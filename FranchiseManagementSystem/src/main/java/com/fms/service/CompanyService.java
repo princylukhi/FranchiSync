@@ -7,14 +7,19 @@ import jakarta.persistence.Query;
 import java.util.Date;
 import java.util.List;
 
+
 import com.fms.entity.CompanyRegistrationRequests;
 import com.fms.entity.Companies;
+import jakarta.ejb.EJB;
 
 @Stateless
 public class CompanyService implements CompanyServiceLocal {
 
     @PersistenceContext(unitName = "FranchisePU")
     private EntityManager em;
+    
+    @EJB
+    private EmailServiceLocal emailService;
 
     @Override
     public void submitCompanyRequest(CompanyRegistrationRequests request) {
@@ -52,6 +57,14 @@ public class CompanyService implements CompanyServiceLocal {
         company.setCreatedDate(new Date());
 
         em.persist(company);
+
+        // Send Email
+        emailService.sendEmail(
+                req.getEmail(),
+                "Company Approved",
+                "Your company registration has been approved."
+        );
+
     }
 
     @Override
@@ -63,5 +76,12 @@ public class CompanyService implements CompanyServiceLocal {
         req.setStatus("REJECTED");
 
         em.merge(req);
+
+        emailService.sendEmail(
+                req.getEmail(),
+                "Company Registration Rejected",
+                "Your company registration request has been rejected."
+        );
+
     }
 }
