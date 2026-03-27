@@ -20,8 +20,7 @@ public class CompanyService implements CompanyServiceLocal {
     @PersistenceContext(unitName = "FranchisePU")
     private EntityManager em;
     
-    @EJB
-    private EmailServiceLocal emailService;
+    
     @EJB
     private UserServiceLocal userService;
     @EJB
@@ -65,13 +64,6 @@ public class CompanyService implements CompanyServiceLocal {
 
         em.persist(company);
 
-        // Send Email
-        emailService.sendEmail(
-                req.getEmail(),
-                "Company Approved",
-                "Your company registration has been approved."
-        );
-
         
          // 2️⃣ Create Super Admin (IMPORTANT)
         Users admin = new Users();
@@ -97,12 +89,7 @@ public class CompanyService implements CompanyServiceLocal {
 
         em.merge(req);
 
-        emailService.sendEmail(
-                req.getEmail(),
-                "Company Registration Rejected",
-                "Your company registration request has been rejected."
-        );
-        
+      
         notificationService.sendCompanyRejection(req.getEmail());
 
     }

@@ -11,12 +11,16 @@ import com.fms.entity.FranchiseRequests;
 import com.fms.entity.Franchises;
 import com.fms.entity.Companies;
 import com.fms.entity.Users;
+import jakarta.ejb.EJB;
 
 @Stateless
 public class FranchiseService implements FranchiseServiceLocal {
 
     @PersistenceContext(unitName = "FranchisePU")
     private EntityManager em;
+    
+    @EJB
+    private NotificationServiceLocal notificationService;
 
     @Override
     public void submitFranchiseRequest(FranchiseRequests request) {
@@ -58,6 +62,8 @@ public class FranchiseService implements FranchiseServiceLocal {
         franchise.setCreatedDate(new Date());
 
         em.persist(franchise);
+        
+        notificationService.sendFranchiseApproval(owner.getEmail());
     }
 
     @Override
