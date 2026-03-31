@@ -31,8 +31,24 @@ public class FeedbackService implements FeedbackServiceLocal {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
         }
 
+//        Users user = em.find(Users.class, userId);
+//        Companies company = em.find(Companies.class, companyId);
+//
+//        feedback.setUid(user);
+//        feedback.setCid(company);
+//        feedback.setFeedbackDate(new Date());
+
         Users user = em.find(Users.class, userId);
         Companies company = em.find(Companies.class, companyId);
+
+        // 🔥 ADD THIS CHECK
+        if (user == null) {
+            throw new RuntimeException("User NOT FOUND with ID: " + userId);
+        }
+
+        if (company == null) {
+            throw new RuntimeException("Company NOT FOUND with ID: " + companyId);
+        }
 
         feedback.setUid(user);
         feedback.setCid(company);

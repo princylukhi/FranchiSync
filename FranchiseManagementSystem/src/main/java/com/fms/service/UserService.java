@@ -115,9 +115,37 @@ public class UserService implements UserServiceLocal {
         return list.isEmpty() ? null : list.get(0);
     }
     
+//    @Override
+//    public Users login(String email, String password) {
+//
+//
+//    Query q = em.createNamedQuery("Users.findByEmail");
+//    q.setParameter("email", email);
+//
+//    List<Users> list = q.getResultList();
+//
+//    if (list.isEmpty()) {
+//        return null;
+//    }
+//
+//    Users user = list.get(0);
+//
+//    // Check password using BCrypt
+//    if (PasswordUtil.checkPassword(password, user.getPassword())) {
+//
+//        // Check status
+//        if (!user.getStatus().equals("ACTIVE")) {
+//            return null;
+//        }
+//
+//        return user;
+//    }
+//
+//    return null;
+//    }  
+    
     @Override
-    public Users login(String email, String password) {
-
+public Users login(String email, String password) {
 
     Query q = em.createNamedQuery("Users.findByEmail");
     q.setParameter("email", email);
@@ -130,17 +158,29 @@ public class UserService implements UserServiceLocal {
 
     Users user = list.get(0);
 
-    // Check password using BCrypt
-    if (PasswordUtil.checkPassword(password, user.getPassword())) {
+    try {
+        // ✅ Try BCrypt check
+        if (PasswordUtil.checkPassword(password, user.getPassword())) {
 
-        // Check status
-        if (!user.getStatus().equals("ACTIVE")) {
-            return null;
+            if (!user.getStatus().equals("ACTIVE")) {
+                return null;
+            }
+
+            return user;
         }
+    } catch (Exception e) {
 
-        return user;
+        // 🔥 FALLBACK (for old plain passwords)
+        if (user.getPassword().equals(password)) {
+
+            // Optional: upgrade to hashed password
+            user.setPassword(PasswordUtil.hashPassword(password));
+            em.merge(user);
+
+            return user;
+        }
     }
 
     return null;
-    }        
+}
 }

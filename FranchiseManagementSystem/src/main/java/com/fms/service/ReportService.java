@@ -23,25 +23,57 @@ public class ReportService implements ReportServiceLocal {
     }
 
     // Daily Sales
-    @Override
-    public double getDailySales() {
+@Override
+public double getDailySales() {
 
-        Query q = em.createQuery(
-            "SELECT SUM(s.totalAmount) FROM Sales s WHERE DATE(s.saleDate) = CURRENT_DATE");
+    java.util.Calendar cal = java.util.Calendar.getInstance();
 
-        return q.getSingleResult() != null ? 
-            ((Number) q.getSingleResult()).doubleValue() : 0;
-    }
+    cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+    cal.set(java.util.Calendar.MINUTE, 0);
+    cal.set(java.util.Calendar.SECOND, 0);
+
+    java.util.Date start = cal.getTime();
+
+    cal.add(java.util.Calendar.DATE, 1);
+    java.util.Date end = cal.getTime();
+
+    Number result = em.createQuery(
+        "SELECT SUM(s.totalAmount) FROM Sales s WHERE s.saleDate >= :start AND s.saleDate < :end", Number.class
+    )
+    .setParameter("start", start)
+    .setParameter("end", end)
+    .getSingleResult();
+
+    return result != null ? result.doubleValue() : 0;
+}
 
     // Monthly Sales
     @Override
     public double getMonthlySales() {
 
-        Query q = em.createQuery(
-            "SELECT SUM(s.totalAmount) FROM Sales s WHERE MONTH(s.saleDate) = MONTH(CURRENT_DATE)");
+        java.util.Calendar cal = java.util.Calendar.getInstance();
 
-        return q.getSingleResult() != null ? 
-            ((Number) q.getSingleResult()).doubleValue() : 0;
+        // 🔥 start of month
+        cal.set(java.util.Calendar.DAY_OF_MONTH, 1);
+        cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+        cal.set(java.util.Calendar.MINUTE, 0);
+        cal.set(java.util.Calendar.SECOND, 0);
+
+        java.util.Date start = cal.getTime();
+
+        // 🔥 next month
+        cal.add(java.util.Calendar.MONTH, 1);
+        java.util.Date end = cal.getTime();
+
+        Number result = em.createQuery(
+            "SELECT SUM(s.totalAmount) FROM Sales s WHERE s.saleDate >= :start AND s.saleDate < :end",
+            Number.class   // ✅ VERY IMPORTANT
+        )
+        .setParameter("start", start)
+        .setParameter("end", end)
+        .getSingleResult();
+
+        return result != null ? result.doubleValue() : 0;
     }
 
     // Branch-wise Sales
