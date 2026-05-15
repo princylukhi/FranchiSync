@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html">
 
@@ -25,6 +25,50 @@
             <h:commandButton value="Login" action="#{loginBean.login()}" />
 
         </h:panelGrid>
+
+    </h:form>
+
+</h:body>
+</html>-->
+
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Login</title>
+</h:head>
+
+<h:body>
+
+    <h:form>
+
+        <p:panel header="Login System"
+                 style="width:400px; margin:auto; margin-top:100px;">
+
+            <p:messages />
+
+            <p:panelGrid columns="2" layout="grid">
+
+                <p:outputLabel value="Email" />
+                <p:inputText value="#{loginBean.email}" />
+
+                <p:outputLabel value="Password" />
+                <p:password value="#{loginBean.password}" />
+
+            </p:panelGrid>
+
+            <br/>
+
+            <p:commandButton value="Login"
+                             action="#{loginBean.login()}"
+                             icon="pi pi-sign-in"
+                             ajax="false"/>
+
+        </p:panel>
 
     </h:form>
 
