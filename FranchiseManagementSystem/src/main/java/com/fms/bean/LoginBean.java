@@ -5,10 +5,10 @@ import com.fms.service.UserServiceLocal;
 
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
-import jakarta.faces.context.FacesContext;
-import jakarta.servlet.http.HttpSession;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.Serializable;
 
@@ -18,76 +18,137 @@ public class LoginBean implements Serializable {
 
     private String email;
     private String password;
+
     private Users loggedUser;
+
+    // 🔥 Dynamic Sidebar
+    private String sidebarPage;
 
     @EJB
     private UserServiceLocal userService;
 
-    // LOGIN METHOD
+    // 🔐 LOGIN METHOD
     public String login() {
 
         Users user = userService.login(email, password);
 
-//        if (user != null) {
-            if (user != null && user.getRid() != null) {
+        if (user != null && user.getRid() != null) {
 
             this.loggedUser = user;
 
-            // Create session
-            HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                    .getExternalContext().getSession(true);
+            // 🔥 Create Session
+            HttpSession session = (HttpSession)
+                    FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getSession(true);
 
             session.setAttribute("user", user);
             session.setAttribute("role", user.getRid().getRoleName());
-            session.setAttribute("companyId", user.getCid().getCid());
 
-            // Redirect based on role
+            // Avoid null company error
+            if (user.getCid() != null) {
+                session.setAttribute("companyId",
+                        user.getCid().getCid());
+            }
+
+            // 🔥 Role
             String role = user.getRid().getRoleName();
 
-            switch (role) {
-                case "SYSTEM_ADMIN":
-                    return "admin_dashboard.xhtml?faces-redirect=true";
-                case "SUPER_ADMIN":
-                    return "company_dashboard.xhtml?faces-redirect=true";
-                case "FRANCHISE_OWNER":
-                    return "franchise_dashboard.xhtml?faces-redirect=true";
-                case "BRANCH_MANAGER":
-                    return "branch_dashboard.xhtml?faces-redirect=true";
-                case "STAFF":
-                    return "billing.xhtml?faces-redirect=true";
-                default:
-                    return null;
+            // 🔥 Dynamic Sidebar
+            if (role.equals("SYSTEM_ADMIN")) {
+
+                sidebarPage = "/templates/admin_sidebar.xhtml";
+
+                return "/admin/dashboard.xhtml?faces-redirect=true";
+
+            } else if (role.equals("SUPER_ADMIN")) {
+
+                sidebarPage = "/templates/company_sidebar.xhtml";
+
+                return "/company/dashboard.xhtml?faces-redirect=true";
+
+            } else if (role.equals("FRANCHISE_OWNER")) {
+
+                sidebarPage = "/templates/franchise_sidebar.xhtml";
+
+                return "/franchise/dashboard.xhtml?faces-redirect=true";
+
+            } else if (role.equals("BRANCH_MANAGER")) {
+
+                sidebarPage = "/templates/branch_sidebar.xhtml";
+
+                return "/branch/dashboard.xhtml?faces-redirect=true";
+
+            } else if (role.equals("STAFF")) {
+
+                sidebarPage = "/templates/staff_sidebar.xhtml";
+
+                return "/staff/dashboard.xhtml?faces-redirect=true";
             }
         }
 
-        // Show error message
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "Login Failed", "Invalid email or password"));
+        // ❌ Invalid Login
+        FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        "Login Failed",
+                        "Invalid email or password"
+                )
+        );
 
         return null;
     }
 
-    // LOGOUT METHOD
+    // 🚪 LOGOUT
     public String logout() {
 
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(false);
+        HttpSession session = (HttpSession)
+                FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSession(false);
 
         if (session != null) {
             session.invalidate();
         }
 
-        return "login.xhtml?faces-redirect=true";
+        loggedUser = null;
+        sidebarPage = null;
+
+        return "/login.xhtml?faces-redirect=true";
     }
 
-    // GETTERS & SETTERS
+    // ===== GETTERS & SETTERS =====
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public Users getLoggedUser() { return loggedUser; }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Users getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(Users loggedUser) {
+        this.loggedUser = loggedUser;
+    }
+
+    public String getSidebarPage() {
+        return sidebarPage;
+    }
+
+    public void setSidebarPage(String sidebarPage) {
+        this.sidebarPage = sidebarPage;
+    }
 }

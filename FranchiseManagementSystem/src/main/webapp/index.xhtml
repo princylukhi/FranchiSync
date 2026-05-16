@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+
+<h:head>
+
+    <title>FranchiSync</title>
+
+    <h:outputStylesheet library="css" name="style.css"/>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"/>
+
+    <!-- PrimeIcons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/primeicons/7.0.0/primeicons.min.css"/>
+
+</h:head>
+
+<h:body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="modern-navbar">
+
+        <div class="modern-logo">
+
+            <i class="pi pi-building"></i>
+
+            <span>FranchiSync</span>
+
+        </div>
+
+        <div class="modern-nav-links">
+
+            <a href="#about" class="modern-link">About</a>
+
+            <a href="#features" class="modern-link">Features</a>
+
+            <a href="#contact" class="modern-link">Contact</a>
+
+            <h:link outcome="/login.xhtml"
+                    value="Login"
+                    styleClass="modern-link"/>
+
+            <h:link outcome="/company_register.xhtml"
+                    value="Register Company"
+                    styleClass="modern-register-btn"/>
+
+        </div>
+
+    </nav>
+
+    <!-- ================= HERO ================= -->
+
+    <section class="modern-hero">
+
+        <!-- LEFT -->
+
+        <div class="hero-left">
+
+            <div class="hero-badge">
+                Smart Franchise Platform
+            </div>
+
+            <h1>
+                Manage Your
+                Franchise Business
+                Smarter
+            </h1>
+
+            <p>
+                Powerful centralized system to manage
+                franchises, branches, staff, inventory,
+                billing, royalty and reports efficiently.
+            </p>
+
+            <div class="hero-actions">
+
+                <h:link outcome="/login.xhtml"
+                        value="Get Started"
+                        styleClass="hero-primary-btn"/>
+
+                <h:link outcome="/company_register.xhtml"
+                        value="Register Company"
+                        styleClass="hero-secondary-btn"/>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="hero-right">
+
+            <div class="floating-card card-one">
+
+                <i class="pi pi-chart-line"></i>
+
+                <h3>Sales Analytics</h3>
+
+                <p>Track business growth instantly.</p>
+
+            </div>
+
+            <div class="floating-card card-two">
+
+                <i class="pi pi-users"></i>
+
+                <h3>Staff Management</h3>
+
+                <p>Manage staff and operations.</p>
+
+            </div>
+
+            <div class="floating-card card-three">
+
+                <i class="pi pi-wallet"></i>
+
+                <h3>Royalty Tracking</h3>
+
+                <p>Monitor commissions and royalty.</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+
+    <section class="modern-features" id="features">
+
+        <div class="container">
+
+            <div class="feature-title">
+
+                <h2>Core Features</h2>
+
+                <p>
+                    Everything required to manage modern franchise operations.
+                </p>
+
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-md-4">
+
+                    <div class="modern-feature-card">
+
+                        <i class="pi pi-building"></i>
+
+                        <h3>Company Management</h3>
+
+                        <p>
+                            Company approval and administration system.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="modern-feature-card">
+
+                        <i class="pi pi-sitemap"></i>
+
+                        <h3>Franchise Operations</h3>
+
+                        <p>
+                            Branches, managers and franchise handling.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="modern-feature-card">
+
+                        <i class="pi pi-shopping-cart"></i>
+
+                        <h3>Billing &amp; Inventory</h3>
+
+                        <p>
+                            Smart inventory, billing and invoice system.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats-section">
+
+        <div class="container">
+
+            <div class="row text-center">
+
+                <div class="col-md-3">
+
+                    <div class="stat-card">
+
+                        <h2>50+</h2>
+
+                        <p>Companies</p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="stat-card">
+
+                        <h2>500+</h2>
+
+                        <p>Branches</p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="stat-card">
+
+                        <h2>1000+</h2>
+
+                        <p>Staff Managed</p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="stat-card">
+
+                        <h2>24/7</h2>
+
+                        <p>Monitoring</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+
+    <section class="about-section" id="about">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+
+                    <div class="about-image">
+
+                        <i class="pi pi-building-columns"></i>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="about-content">
+
+                        <h2>About FranchiSync</h2>
+
+                        <p>
+                            FranchiSync is a centralized Franchise
+                            Management System designed to simplify
+                            franchise operations for companies,
+                            franchise owners, branch managers and staff.
+                        </p>
+
+                        <p>
+                            The system provides efficient tools for
+                            inventory management, billing, reporting,
+                            notifications, royalty management and
+                            staff administration.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= WHY CHOOSE US ================= -->
+
+    <section class="why-section">
+
+        <div class="container">
+
+            <div class="feature-title">
+
+                <h2>Why Choose FranchiSync?</h2>
+
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-md-3">
+
+                    <div class="why-card">
+
+                        <i class="pi pi-shield"></i>
+
+                        <h4>Secure Access</h4>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="why-card">
+
+                        <i class="pi pi-chart-bar"></i>
+
+                        <h4>Real-time Reports</h4>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="why-card">
+
+                        <i class="pi pi-bolt"></i>
+
+                        <h4>Fast Billing</h4>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="why-card">
+
+                        <i class="pi pi-database"></i>
+
+                        <h4>Inventory Tracking</h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+
+    <section class="contact-section" id="contact">
+
+        <div class="container">
+
+            <div class="feature-title">
+
+                <h2>Contact Us</h2>
+
+                <p>
+                    Reach out for support and business inquiries.
+                </p>
+
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-md-4">
+
+                    <div class="contact-card">
+
+                        <i class="pi pi-envelope"></i>
+
+                        <h4>Email</h4>
+
+                        <p>support@franchisync.com</p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="contact-card">
+
+                        <i class="pi pi-phone"></i>
+
+                        <h4>Phone</h4>
+
+                        <p>+91 9876543210</p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="contact-card">
+
+                        <i class="pi pi-map-marker"></i>
+
+                        <h4>Location</h4>
+
+                        <p>Surat, Gujarat</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="modern-footer">
+
+        © 2026 FranchiSync | Franchise Management System
+
+    </footer>
+
+</h:body>
+</html>
