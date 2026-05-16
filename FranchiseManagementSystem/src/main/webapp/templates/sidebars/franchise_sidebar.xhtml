@@ -1,0 +1,136 @@
+<!--<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+
+<h:body>
+
+<div class="sidebar-container">
+
+    <div class="sidebar-title">FRANCHISE PANEL</div>
+
+    <h:link outcome="/franchise/dashboard.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-home"></i>
+        <span>Dashboard</span>
+    </h:link>
+
+    <h:link outcome="/franchise/branches.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-building"></i>
+        <span>Branches</span>
+    </h:link>
+
+    <h:link outcome="/franchise/managers.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-users"></i>
+        <span>Managers</span>
+    </h:link>
+
+    <h:link outcome="/franchise/sales.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-shopping-cart"></i>
+        <span>Sales</span>
+    </h:link>
+    
+    <h:link outcome="/franchise/royalty.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-wallet"></i>
+        <span>Royalty</span>
+    </h:link>
+
+    <h:link outcome="/franchise/reports.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-chart-bar"></i>
+        <span>Reports</span>
+    </h:link>
+
+</div>
+
+</h:body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+
+<h:body>
+
+    <div class="h-full flex flex-col bg-zinc-950">
+
+        <!-- TITLE -->
+        <div class="p-6 border-b border-zinc-800">
+
+            <h2 class="text-xl font-bold text-white">
+                Franchise Panel
+            </h2>
+
+            <p class="text-slate-400 text-sm mt-1">
+                Franchise Operations
+            </p>
+
+        </div>
+
+        <!-- MENU -->
+        <div class="flex-1 p-4 space-y-2">
+
+            <!-- Dashboard -->
+            <h:link outcome="/franchise/dashboard.xhtml"
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg">
+
+                <i class="pi pi-home"></i>
+
+                <span>Dashboard</span>
+
+            </h:link>
+
+            <!-- Branches -->
+            <h:link outcome="/franchise/branches.xhtml"
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                <i class="pi pi-building"></i>
+
+                <span>Branches</span>
+
+            </h:link>
+
+            <!-- Managers -->
+            <h:link outcome="/franchise/managers.xhtml"
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                <i class="pi pi-users"></i>
+
+                <span>Managers</span>
+
+            </h:link>
+
+            <!-- Sales -->
+            <h:link outcome="/franchise/sales.xhtml"
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                <i class="pi pi-shopping-cart"></i>
+
+                <span>Sales</span>
+
+            </h:link>
+
+            <!-- Royalty -->
+            <h:link outcome="/franchise/royalty.xhtml"
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                <i class="pi pi-wallet"></i>
+
+                <span>Royalty</span>
+
+            </h:link>
+
+            <!-- Reports -->
+            <h:link outcome="/franchise/reports.xhtml"
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                <i class="pi pi-chart-bar"></i>
+
+                <span>Reports</span>
+
+            </h:link>
+
+        </div>
+
+    </div>
+
+</h:body>
+</html>
