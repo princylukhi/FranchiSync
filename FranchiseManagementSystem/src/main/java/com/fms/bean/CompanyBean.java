@@ -4,62 +4,76 @@ import com.fms.entity.CompanyRegistrationRequests;
 import com.fms.service.CompanyServiceLocal;
 
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
-
 import java.io.Serializable;
-import java.util.Date;
 
 @Named
-@RequestScoped
-public class CompanyBean implements Serializable {
+@ViewScoped
+public class CompanyBean implements Serializable{
 
-    // 🔥 FORM OBJECT
     private CompanyRegistrationRequests request =
             new CompanyRegistrationRequests();
 
     @EJB
     private CompanyServiceLocal companyService;
+    
+    private String customBusinessType;
 
-    // 🔥 SUBMIT REGISTRATION REQUEST
+    // REGISTER COMPANY REQUEST
     public String submitRequest() {
 
         try {
 
-            // Default Values
-            request.setStatus("PENDING");
-            request.setRequestDate(new Date());
+           if ("Other".equals(request.getBusinessType())) {
 
-            // Save Request
+    if (customBusinessType == null ||
+        customBusinessType.trim().isEmpty()) {
+
+        FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        "Business Type Required",
+                        "Please enter custom business type."
+                )
+        );
+
+        return null;
+    }
+
+    request.setBusinessType(customBusinessType);
+}
+            
             companyService.submitCompanyRequest(request);
 
-            // Success Message
             FacesContext.getCurrentInstance().addMessage(
                     null,
                     new FacesMessage(
                             FacesMessage.SEVERITY_INFO,
-                            "Success",
-                            "Company registration request submitted successfully"
+                            "Request Submitted",
+                            "Your company registration request was submitted successfully."
                     )
             );
 
-            // Reset Form
+            // Clear Form
             request = new CompanyRegistrationRequests();
+            
+            customBusinessType = null;
 
             return null;
 
         } catch (Exception e) {
-
-            e.printStackTrace();
 
             FacesContext.getCurrentInstance().addMessage(
                     null,
                     new FacesMessage(
                             FacesMessage.SEVERITY_ERROR,
                             "Error",
-                            e.getMessage()
+                                                e.getMessage()
+
                     )
             );
 
@@ -67,13 +81,20 @@ public class CompanyBean implements Serializable {
         }
     }
 
-    // ===== GETTER & SETTER =====
-
+    // GETTER SETTER
     public CompanyRegistrationRequests getRequest() {
         return request;
     }
 
     public void setRequest(CompanyRegistrationRequests request) {
         this.request = request;
+    }
+    
+    public String getCustomBusinessType() {
+        return customBusinessType;
+    }
+
+    public void setCustomBusinessType(String customBusinessType) {
+        this.customBusinessType = customBusinessType;
     }
 }

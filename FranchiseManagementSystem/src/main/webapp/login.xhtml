@@ -16,13 +16,13 @@
 
 </h:head>
 
-<h:body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-slate-100 overflow-hidden">
+<h:body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-slate-100 overflow-x-hidden">
 
     <!-- MAIN CONTAINER -->
     <div class="min-h-screen flex items-center justify-center px-6 py-10">
 
         <!-- LOGIN CARD -->
-        <div class="w-full max-w-5xl grid lg:grid-cols-2
+        <div class="w-full max-w-6xl grid lg:grid-cols-2
                     bg-white/80 backdrop-blur-xl
                     rounded-[35px] shadow-2xl overflow-hidden">
 
@@ -153,6 +153,8 @@
 
                             <p:inputText
                                 value="#{loginBean.email}"
+                                required="true"
+                                requiredMessage="Email is required"
                                 placeholder="Enter your email"
                                 styleClass="w-full !pl-12 !py-4
                                 !rounded-2xl !border-slate-200
@@ -178,6 +180,8 @@
 
                             <p:password
                                 value="#{loginBean.password}"
+                                required="true"
+                                requiredMessage="Password is required"
                                 placeholder="Enter your password"
                                 feedback="false"
                                 toggleMask="true"
@@ -217,6 +221,8 @@
                     <p:commandButton
                         value="Login"
                         action="#{loginBean.login()}"
+                        update="growl"
+                        process="@form"
                         ajax="false"
                         styleClass="!w-full !bg-emerald-500
                         hover:!bg-emerald-600
