@@ -1,464 +1,7 @@
-<!--<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-
-<h:head>
-
-    <title>FranchiSync</title>
-
-    <h:outputStylesheet library="css" name="style.css"/>
-
-     Bootstrap 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"/>
-
-     PrimeIcons 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/primeicons/7.0.0/primeicons.min.css"/>
-
-</h:head>
-
-<h:body>
-
-     ================= NAVBAR ================= 
-
-    <nav class="modern-navbar">
-
-        <div class="modern-logo">
-
-            <i class="pi pi-building"></i>
-
-            <span>FranchiSync</span>
-
-        </div>
-
-        <div class="modern-nav-links">
-
-            <a href="#about" class="modern-link">About</a>
-
-            <a href="#features" class="modern-link">Features</a>
-
-            <a href="#contact" class="modern-link">Contact</a>
-
-            <h:link outcome="/login.xhtml"
-                    value="Login"
-                    styleClass="modern-link"/>
-
-            <h:link outcome="/company_register.xhtml"
-                    value="Register Company"
-                    styleClass="modern-register-btn"/>
-
-        </div>
-
-    </nav>
-
-     ================= HERO ================= 
-
-    <section class="modern-hero">
-
-         LEFT 
-
-        <div class="hero-left">
-
-            <div class="hero-badge">
-                Smart Franchise Platform
-            </div>
-
-            <h1>
-                Manage Your
-                Franchise Business
-                Smarter
-            </h1>
-
-            <p>
-                Powerful centralized system to manage
-                franchises, branches, staff, inventory,
-                billing, royalty and reports efficiently.
-            </p>
-
-            <div class="hero-actions">
-
-                <h:link outcome="/login.xhtml"
-                        value="Get Started"
-                        styleClass="hero-primary-btn"/>
-
-                <h:link outcome="/company_register.xhtml"
-                        value="Register Company"
-                        styleClass="hero-secondary-btn"/>
-
-            </div>
-
-        </div>
-
-         RIGHT 
-
-        <div class="hero-right">
-
-            <div class="floating-card card-one">
-
-                <i class="pi pi-chart-line"></i>
-
-                <h3>Sales Analytics</h3>
-
-                <p>Track business growth instantly.</p>
-
-            </div>
-
-            <div class="floating-card card-two">
-
-                <i class="pi pi-users"></i>
-
-                <h3>Staff Management</h3>
-
-                <p>Manage staff and operations.</p>
-
-            </div>
-
-            <div class="floating-card card-three">
-
-                <i class="pi pi-wallet"></i>
-
-                <h3>Royalty Tracking</h3>
-
-                <p>Monitor commissions and royalty.</p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-     ================= FEATURES ================= 
-
-    <section class="modern-features" id="features">
-
-        <div class="container">
-
-            <div class="feature-title">
-
-                <h2>Core Features</h2>
-
-                <p>
-                    Everything required to manage modern franchise operations.
-                </p>
-
-            </div>
-
-            <div class="row g-4">
-
-                <div class="col-md-4">
-
-                    <div class="modern-feature-card">
-
-                        <i class="pi pi-building"></i>
-
-                        <h3>Company Management</h3>
-
-                        <p>
-                            Company approval and administration system.
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-4">
-
-                    <div class="modern-feature-card">
-
-                        <i class="pi pi-sitemap"></i>
-
-                        <h3>Franchise Operations</h3>
-
-                        <p>
-                            Branches, managers and franchise handling.
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-4">
-
-                    <div class="modern-feature-card">
-
-                        <i class="pi pi-shopping-cart"></i>
-
-                        <h3>Billing &amp; Inventory</h3>
-
-                        <p>
-                            Smart inventory, billing and invoice system.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-     ================= STATS ================= 
-
-    <section class="stats-section">
-
-        <div class="container">
-
-            <div class="row text-center">
-
-                <div class="col-md-3">
-
-                    <div class="stat-card">
-
-                        <h2>50+</h2>
-
-                        <p>Companies</p>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="stat-card">
-
-                        <h2>500+</h2>
-
-                        <p>Branches</p>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="stat-card">
-
-                        <h2>1000+</h2>
-
-                        <p>Staff Managed</p>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="stat-card">
-
-                        <h2>24/7</h2>
-
-                        <p>Monitoring</p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-     ================= ABOUT ================= 
-
-    <section class="about-section" id="about">
-
-        <div class="container">
-
-            <div class="row align-items-center">
-
-                <div class="col-md-6">
-
-                    <div class="about-image">
-
-                        <i class="pi pi-building-columns"></i>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-6">
-
-                    <div class="about-content">
-
-                        <h2>About FranchiSync</h2>
-
-                        <p>
-                            FranchiSync is a centralized Franchise
-                            Management System designed to simplify
-                            franchise operations for companies,
-                            franchise owners, branch managers and staff.
-                        </p>
-
-                        <p>
-                            The system provides efficient tools for
-                            inventory management, billing, reporting,
-                            notifications, royalty management and
-                            staff administration.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-     ================= WHY CHOOSE US ================= 
-
-    <section class="why-section">
-
-        <div class="container">
-
-            <div class="feature-title">
-
-                <h2>Why Choose FranchiSync?</h2>
-
-            </div>
-
-            <div class="row g-4">
-
-                <div class="col-md-3">
-
-                    <div class="why-card">
-
-                        <i class="pi pi-shield"></i>
-
-                        <h4>Secure Access</h4>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="why-card">
-
-                        <i class="pi pi-chart-bar"></i>
-
-                        <h4>Real-time Reports</h4>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="why-card">
-
-                        <i class="pi pi-bolt"></i>
-
-                        <h4>Fast Billing</h4>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-3">
-
-                    <div class="why-card">
-
-                        <i class="pi pi-database"></i>
-
-                        <h4>Inventory Tracking</h4>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-     ================= CONTACT ================= 
-
-    <section class="contact-section" id="contact">
-
-        <div class="container">
-
-            <div class="feature-title">
-
-                <h2>Contact Us</h2>
-
-                <p>
-                    Reach out for support and business inquiries.
-                </p>
-
-            </div>
-
-            <div class="row g-4">
-
-                <div class="col-md-4">
-
-                    <div class="contact-card">
-
-                        <i class="pi pi-envelope"></i>
-
-                        <h4>Email</h4>
-
-                        <p>support@franchisync.com</p>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-4">
-
-                    <div class="contact-card">
-
-                        <i class="pi pi-phone"></i>
-
-                        <h4>Phone</h4>
-
-                        <p>+91 9876543210</p>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-4">
-
-                    <div class="contact-card">
-
-                        <i class="pi pi-map-marker"></i>
-
-                        <h4>Location</h4>
-
-                        <p>Surat, Gujarat</p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-     ================= FOOTER ================= 
-
-    <footer class="modern-footer">
-
-        © 2026 FranchiSync | Franchise Management System
-
-    </footer>
-
-</h:body>
-</html>-->
-
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 
@@ -470,6 +13,33 @@
     <!-- PrimeIcons -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/primeicons/7.0.0/primeicons.min.css"/>
+    
+    <style>
+
+    .custom-faq .ui-accordion-header {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 18px !important;
+        margin-bottom: 14px !important;
+        overflow: hidden;
+    }
+
+    .custom-faq .ui-accordion-header a {
+        color: #0f172a !important;
+        font-weight: 600 !important;
+        padding: 22px !important;
+        font-size: 16px !important;
+    }
+
+    .custom-faq .ui-accordion-content {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        color: #334155 !important;
+        border-radius: 0 0 18px 18px !important;
+        padding: 24px !important;
+    }
+
+</style>
 
 </h:head>
 
@@ -479,8 +49,8 @@
 
     <nav class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-lg border-b border-slate-200 z-50">
 
-        <div class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-
+            <div class="w-full px-6 lg:px-12 py-4 flex items-center justify-between">
+                
             <!-- LOGO -->
             <div class="flex items-center gap-3">
 
@@ -511,8 +81,8 @@
                     Home
                 </a>
 
-                <a href="#modules" class="hover:text-emerald-500 transition">
-                    Modules
+                <a href="#features" class="hover:text-emerald-500 transition">
+                    Features
                 </a>
 
 
@@ -520,6 +90,10 @@
                     About
                 </a>
 
+                <a href="#faqs" class="hover:text-emerald-500 transition">
+                    FAQs
+                </a>
+                
                 <a href="#contact" class="hover:text-emerald-500 transition">
                     Contact
                 </a>
@@ -546,7 +120,7 @@
     <!-- ================= HERO SECTION ================= -->
 
     <section id="home"
-             class="min-h-[85vh] flex items-center bg-gradient-to-br from-emerald-50 via-white to-slate-100 pt-24">
+             class="min-h-screen flex items-center bg-gradient-to-br from-emerald-50 via-white to-slate-100 pt-24">
 
         <div class="max-w-5xl mx-auto px-8 text-center">
 
@@ -578,21 +152,18 @@
                 </p>
 
                 <!-- BUTTONS -->
-                <div class="flex flex-wrap gap-5 mb-10">
+               <h:link outcome="/login.xhtml"
+                    value="Get Started"
+                    styleClass="inline-block mt-2
+                    bg-emerald-500 hover:bg-emerald-600
+                    text-white px-8 py-4
+                    rounded-2xl shadow-lg
+                    font-semibold text-lg
+                    transition duration-300"/>
 
-                    <h:link outcome="/login.xhtml"
-                            value="Login"
-                            styleClass="bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-2xl font-semibold shadow-xl transition"/>
-
-                    <h:link outcome="/company_register.xhtml"
-                            value="Register Company"
-                            styleClass="bg-white border border-slate-300 hover:border-emerald-500 hover:text-emerald-600 px-8 py-4 rounded-2xl font-semibold shadow-lg transition"/>
-
-                </div>
-
+                
                 <!-- TRUST POINTS -->
-                <div class="flex flex-wrap gap-6 text-slate-600">
-
+                <div class="flex flex-wrap justify-center gap-6 text-slate-600 mt-8">
                     <div class="flex items-center gap-2">
 
                         <i class="pi pi-check-circle text-emerald-500"></i>
@@ -628,14 +199,14 @@
 
     <!-- ================= MODULES ================= -->
 
-    <section id="modules" class="py-24 bg-white">
+    <section id="features" class="py-24 bg-white">
 
         <div class="max-w-7xl mx-auto px-8">
 
             <div class="text-center mb-16">
 
                 <h2 class="text-5xl font-black text-slate-900 mb-5">
-                    System Modules
+                    Our Key Features
                 </h2>
 
                 <p class="text-slate-500 text-lg">
@@ -644,58 +215,106 @@
 
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                <!-- CARD -->
-                <div class="bg-stone-100 rounded-3xl p-8 hover:-translate-y-2 transition duration-300">
+            <!-- COMPANY -->
+            <div class="bg-stone-100 rounded-3xl p-8 hover:-translate-y-2 transition duration-300">
 
-                    <i class="pi pi-building text-emerald-500 text-5xl mb-6"></i>
+                <i class="pi pi-building text-emerald-500 text-5xl mb-6"></i>
 
-                    <h3 class="text-2xl font-bold mb-4">
-                        Company Module
-                    </h3>
+                <h3 class="text-2xl font-bold mb-4">
+                    Company Management
+                </h3>
 
-                    <p class="text-slate-600 leading-relaxed">
-                        Company approvals, franchise requests,
-                        pricing and management.
-                    </p>
-
-                </div>
-
-                <!-- CARD -->
-                <div class="bg-stone-100 rounded-3xl p-8 hover:-translate-y-2 transition duration-300">
-
-                    <i class="pi pi-sitemap text-cyan-500 text-5xl mb-6"></i>
-
-                    <h3 class="text-2xl font-bold mb-4">
-                        Franchise Module
-                    </h3>
-
-                    <p class="text-slate-600 leading-relaxed">
-                        Branch management, royalty tracking
-                        and operational workflows.
-                    </p>
-
-                </div>
-
-                <!-- CARD -->
-                <div class="bg-stone-100 rounded-3xl p-8 hover:-translate-y-2 transition duration-300">
-
-                    <i class="pi pi-wallet text-violet-500 text-5xl mb-6"></i>
-
-                    <h3 class="text-2xl font-bold mb-4">
-                        Billing Module
-                    </h3>
-
-                    <p class="text-slate-600 leading-relaxed">
-                        Invoice generation, sales management
-                        and reporting system.
-                    </p>
-
-                </div>
+                <p class="text-slate-600 leading-relaxed">
+                    Manage company registrations,
+                    approvals and franchise operations.
+                </p>
 
             </div>
 
+            <!-- FRANCHISE -->
+            <div class="bg-stone-100 rounded-3xl p-8 hover:-translate-y-2 transition duration-300">
+
+                <i class="pi pi-sitemap text-cyan-500 text-5xl mb-6"></i>
+
+                <h3 class="text-2xl font-bold mb-4">
+                    Franchise Management
+                </h3>
+
+                <p class="text-slate-600 leading-relaxed">
+                    Handle franchises, royalty tracking
+                    and operational management.
+                </p>
+
+            </div>
+
+            <!-- BRANCH -->
+            <div class="bg-stone-100 rounded-3xl p-8 hover:-translate-y-2 transition duration-300">
+
+                <i class="pi pi-shop text-orange-500 text-5xl mb-6"></i>
+
+                <h3 class="text-2xl font-bold mb-4">
+                    Branch Operations
+                </h3>
+
+                <p class="text-slate-600 leading-relaxed">
+                    Manage branches, staff allocation
+                    and daily activities efficiently.
+                </p>
+
+            </div>
+
+            <!-- INVENTORY -->
+            <div class="bg-stone-100 rounded-3xl p-8 hover:-translate-y-2 transition duration-300">
+
+                <i class="pi pi-database text-indigo-500 text-5xl mb-6"></i>
+
+                <h3 class="text-2xl font-bold mb-4">
+                    Inventory Management
+                </h3>
+
+                <p class="text-slate-600 leading-relaxed">
+                    Track inventory, stock updates
+                    and low stock notifications.
+                </p>
+
+            </div>
+
+            <!-- BILLING -->
+            <div class="bg-stone-100 rounded-3xl p-8 hover:-translate-y-2 transition duration-300">
+
+                <i class="pi pi-wallet text-violet-500 text-5xl mb-6"></i>
+
+                <h3 class="text-2xl font-bold mb-4">
+                    Billing &amp; Sales
+                </h3>
+
+                <p class="text-slate-600 leading-relaxed">
+                    Generate invoices, manage billing
+                    and monitor sales performance.
+                </p>
+
+            </div>
+
+            <!-- REPORTS -->
+            <div class="bg-stone-100 rounded-3xl p-8 hover:-translate-y-2 transition duration-300">
+
+                <i class="pi pi-chart-line text-pink-500 text-5xl mb-6"></i>
+
+                <h3 class="text-2xl font-bold mb-4">
+                    Reports &amp; Analytics
+                </h3>
+
+                <p class="text-slate-600 leading-relaxed">
+                    Access business insights,
+                    reports and performance analytics.
+                </p>
+
+            </div>
+
+        </div>
+            
         </div>
 
     </section>
@@ -723,6 +342,174 @@
         </div>
 
     </section>
+    
+    <!-- FAQ SECTION -->
+<section id="faqs"
+         class="py-24 bg-gradient-to-br from-slate-100 via-white to-emerald-50">
+
+    <div class="max-w-5xl mx-auto px-6">
+
+        <!-- HEADING -->
+        <div class="text-center mb-16">
+
+            <p class="text-emerald-400 font-semibold uppercase tracking-widest mb-4">
+                Help Center
+            </p>
+
+            <h2 class="text-5xl font-black mb-6">
+                Frequently Asked Questions
+            </h2>
+
+            <p class="text-slate-400 text-lg max-w-3xl mx-auto">
+                Find answers about franchise management,
+                inventory, billing, branches and workflows.
+            </p>
+
+        </div>
+
+        <!-- FAQ CONTAINER -->
+        <div class="bg-white/80 backdrop-blur-lg
+            border border-slate-200
+            rounded-3xl p-8 shadow-xl">
+
+            <h:form>
+
+            <p:accordionPanel multiple="true"
+                              styleClass="custom-faq">
+
+                <!-- FAQ 1 -->
+                <p:tab title="How does company registration work?">
+
+                    <p class="text-slate-300 leading-8">
+                        Companies submit registration requests through
+                        the platform. After admin approval,
+                        a Super Admin account is automatically created.
+                    </p>
+
+                </p:tab>
+
+                <!-- FAQ 2 -->
+                <p:tab title="Can franchises manage multiple branches?">
+
+                    <p class="text-slate-300 leading-8">
+                        Yes. Franchise owners can centrally manage
+                        multiple branches and operations efficiently.
+                    </p>
+
+                </p:tab>
+
+                <!-- FAQ 3 -->
+                <p:tab title="How is inventory managed?">
+
+                    <p class="text-slate-300 leading-8">
+                        Inventory is tracked branch-wise with
+                        low stock alerts and real-time updates.
+                    </p>
+
+                </p:tab>
+
+                <!-- FAQ 4 -->
+                <p:tab title="Does the system support billing?">
+
+                    <p class="text-slate-300 leading-8">
+                        Yes. The system supports invoice generation,
+                        billing and sales tracking.
+                    </p>
+
+                </p:tab>
+
+                <!-- FAQ 5 -->
+                <p:tab title="Are reports and analytics available?">
+
+                    <p class="text-slate-300 leading-8">
+                        Detailed reports and analytics help businesses
+                        monitor operational performance effectively.
+                    </p>
+
+                </p:tab>
+
+                <!-- FAQ 6 -->
+                <p:tab title="Is role-based access implemented?">
+
+                    <p class="text-slate-300 leading-8">
+                        Yes. The system provides secure role-based
+                        access for admins, franchises, branches and staff.
+                    </p>
+
+                </p:tab>
+
+            </p:accordionPanel>
+                
+           </h:form>
+
+        </div>
+
+        <!-- STILL HAVE QUESTIONS -->
+        <div class="mt-16 bg-gradient-to-r
+            from-emerald-500 to-emerald-600
+            rounded-3xl p-12 text-center
+            shadow-2xl text-white">
+
+            <!-- ICON -->
+            <div class="w-20 h-20 mx-auto mb-8
+                        rounded-2xl bg-emerald-500/20
+                        flex items-center justify-center">
+
+                <i class="pi pi-comments text-emerald-400 text-4xl"></i>
+
+            </div>
+
+            <!-- TITLE -->
+            <h3 class="text-4xl font-black mb-5 text-white">
+                Still Have Questions?
+            </h3>
+
+            <!-- DESCRIPTION -->
+            <p class="text-emerald-50 text-lg max-w-2xl mx-auto leading-8 mb-10">
+
+                Need additional support or have business inquiries?
+                Contact our support team or login to your dashboard
+                for personalized assistance.
+
+            </p>
+
+            <!-- BUTTONS -->
+            <div class="flex flex-wrap justify-center gap-5">
+
+                <!-- EMAIL -->
+                <a href="mailto:franchisync@gmail.com"
+                   class="bg-white/20 hover:bg-white/30
+                   border border-white/30
+                   px-8 py-4 rounded-2xl
+                   text-white font-semibold
+                   transition duration-300">
+
+                    <i class="pi pi-envelope mr-2"></i>
+
+                    Email Support
+
+                </a>
+
+                <!-- LOGIN -->
+                <h:link outcome="/login.xhtml"
+                        styleClass="bg-emerald-500 hover:bg-emerald-600
+                        px-8 py-4 rounded-2xl
+                        text-white font-semibold
+                        transition duration-300 shadow-lg">
+
+                    <i class="pi pi-arrow-right mr-2"></i>
+
+                    Login to Dashboard
+
+                </h:link>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
     <!-- ================= CONTACT ================= -->
 
@@ -741,7 +528,8 @@
             <div class="grid md:grid-cols-3 gap-8">
 
                 <!-- EMAIL -->
-                <div class="bg-white rounded-3xl p-10 shadow-lg">
+                <div class="bg-white rounded-3xl p-10 shadow-lg
+                hover:-translate-y-2 transition duration-300">
 
                     <i class="pi pi-envelope text-emerald-500 text-5xl mb-6"></i>
 
@@ -750,13 +538,14 @@
                     </h3>
 
                     <p class="text-slate-500">
-                        support@franchisync.com
+                        franchisync@gmail.com
                     </p>
 
                 </div>
 
                 <!-- PHONE -->
-                <div class="bg-white rounded-3xl p-10 shadow-lg">
+                <div class="bg-white rounded-3xl p-10 shadow-lg
+                hover:-translate-y-2 transition duration-300">
 
                     <i class="pi pi-phone text-cyan-500 text-5xl mb-6"></i>
 
@@ -771,7 +560,8 @@
                 </div>
 
                 <!-- LOCATION -->
-                <div class="bg-white rounded-3xl p-10 shadow-lg">
+                <div class="bg-white rounded-3xl p-10 shadow-lg
+                hover:-translate-y-2 transition duration-300">
 
                     <i class="pi pi-map-marker text-violet-500 text-5xl mb-6"></i>
 
@@ -793,8 +583,8 @@
 
     <!-- ================= FOOTER ================= -->
 
-    <footer class="bg-slate-900 text-slate-400 py-6 text-center">
-
+<footer class="bg-slate-950 text-slate-400 py-8 text-center border-t border-slate-800">
+    
         © 2026 FranchiSync | Franchise Management System
 
     </footer>
