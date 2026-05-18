@@ -72,7 +72,7 @@ public class CompanyBean implements Serializable{
                     new FacesMessage(
                             FacesMessage.SEVERITY_ERROR,
                             "Error",
-                                                e.getMessage()
+                            e.getMessage()
 
                     )
             );
