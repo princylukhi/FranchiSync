@@ -57,31 +57,31 @@ public class LoginBean implements Serializable {
             // 🔥 Dynamic Sidebar
             if (role.equals("SYSTEM_ADMIN")) {
 
-                sidebarPage = "/templates/admin_sidebar.xhtml";
+                sidebarPage = "/templates/sidebars/admin_sidebar.xhtml";
 
                 return "/admin/dashboard.xhtml?faces-redirect=true";
 
             } else if (role.equals("SUPER_ADMIN")) {
 
-                sidebarPage = "/templates/company_sidebar.xhtml";
+                sidebarPage = "/templates/sidebars/company_sidebar.xhtml";
 
                 return "/company/dashboard.xhtml?faces-redirect=true";
 
             } else if (role.equals("FRANCHISE_OWNER")) {
 
-                sidebarPage = "/templates/franchise_sidebar.xhtml";
+                sidebarPage = "/templates/sidebars/franchise_sidebar.xhtml";
 
                 return "/franchise/dashboard.xhtml?faces-redirect=true";
 
             } else if (role.equals("BRANCH_MANAGER")) {
 
-                sidebarPage = "/templates/branch_sidebar.xhtml";
+                sidebarPage = "/templates/sidebars/branch_sidebar.xhtml";
 
                 return "/branch/dashboard.xhtml?faces-redirect=true";
 
             } else if (role.equals("STAFF")) {
 
-                sidebarPage = "/templates/staff_sidebar.xhtml";
+                sidebarPage = "/templates/sidebars/staff_sidebar.xhtml";
 
                 return "/staff/dashboard.xhtml?faces-redirect=true";
             }
@@ -116,6 +116,28 @@ public class LoginBean implements Serializable {
         sidebarPage = null;
 
         return "/login.xhtml?faces-redirect=true";
+    }
+    
+    // 🔔 DYNAMIC NOTIFICATION PAGE
+    public String getNotificationPage() {
+
+        String role = loggedUser.getRid().getRoleName();
+
+        if(role.equals("SYSTEM_ADMIN")) {
+            return "/admin/notifications.xhtml";
+        }
+        else if(role.equals("SUPER_ADMIN")) {
+            return "/company/notifications.xhtml";
+        }
+        else if(role.equals("FRANCHISE_OWNER")) {
+            return "/franchise/notifications.xhtml";
+        }
+        else if(role.equals("BRANCH_MANAGER")) {
+            return "/branch/notifications.xhtml";
+        }
+        else {
+            return "/staff/notifications.xhtml";
+        }
     }
 
     // ===== GETTERS & SETTERS =====

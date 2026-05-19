@@ -104,17 +104,19 @@
         <div class="flex items-center gap-5">
 
             <!-- NOTIFICATION -->
-            <button class="relative w-11 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 transition flex items-center justify-center">
+            <h:link outcome="#{loginBean.notificationPage}"
+            styleClass="relative w-11 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 transition flex items-center justify-center">
 
                 <i class="pi pi-bell text-white text-lg"></i>
 
                 <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-400"></span>
 
-            </button>
+            </h:link>
 
             <!-- PROFILE -->
-            <div class="flex items-center gap-3 bg-slate-800 px-4 py-2 rounded-xl">
-
+            <h:link outcome="/profile.xhtml"
+            styleClass="flex items-center gap-3 bg-slate-800 px-4 py-2 rounded-xl hover:bg-slate-700 transition-all duration-200">
+            
                 <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center">
 
                     <i class="pi pi-user text-white"></i>
@@ -137,7 +139,7 @@
 
                 </div>
 
-            </div>
+            </h:link>
 
             <!-- LOGOUT -->
             <h:form>

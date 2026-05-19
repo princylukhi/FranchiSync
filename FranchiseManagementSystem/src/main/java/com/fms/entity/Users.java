@@ -66,6 +66,8 @@ public class Users implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
+    @Column(name = "profile_photo")
+    private String profilePhoto;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -86,7 +88,7 @@ public class Users implements Serializable {
     @ManyToOne
     private Branches bid;
     @JoinColumn(name = "cid", referencedColumnName = "cid")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Companies cid;
     @JoinColumn(name = "rid", referencedColumnName = "rid")
     @ManyToOne(optional = false)
@@ -138,6 +140,14 @@ public class Users implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
     public String getStatus() {
