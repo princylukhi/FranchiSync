@@ -110,11 +110,44 @@ public class CompanyService implements CompanyServiceLocal {
                 em.find(CompanyRegistrationRequests.class, requestId);
 
         req.setStatus("REJECTED");
+        
+
+        req.setApprovedDate(new Date());
 
         em.merge(req);
 
       
         notificationService.sendCompanyRejection(req.getEmail());
 
+    }
+    
+    @Override
+    public List<Companies> getAllCompanies() {
+
+        return em.createNamedQuery(
+                "Companies.findAll",
+                Companies.class
+        ).getResultList();
+    }
+    
+    @Override
+    public List<CompanyRegistrationRequests> getAllRequests() {
+
+        return em.createNamedQuery(
+                "CompanyRegistrationRequests.findAll",
+                CompanyRegistrationRequests.class
+        ).getResultList();
+    }
+    
+    @Override
+    public List<CompanyRegistrationRequests>
+    getCompaniesByStatus(String status) {
+
+        return em.createQuery(
+                "SELECT c FROM CompanyRegistrationRequests c WHERE c.status = :status",
+                CompanyRegistrationRequests.class
+        )
+        .setParameter("status", status)
+        .getResultList();
     }
 }

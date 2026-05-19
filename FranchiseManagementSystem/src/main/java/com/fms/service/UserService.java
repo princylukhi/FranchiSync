@@ -183,4 +183,24 @@ public Users login(String email, String password) {
 
     return null;
 }
+
+@Override
+public List<Users> getAllUsers() {
+
+    return em.createNamedQuery(
+            "Users.findAll",
+            Users.class
+    ).getResultList();
+}
+
+@Override
+public List<Users> getUsersByStatus(String status) {
+
+    return em.createQuery(
+            "SELECT u FROM Users u WHERE u.status = :status",
+            Users.class
+    )
+    .setParameter("status", status)
+    .getResultList();
+}
 }

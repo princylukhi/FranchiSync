@@ -64,74 +64,82 @@
         <div class="flex-1 p-4 space-y-2">
 
             <!-- Dashboard -->
-            <h:link outcome="/admin/dashboard.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg">
+            
+        <h:link outcome="/admin/dashboard.xhtml"
+                styleClass="#{request.requestURI.contains('dashboard.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
-                <i class="pi pi-home"></i>
+            <i class="pi pi-home"></i>
+            <span>Dashboard</span>
 
-                <span>Dashboard</span>
+        </h:link>
 
-            </h:link>
+        <!-- Companies -->
+        <h:link outcome="/admin/companies.xhtml"
+                styleClass="#{request.requestURI.contains('companies.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
-            <!-- Companies -->
-            <h:link outcome="/admin/companies.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+            <i class="pi pi-building"></i>
+            <span>Companies</span>
 
-                <i class="pi pi-building"></i>
+        </h:link>
 
-                <span>Companies</span>
+        <!-- Requests -->
+        <h:link outcome="/admin/requests.xhtml"
+                styleClass="#{request.requestURI.contains('requests.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
-            </h:link>
+            <i class="pi pi-send"></i>
+            <span>Requests</span>
 
-            <!-- Requests -->
-            <h:link outcome="/admin/requests.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+        </h:link>
 
-                <i class="pi pi-send"></i>
+        <!-- Users -->
+        <h:link outcome="/admin/users.xhtml"
+                styleClass="#{request.requestURI.contains('users.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
-                <span>Requests</span>
+            <i class="pi pi-users"></i>
+            <span>Users</span>
 
-            </h:link>
+        </h:link>
 
-            <!-- Users -->
-            <h:link outcome="/admin/users.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+        <!-- Reports -->
+        <h:link outcome="/admin/reports.xhtml"
+                styleClass="#{request.requestURI.contains('reports.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
-                <i class="pi pi-users"></i>
+            <i class="pi pi-chart-bar"></i>
+            <span>Reports</span>
 
-                <span>Users</span>
+        </h:link>
 
-            </h:link>
+        <!-- Notifications -->
+        <h:link outcome="/admin/notifications.xhtml"
+                styleClass="#{request.requestURI.contains('notifications.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
-            <!-- Reports -->
-            <h:link outcome="/admin/reports.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+            <i class="pi pi-bell"></i>
+            <span>Notifications</span>
 
-                <i class="pi pi-chart-bar"></i>
+        </h:link>
 
-                <span>Reports</span>
+        <!-- Feedback -->
+        <h:link outcome="/admin/feedback.xhtml"
+                styleClass="#{request.requestURI.contains('feedback.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
-            </h:link>
+            <i class="pi pi-comments"></i>
+            <span>Feedback</span>
 
-            <!-- Notifications -->
-            <h:link outcome="/admin/notifications.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
-
-                <i class="pi pi-bell"></i>
-
-                <span>Notifications</span>
-
-            </h:link>
-
-            <!-- Feedback -->
-            <h:link outcome="/admin/feedback.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
-
-                <i class="pi pi-comments"></i>
-
-                <span>Feedback</span>
-
-            </h:link>
+        </h:link>
 
         </div>
 

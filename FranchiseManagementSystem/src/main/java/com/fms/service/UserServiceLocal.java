@@ -32,4 +32,8 @@ public interface UserServiceLocal {
     
     public Users login(String email, String password);
     
+    public List<Users> getAllUsers();
+
+  public List<Users> getUsersByStatus(String status);
+    
 }
