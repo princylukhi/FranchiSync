@@ -1,11 +1,393 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+
+            <h1 class="text-4xl font-black text-slate-900">
+                Branch Dashboard
+            </h1>
+
+            <p class="text-slate-500 mt-2 text-lg">
+                Manage inventory, staff and branch operations.
+            </p>
+
+        </div>
+
+        <!-- STATS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+
+            <!-- CARD 1 -->
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Total Products
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            248
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl
+                                bg-emerald-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-box text-emerald-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Staff Members
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            16
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl
+                                bg-cyan-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-users text-cyan-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Daily Sales
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            ₹82K
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl
+                                bg-amber-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-shopping-cart text-amber-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Low Stock Items
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            14
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl
+                                bg-red-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-exclamation-triangle text-red-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- GRID -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+
+            <!-- LEFT SIDE -->
+            <div class="xl:col-span-2">
+
+                <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+
+                    <!-- HEADER -->
+                    <div class="flex items-center justify-between mb-6">
+
+                        <div>
+
+                            <h2 class="text-2xl font-black text-slate-900">
+                                Inventory Status
+                            </h2>
+
+                            <p class="text-slate-500 mt-1">
+                                Current stock and branch inventory overview.
+                            </p>
+
+                        </div>
+
+                        <h:link outcome="/branch/inventory.xhtml"
+                                styleClass="px-5 py-3 rounded-2xl
+                                bg-emerald-500 text-white
+                                font-semibold hover:bg-emerald-600 transition">
+
+                            View All
+
+                        </h:link>
+
+                    </div>
+
+                    <!-- TABLE -->
+                    <div class="overflow-x-auto">
+
+                        <table class="w-full">
+
+                            <thead>
+
+                                <tr class="border-b border-slate-100">
+
+                                    <th class="text-left py-4 text-slate-500 font-semibold">
+                                        Product
+                                    </th>
+
+                                    <th class="text-left py-4 text-slate-500 font-semibold">
+                                        Category
+                                    </th>
+
+                                    <th class="text-left py-4 text-slate-500 font-semibold">
+                                        Stock
+                                    </th>
+
+                                    <th class="text-left py-4 text-slate-500 font-semibold">
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <!-- ROW 1 -->
+                                <tr class="border-b border-slate-50">
+
+                                    <td class="py-4 font-semibold text-slate-800">
+                                        Burger Bun
+                                    </td>
+
+                                    <td class="py-4 text-slate-600">
+                                        Food Item
+                                    </td>
+
+                                    <td class="py-4 text-slate-700">
+                                        120
+                                    </td>
+
+                                    <td class="py-4">
+
+                                        <span class="px-4 py-2 rounded-full
+                                                     bg-emerald-100 text-emerald-700
+                                                     text-sm font-semibold">
+
+                                            In Stock
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                <!-- ROW 2 -->
+                                <tr class="border-b border-slate-50">
+
+                                    <td class="py-4 font-semibold text-slate-800">
+                                        Soft Drinks
+                                    </td>
+
+                                    <td class="py-4 text-slate-600">
+                                        Beverage
+                                    </td>
+
+                                    <td class="py-4 text-slate-700">
+                                        48
+                                    </td>
+
+                                    <td class="py-4">
+
+                                        <span class="px-4 py-2 rounded-full
+                                                     bg-amber-100 text-amber-700
+                                                     text-sm font-semibold">
+
+                                            Medium
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                <!-- ROW 3 -->
+                                <tr>
+
+                                    <td class="py-4 font-semibold text-slate-800">
+                                        French Fries
+                                    </td>
+
+                                    <td class="py-4 text-slate-600">
+                                        Frozen Food
+                                    </td>
+
+                                    <td class="py-4 text-slate-700">
+                                        8
+                                    </td>
+
+                                    <td class="py-4">
+
+                                        <span class="px-4 py-2 rounded-full
+                                                     bg-red-100 text-red-700
+                                                     text-sm font-semibold">
+
+                                            Low Stock
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="space-y-8">
+
+                <!-- QUICK ACTIONS -->
+                <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+
+                    <h2 class="text-2xl font-black text-slate-900 mb-6">
+                        Quick Actions
+                    </h2>
+
+                    <div class="space-y-4">
+
+                        
+
+                        <!-- ACTION 2 -->
+                        <h:link outcome="/branch/staff.xhtml"
+                                styleClass="flex items-center gap-4 p-4
+                                rounded-2xl bg-slate-50 hover:bg-cyan-50
+                                transition">
+
+                            <div class="w-12 h-12 rounded-2xl
+                                        bg-cyan-100
+                                        flex items-center justify-center">
+
+                                <i class="pi pi-users text-cyan-600"></i>
+
+                            </div>
+
+                            <span class="font-semibold text-slate-700">
+                                Manage Staff
+                            </span>
+
+                        </h:link>
+
+                        <!-- ACTION 3 -->
+                        <h:link outcome="/branch/low_stock.xhtml"
+                                styleClass="flex items-center gap-4 p-4
+                                rounded-2xl bg-slate-50 hover:bg-red-50
+                                transition">
+
+                            <div class="w-12 h-12 rounded-2xl
+                                        bg-red-100
+                                        flex items-center justify-center">
+
+                                <i class="pi pi-exclamation-triangle text-red-600"></i>
+
+                            </div>
+
+                            <span class="font-semibold text-slate-700">
+                                Check Low Stock
+                            </span>
+
+                        </h:link>
+
+                        <!-- ACTION 4 -->
+                        <h:link outcome="/branch/reports.xhtml"
+                                styleClass="flex items-center gap-4 p-4
+                                rounded-2xl bg-slate-50 hover:bg-violet-50
+                                transition">
+
+                            <div class="w-12 h-12 rounded-2xl
+                                        bg-violet-100
+                                        flex items-center justify-center">
+
+                                <i class="pi pi-chart-line text-violet-600"></i>
+
+                            </div>
+
+                            <span class="font-semibold text-slate-700">
+                                View Reports
+                            </span>
+
+                        </h:link>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>
