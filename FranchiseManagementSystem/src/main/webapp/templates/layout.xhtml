@@ -72,24 +72,23 @@
 <h:body class="bg-stone-100">
 
     <!-- MAIN APP -->
-    <div class="min-h-screen flex flex-col">
+    <div class="h-screen flex flex-col overflow-hidden">
 
         <!-- NAVBAR -->
         <ui:include src="/templates/navbar.xhtml"/>
 
         <!-- BODY -->
-        <div class="flex flex-1">
-
+        <div class="flex flex-1 overflow-hidden">
+            
             <!-- SIDEBAR -->
-            <aside class="w-72 bg-zinc-950 text-white shadow-2xl">
-
+            <aside class="w-72 bg-zinc-950 text-white shadow-2xl h-screen sticky top-0 overflow-y-auto">
+                
                 <ui:include src="#{loginBean.sidebarPage}" />
 
             </aside>
 
             <!-- PAGE CONTENT -->
             <main class="flex-1 p-8 overflow-y-auto">
-
                 <ui:insert name="content"/>
 
             </main>
