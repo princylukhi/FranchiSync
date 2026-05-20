@@ -21,7 +21,8 @@ public interface CompanyServiceLocal {
     public List<CompanyRegistrationRequests> getAllRequests();
     
     public List<CompanyRegistrationRequests>
-getCompaniesByStatus(String status);
+    getCompaniesByStatus(String status);
 
-   
+    public String getBusinessTypeByEmail(String email);
+
 }

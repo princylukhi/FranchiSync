@@ -160,4 +160,22 @@ public class CompanyService implements CompanyServiceLocal {
         .setParameter("status", status)
         .getResultList();
     }
+    
+    @Override
+    public String getBusinessTypeByEmail(String email) {
+
+        try {
+
+            return em.createQuery(
+                "SELECT c.businessType FROM CompanyRegistrationRequests c WHERE c.email = :email",
+                String.class
+            )
+            .setParameter("email", email)
+            .getSingleResult();
+
+        } catch (Exception e) {
+
+            return "General";
+        }
+    }
 }

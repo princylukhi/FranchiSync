@@ -64,7 +64,10 @@
 
             <!-- Dashboard -->
             <h:link outcome="/company/dashboard.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg">
+
+                    styleClass="#{request.requestURI.contains('dashboard.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-home"></i>
 
@@ -74,7 +77,10 @@
 
             <!-- Franchise Requests -->
             <h:link outcome="/company/franchise_requests.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                    styleClass="#{request.requestURI.contains('franchise_requests.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-sitemap"></i>
 
@@ -84,7 +90,10 @@
 
             <!-- Products -->
             <h:link outcome="/company/products.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                    styleClass="#{request.requestURI.contains('products.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-box"></i>
 
@@ -94,7 +103,10 @@
 
             <!-- Commission Rules -->
             <h:link outcome="/company/pricing.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                    styleClass="#{request.requestURI.contains('pricing.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-dollar"></i>
 
@@ -104,17 +116,23 @@
 
             <!-- Reports -->
             <h:link outcome="/company/reports.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                    styleClass="#{request.requestURI.contains('reports.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-chart-line"></i>
 
                 <span>Reports</span>
 
             </h:link>
-            
+
             <!-- Notifications -->
             <h:link outcome="/company/notifications.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                    styleClass="#{request.requestURI.contains('notifications.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-bell"></i>
 
@@ -124,7 +142,10 @@
 
             <!-- Feedback -->
             <h:link outcome="/company/feedback.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+
+                    styleClass="#{request.requestURI.contains('feedback.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-comments"></i>
 
@@ -133,7 +154,6 @@
             </h:link>
 
         </div>
-
     </div>
 
 </h:body>
