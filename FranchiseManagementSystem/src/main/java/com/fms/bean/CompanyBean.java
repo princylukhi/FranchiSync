@@ -54,7 +54,8 @@ public class CompanyBean implements Serializable{
                     new FacesMessage(
                             FacesMessage.SEVERITY_INFO,
                             "Request Submitted",
-                            "Your company registration request was submitted successfully."
+                            "Your registration request is under review."
+
                     )
             );
 

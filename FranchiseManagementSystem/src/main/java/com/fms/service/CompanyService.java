@@ -35,6 +35,13 @@ public class CompanyService implements CompanyServiceLocal {
         request.setRequestDate(new Date());
 
         em.persist(request);
+        
+            em.flush();
+
+        // SEND EMAIL AFTER SUBMISSION
+        notificationService.sendRequestReceivedEmail(
+                request.getEmail()
+        );
     }
 
     @Override
@@ -93,14 +100,17 @@ public class CompanyService implements CompanyServiceLocal {
         // Create Super Admin
         Users admin = new Users();
 
-        admin.setName("Super Admin");
+        admin.setName(req.getContactPerson());
         admin.setEmail(req.getEmail());
         admin.setPassword("admin123");
 
-        userService.createUser(admin, 2, company.getCid(), null);
 
-        // Send Notification
-        notificationService.sendCompanyApproval(req.getEmail());
+        // SEND APPROVAL MAIL
+        notificationService.sendCompanyApproval(
+                req.getEmail()
+        );
+        
+        userService.createUser(admin, 2, company.getCid(), null);
     }
 
     @Override

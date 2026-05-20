@@ -19,6 +19,7 @@ public interface NotificationServiceLocal {
     public void sendNotification(String email, String subject, String message, String type);
 
     // Specific use cases (your module)
+    public void sendRequestReceivedEmail(String email);
     public void sendCompanyApproval(String email);
     public void sendCompanyRejection(String email);
     public void sendFranchiseApproval(String email);
