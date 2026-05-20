@@ -33,6 +33,8 @@ public class ProductService implements ProductServiceLocal {
         if (existing != null) {
             existing.setProductName(product.getProductName());
             existing.setPrice(product.getPrice());
+            existing.setCategory(product.getCategory());
+            existing.setImage(product.getImage());
 
             em.merge(existing);
         }

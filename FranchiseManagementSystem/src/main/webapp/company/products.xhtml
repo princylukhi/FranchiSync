@@ -1,11 +1,432 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <h:form id="productForm"
+                enctype="multipart/form-data">
+
+            <!-- ================= HEADER ================= -->
+
+            <!-- ================= HEADER ================= -->
+
+            <div class="bg-gradient-to-r
+                        from-slate-900
+                        via-zinc-900
+                        to-slate-800
+                        rounded-[28px]
+                        p-7
+                        shadow-2xl
+                        mb-8
+                        text-white">
+
+                <div class="flex
+                            items-center
+                            justify-between
+                            flex-wrap
+                            gap-5">
+
+                    <!-- LEFT -->
+                    <div class="flex items-center gap-5">
+
+                        <!-- ICON -->
+                        <div class="w-20
+                                    h-20
+                                    rounded-full
+                                    bg-white/20
+                                    backdrop-blur-md
+                                    flex
+                                    items-center
+                                    justify-center">
+
+                            <i class="pi pi-box text-3xl"></i>
+
+                        </div>
+
+                        <!-- TEXT -->
+                        <div>
+
+                            <h1 class="text-5xl
+                                       font-black
+                                       tracking-tight">
+
+                                Products
+
+                            </h1>
+
+                            <p class="text-lg
+                                      text-slate-300
+                                      mt-2">
+
+                                Manage your company product catalog
+
+                            </p>
+
+                            <!-- COUNT -->
+                            <div class="mt-4
+                                        inline-flex
+                                        items-center
+                                        gap-2
+                                        bg-white/15
+                                        backdrop-blur-md
+                                        px-4
+                                        py-2
+                                        rounded-2xl">
+
+                                <i class="pi pi-box"></i>
+
+                                <span class="font-bold text-base">
+
+                                    #{companyProductBean.products.size()} Products
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <p:commandButton
+                        value="Add Product"
+                        icon="pi pi-plus"
+                        type="button"
+                        onclick="PF('productDialog').show()"
+                        styleClass="!bg-white
+                                    !text-slate-900
+                                    hover:!bg-slate-100
+                                    !border-0
+                                    !rounded-2xl
+                                    !px-6
+                                    !py-3
+                                    !text-base
+                                    !font-bold"/>
+
+                </div>
+
+            </div>
+
+            <!-- ================= EMPTY STATE ================= -->
+
+            <ui:fragment rendered="#{empty companyProductBean.products}">
+
+                <div class="bg-white
+                            rounded-3xl
+                            shadow-lg
+                            p-12
+                            text-center">
+
+                    <i class="pi pi-box
+                              text-7xl
+                              text-slate-300"></i>
+
+                    <h2 class="text-3xl
+                               font-bold
+                               text-slate-700
+                               mt-5">
+
+                        No Products Yet
+
+                    </h2>
+
+                    <p class="text-slate-500 mt-3">
+                        Start adding your company products.
+                    </p>
+
+                </div>
+
+            </ui:fragment>
+
+            <!-- ================= PRODUCT GRID ================= -->
+
+            <div class="grid
+                        grid-cols-1
+                        md:grid-cols-2
+                        xl:grid-cols-3
+                        gap-5">
+
+                <ui:repeat
+                    value="#{companyProductBean.products}"
+                    var="p">
+
+                    <!-- CARD -->
+                    <div class="bg-white
+                                rounded-[24px]
+                                overflow-hidden
+                                shadow-lg
+                                hover:shadow-2xl
+                                transition-all
+                                duration-500
+                                hover:-translate-y-1">
+
+                        <!-- IMAGE -->
+                        <div class="relative
+                                    overflow-hidden
+                                    h-48">
+
+                           <img src="#{request.contextPath}/../product-images/#{p.image}"
+                                class="w-full
+                                       h-full
+                                       object-cover
+                                       hover:scale-105
+                                       transition-all
+                                       duration-700"/>
+
+                            <!-- CATEGORY -->
+                            <div class="absolute top-3 right-3">
+
+                                <span class="bg-white/90
+                                            text-emerald-600
+                                             font-bold
+                                             px-3
+                                             py-1
+                                             rounded-full
+                                             text-xs
+                                             shadow">
+
+                                    #{p.category}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- CONTENT -->
+                        <div class="p-4">
+
+                            <!-- NAME -->
+                            <h2 class="text-2xl
+                                       font-black
+                                       text-slate-900">
+
+                                #{p.productName}
+
+                            </h2>
+
+                            <!-- CATEGORY -->
+                            <p class="text-sm
+                                      text-slate-500
+                                      mt-1">
+
+                                #{p.category}
+
+                            </p>
+
+                            <!-- PRICE -->
+                            <div class="mt-4">
+
+                                <p class="text-slate-400 text-sm">
+
+                                    Price
+
+                                </p>
+
+                                <h3 class="text-3xl
+                                           font-black
+                                           text-emerald-600
+                                           mt-1">
+
+                                    ₹ #{p.price}
+
+                                </h3>
+
+                            </div>
+
+                            <!-- BUTTON -->
+                            <div class="mt-5">
+
+                                <p:commandButton
+                                    value="Edit Product"
+                                    icon="pi pi-pencil"
+                                    process="@this"
+                                    update=":productForm:dialogPanel"
+                                    action="#{companyProductBean.edit(p)}"
+                                    oncomplete="PF('productDialog').show()"
+                                    styleClass="w-full
+                                                !bg-orange-50
+                                                hover:!bg-orange-100
+                                                !text-emerald-600
+                                                !border-0
+                                                !rounded-2xl
+                                                !py-3
+                                                !font-bold
+                                                !text-sm"/>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </ui:repeat>
+
+            </div>
+
+            <!-- ================= DIALOG ================= -->
+
+            <p:dialog
+                header="Product Details"
+                widgetVar="productDialog"
+                modal="true"
+                responsive="true"
+                width="550"
+                closable="true"
+                draggable="false"
+                resizable="false"
+                styleClass="rounded-3xl overflow-hidden">
+
+                <h:panelGroup id="dialogPanel">
+
+                    <div class="grid
+                                grid-cols-1
+                                gap-5
+                                p-3">
+
+                        <!-- NAME -->
+                        <div>
+
+                            <label class="block
+                                         text-slate-700
+                                         font-semibold
+                                         mb-2">
+
+                                Product Name
+
+                            </label>
+
+                            <p:inputText
+                                value="#{companyProductBean.product.productName}"
+                                required="true"
+                                styleClass="w-full"/>
+
+                        </div>
+
+                        <!-- CATEGORY -->
+                        <div>
+
+                            <label class="block
+                                         text-slate-700
+                                         font-semibold
+                                         mb-2">
+
+                                Category
+
+                            </label>
+
+                            <p:selectOneMenu
+                                value="#{companyProductBean.product.category}"
+                                styleClass="w-full">
+
+                                <f:selectItem
+                                    itemLabel="Select Category"
+                                    itemValue=""/>
+
+                                <f:selectItems
+                                    value="#{companyProductBean.categories}"/>
+
+                            </p:selectOneMenu>
+
+                        </div>
+
+                        <!-- PRICE -->
+                        <div>
+
+                            <label class="block
+                                         text-slate-700
+                                         font-semibold
+                                         mb-2">
+
+                                Price
+
+                            </label>
+
+                            <p:inputText
+                                value="#{companyProductBean.product.price}"
+                                required="true"
+                                styleClass="w-full"/>
+
+                        </div>
+
+                        <!-- IMAGE -->
+                        <div>
+
+                            <label class="block
+                                         text-slate-700
+                                         font-semibold
+                                         mb-2">
+
+                                Product Image
+
+                            </label>
+
+                            <p:fileUpload
+                                value="#{companyProductBean.uploadedFile}"
+                                mode="simple"
+                                skinSimple="true"
+                                accept="image/*"/>
+
+                        </div>
+
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <div class="flex
+                                justify-start
+                                gap-3
+                                pt-6">
+
+                        <!-- SAVE -->
+                        <p:commandButton
+                            value="Save Product"
+                            rendered="#{companyProductBean.product.pid == null}"
+                            action="#{companyProductBean.addProduct}"
+                            update="@form"
+                            process="@form"
+                            icon="pi pi-check"
+                            oncomplete="PF('productDialog').hide()"
+                            styleClass="!bg-emerald-500
+                                        hover:!bg-emerald-600
+                                        !border-0
+                                        !rounded-2xl
+                                        !px-5
+                                        !py-3
+                                        !font-bold"/>
+
+                        <!-- UPDATE -->
+                        <p:commandButton
+                            value="Update Product"
+                            rendered="#{companyProductBean.product.pid != null}"
+                            action="#{companyProductBean.updateProduct}"
+                            update="@form"
+                            process="@form"
+                            icon="pi pi-pencil"
+                            oncomplete="PF('productDialog').hide()"
+                            styleClass="!bg-blue-500
+                                        hover:!bg-blue-600
+                                        !border-0
+                                        !rounded-2xl
+                                        !px-5
+                                        !py-3
+                                        !font-bold"/>
+
+                    </div>
+
+                </h:panelGroup>
+
+            </p:dialog>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
