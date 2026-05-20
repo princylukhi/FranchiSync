@@ -203,4 +203,9 @@ public List<Users> getUsersByStatus(String status) {
     .setParameter("status", status)
     .getResultList();
 }
+
+    @Override
+    public void updateUser(Users user) {
+            em.merge(user);
+    }
 }

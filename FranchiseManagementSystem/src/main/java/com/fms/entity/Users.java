@@ -41,7 +41,10 @@ import java.util.Date;
     @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
     @NamedQuery(name = "Users.findByStatus", query = "SELECT u FROM Users u WHERE u.status = :status"),
-    @NamedQuery(name = "Users.findByCreatedDate", query = "SELECT u FROM Users u WHERE u.createdDate = :createdDate")})
+    @NamedQuery(name = "Users.findByCreatedDate", query = "SELECT u FROM Users u WHERE u.createdDate = :createdDate"),
+    @NamedQuery(name = "Users.findByPhone", query = "SELECT u FROM Users u WHERE u.phone = :phone"),
+    @NamedQuery(name = "Users.findByGender", query = "SELECT u FROM Users u WHERE u.gender = :gender"),
+    @NamedQuery(name = "Users.findByDob", query = "SELECT u FROM Users u WHERE u.dob = :dob")})
 public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,6 +71,15 @@ public class Users implements Serializable {
     private String password;
     @Column(name = "profile_photo")
     private String profilePhoto;
+    @Size(max = 20)
+    @Column(name = "phone")
+    private String phone;
+    @Size(max = 10)
+    @Column(name = "gender")
+    private String gender;
+    @Column(name = "dob")
+    @Temporal(TemporalType.DATE)
+    private Date dob;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -148,6 +160,30 @@ public class Users implements Serializable {
 
     public void setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
+    }
+    
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
     public String getStatus() {
