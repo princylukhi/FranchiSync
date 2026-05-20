@@ -192,9 +192,15 @@ public class CompanyProductBean implements Serializable {
                 + "_"
                 + uploadedFile.getFileName();
             
-            String uploadPath =
-            "C:/Users/Public/Payara_Server/glassfish/domains/domain1/docroot/product-images/";
+//            String uploadPath =
+//            "C:/Users/Public/Payara_Server/glassfish/domains/domain1/docroot/product-images/";
 
+            String uploadPath =
+        System.getProperty("com.sun.aas.instanceRoot")
+        + File.separator
+        + "product-images"
+        + File.separator;
+            
             File folder = new File(uploadPath);
 
             if (!folder.exists()) {
