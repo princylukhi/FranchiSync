@@ -28,4 +28,5 @@ public interface NotificationServiceLocal {
     // Logs
     public List<Notifications> getAllNotifications();
     
+    public List<Notifications> getNotificationsByEmail(String email);
 }

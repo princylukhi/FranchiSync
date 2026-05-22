@@ -55,6 +55,20 @@ public class FeedbackService implements FeedbackServiceLocal {
         feedback.setFeedbackDate(new Date());
 
         em.persist(feedback);
+        
+        notificationService.sendNotification(
+
+        "franchisync@gmail.com",
+
+        "New Feedback Received",
+
+        feedback.getUid().getName()
+        + " submitted feedback: "
+        + feedback.getMessage(),
+
+        "ADMIN_FEEDBACK"
+
+        );
 
         // ✔ Notify company (email + DB log)
         notificationService.sendNotification(

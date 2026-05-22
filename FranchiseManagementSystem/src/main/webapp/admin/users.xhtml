@@ -94,19 +94,25 @@
                     styleClass="rounded-2xl overflow-hidden">
 
                     <!-- PROFILE -->
-                    <p:column headerText="Profile">
+                  <p:column headerText="Profile">
 
-                        <div class="flex items-center justify-center">
+                    <div class="flex items-center justify-center">
 
-                            <h:graphicImage
-                                value="#{empty u.profilePhoto 
-                                         ? '/resources/images/default-user.png'
-                                         : u.profilePhoto}"
-                                styleClass="w-12 h-12 rounded-full object-cover border"/>
+                        <!-- USER PHOTO -->
+                        <h:graphicImage
+                            value="/uploads/#{u.profilePhoto}"
+                            rendered="#{not empty u.profilePhoto}"
+                            styleClass="w-12 h-12 rounded-full object-cover border"/>
 
-                        </div>
+                        <!-- DEFAULT IMAGE -->
+                        <h:graphicImage
+                            value="/resources/images/default-user.png"
+                            rendered="#{empty u.profilePhoto}"
+                            styleClass="w-12 h-12 rounded-full object-cover border"/>
 
-                    </p:column>
+                    </div>
+
+                  </p:column>
 
                     <!-- NAME -->
                     <p:column headerText="Name">

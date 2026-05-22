@@ -36,7 +36,20 @@ public class CompanyService implements CompanyServiceLocal {
 
         em.persist(request);
         
-            em.flush();
+        notificationService.sendNotification(
+
+        "franchisync@gmail.com",
+
+        "New Company Request",
+
+        "A new company registration request has been submitted by "
+        + request.getCompanyName(),
+
+        "ADMIN_REQUEST"
+
+        );
+        
+        em.flush();
 
         // SEND EMAIL AFTER SUBMISSION
         notificationService.sendRequestReceivedEmail(
@@ -181,5 +194,23 @@ public class CompanyService implements CompanyServiceLocal {
 
             return "General";
         }
+    }
+    
+    @Override
+    public long getTotalCompanies() {
+
+        return em.createQuery(
+                "SELECT COUNT(c) FROM Companies c",
+                Long.class
+        ).getSingleResult();
+    }
+
+    @Override
+    public long getPendingRequestCount() {
+
+        return em.createQuery(
+                "SELECT COUNT(r) FROM CompanyRegistrationRequests r WHERE r.status='PENDING'",
+                Long.class
+        ).getSingleResult();
     }
 }

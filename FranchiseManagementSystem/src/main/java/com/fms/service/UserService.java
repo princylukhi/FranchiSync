@@ -49,6 +49,19 @@ public class UserService implements UserServiceLocal {
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
 
         em.persist(user);
+        
+        notificationService.sendNotification(
+
+        "franchisync@gmail.com",
+
+        "New User Created",
+
+        user.getName()
+        + " account has been created.",
+
+        "ADMIN_USER"
+
+        );
 
         // 📧 Send plain password to user
         notificationService.sendCredentials(user.getEmail(), plainPassword);
@@ -114,98 +127,80 @@ public class UserService implements UserServiceLocal {
 
         return list.isEmpty() ? null : list.get(0);
     }
-    
-//    @Override
-//    public Users login(String email, String password) {
-//
-//
-//    Query q = em.createNamedQuery("Users.findByEmail");
-//    q.setParameter("email", email);
-//
-//    List<Users> list = q.getResultList();
-//
-//    if (list.isEmpty()) {
-//        return null;
-//    }
-//
-//    Users user = list.get(0);
-//
-//    // Check password using BCrypt
-//    if (PasswordUtil.checkPassword(password, user.getPassword())) {
-//
-//        // Check status
-//        if (!user.getStatus().equals("ACTIVE")) {
-//            return null;
-//        }
-//
-//        return user;
-//    }
-//
-//    return null;
-//    }  
+
     
     @Override
-public Users login(String email, String password) {
+    public Users login(String email, String password) {
 
-    Query q = em.createNamedQuery("Users.findByEmail");
-    q.setParameter("email", email);
+        Query q = em.createNamedQuery("Users.findByEmail");
+        q.setParameter("email", email);
 
-    List<Users> list = q.getResultList();
+        List<Users> list = q.getResultList();
 
-    if (list.isEmpty()) {
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        Users user = list.get(0);
+
+        try {
+            // ✅ Try BCrypt check
+            if (PasswordUtil.checkPassword(password, user.getPassword())) {
+
+                if (!user.getStatus().equals("ACTIVE")) {
+                    return null;
+                }
+
+                return user;
+            }
+        } catch (Exception e) {
+
+            // 🔥 FALLBACK (for old plain passwords)
+            if (user.getPassword().equals(password)) {
+
+                // Optional: upgrade to hashed password
+                user.setPassword(PasswordUtil.hashPassword(password));
+                em.merge(user);
+
+                return user;
+            }
+        }
+
         return null;
     }
 
-    Users user = list.get(0);
+    @Override
+    public List<Users> getAllUsers() {
 
-    try {
-        // ✅ Try BCrypt check
-        if (PasswordUtil.checkPassword(password, user.getPassword())) {
-
-            if (!user.getStatus().equals("ACTIVE")) {
-                return null;
-            }
-
-            return user;
-        }
-    } catch (Exception e) {
-
-        // 🔥 FALLBACK (for old plain passwords)
-        if (user.getPassword().equals(password)) {
-
-            // Optional: upgrade to hashed password
-            user.setPassword(PasswordUtil.hashPassword(password));
-            em.merge(user);
-
-            return user;
-        }
+        return em.createNamedQuery(
+                "Users.findAll",
+                Users.class
+        ).getResultList();
     }
 
-    return null;
-}
+    @Override
+    public List<Users> getUsersByStatus(String status) {
 
-@Override
-public List<Users> getAllUsers() {
-
-    return em.createNamedQuery(
-            "Users.findAll",
-            Users.class
-    ).getResultList();
-}
-
-@Override
-public List<Users> getUsersByStatus(String status) {
-
-    return em.createQuery(
-            "SELECT u FROM Users u WHERE u.status = :status",
-            Users.class
-    )
-    .setParameter("status", status)
-    .getResultList();
-}
+        return em.createQuery(
+                "SELECT u FROM Users u WHERE u.status = :status",
+                Users.class
+        )
+        .setParameter("status", status)
+        .getResultList();
+    }
 
     @Override
     public void updateUser(Users user) {
             em.merge(user);
     }
+    
+    @Override
+    public long getTotalUsers() {
+
+        return em.createQuery(
+                "SELECT COUNT(u) FROM Users u",
+                Long.class
+        ).getSingleResult();
+    }
 }
+

@@ -17,5 +17,7 @@ public interface FranchiseServiceLocal {
     public void rejectFranchise(int requestId);
 
     public List<Franchises> getFranchisesByCompany(int cid);
+    
+    public long getActiveFranchiseCount();
 
 }

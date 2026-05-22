@@ -24,5 +24,9 @@ public interface CompanyServiceLocal {
     getCompaniesByStatus(String status);
 
     public String getBusinessTypeByEmail(String email);
+    
+    public long getTotalCompanies();
+
+    public long getPendingRequestCount();
 
 }

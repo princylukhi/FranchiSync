@@ -29,6 +29,19 @@ public class FranchiseService implements FranchiseServiceLocal {
         request.setRequestDate(new Date());
 
         em.persist(request);
+        
+       notificationService.sendNotification(
+
+        "franchisync@gmail.com",
+
+        "New Franchise Request",
+
+        request.getOwnerName()
+        + " submitted a new franchise request.",
+
+        "ADMIN_REQUEST"
+
+    );
     }
 
     @Override
@@ -94,5 +107,14 @@ public class FranchiseService implements FranchiseServiceLocal {
         q.setParameter("cid", cid);
 
         return q.getResultList();
+    }
+    
+    @Override
+    public long getActiveFranchiseCount() {
+
+        return em.createQuery(
+                "SELECT COUNT(f) FROM Franchises f WHERE f.status='ACTIVE'",
+                Long.class
+        ).getSingleResult();
     }
 }

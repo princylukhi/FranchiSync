@@ -141,42 +141,58 @@ public class NotificationService implements NotificationServiceLocal {
     }
 
     @Override
-public void sendRequestReceivedEmail(String email) {
+    public void sendRequestReceivedEmail(String email) {
 
-    try {
+        try {
 
-        String subject =
-                "Registration Request Received";
+            String subject =
+                    "Registration Request Received";
 
-        String message =
+            String message =
 
-                "Dear Company,\n\n"
+                    "Dear Company,\n\n"
 
-                + "Your franchise registration request "
-                + "has been received successfully.\n\n"
+                    + "Your franchise registration request "
+                    + "has been received successfully.\n\n"
 
-                + "Our admin team is currently reviewing "
-                + "your application.\n\n"
+                    + "Our admin team is currently reviewing "
+                    + "your application.\n\n"
 
-                + "You will receive another email once "
-                + "your request is approved or rejected.\n\n"
+                    + "You will receive another email once "
+                    + "your request is approved or rejected.\n\n"
 
-                + "Thank you,\n"
-                + "FranchiSync Team";
+                    + "Thank you,\n"
+                    + "FranchiSync Team";
 
-        // ONLY SEND EMAIL
-        emailService.sendEmail(
-                email,
-                subject,
-                message
+            // ONLY SEND EMAIL
+            emailService.sendEmail(
+                    email,
+                    subject,
+                    message
+            );
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+    }
+
+    @Override
+    public List<Notifications> getNotificationsByEmail(String email) {
+
+        Query q = em.createQuery(
+
+            "SELECT n FROM Notifications n "
+          + "WHERE n.recipientEmail = :email "
+          + "ORDER BY n.sentDate DESC"
+
         );
 
-    } catch (Exception e) {
+        q.setParameter("email", email);
 
-        e.printStackTrace();
-
+        return q.getResultList();
     }
-}
 }
 
        

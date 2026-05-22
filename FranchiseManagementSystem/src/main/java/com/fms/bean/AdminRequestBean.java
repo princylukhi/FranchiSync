@@ -19,11 +19,16 @@ public class AdminRequestBean implements Serializable {
     private CompanyServiceLocal companyService;
 
     private List<CompanyRegistrationRequests> requests;
+    private List<CompanyRegistrationRequests> latestRequests;
 
     @PostConstruct
     public void init() {
 
         requests = companyService.getPendingRequests();
+        latestRequests =
+        requests.stream()
+        .limit(3)
+        .toList();
     }
 
     // APPROVE
@@ -44,4 +49,14 @@ public void reject(int id) {
     public List<CompanyRegistrationRequests> getRequests() {
         return requests;
     }
+    
+    public List<CompanyRegistrationRequests> getLatestRequests() {
+    return latestRequests;
+}
+
+public void setLatestRequests(
+        List<CompanyRegistrationRequests> latestRequests) {
+
+    this.latestRequests = latestRequests;
+}
 }

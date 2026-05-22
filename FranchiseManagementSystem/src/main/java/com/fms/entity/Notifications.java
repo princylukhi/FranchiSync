@@ -68,7 +68,7 @@ public class Notifications implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "sent_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date sentDate;
 
     public Notifications() {

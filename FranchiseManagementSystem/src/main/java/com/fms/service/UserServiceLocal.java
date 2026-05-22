@@ -34,8 +34,10 @@ public interface UserServiceLocal {
     
     public List<Users> getAllUsers();
 
-  public List<Users> getUsersByStatus(String status);
+    public List<Users> getUsersByStatus(String status);
   
-  public void updateUser(Users user);
+    public void updateUser(Users user);
+    
+    public long getTotalUsers();
     
 }
