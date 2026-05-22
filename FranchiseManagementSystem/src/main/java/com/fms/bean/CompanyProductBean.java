@@ -44,6 +44,7 @@ public class CompanyProductBean implements Serializable {
     private UploadedFile uploadedFile;
 
     private List<String> categories = new ArrayList<>();
+    private String customCategory;
 
     private int companyId;
 
@@ -99,7 +100,8 @@ public class CompanyProductBean implements Serializable {
                     "Beverages",
                     "Desserts",
                     "Fast Food",
-                    "Snacks"
+                    "Snacks",
+                    "Other"
                 );
             }
 
@@ -111,7 +113,8 @@ public class CompanyProductBean implements Serializable {
                     "Clothing",
                     "Electronics",
                     "Shoes",
-                    "Accessories"
+                    "Accessories",
+                    "Other"
                 );
             }
 
@@ -123,7 +126,8 @@ public class CompanyProductBean implements Serializable {
                     "Books",
                     "Courses",
                     "Stationery",
-                    "Training"
+                    "Training",
+                    "Other"
                 );
             }
 
@@ -134,14 +138,45 @@ public class CompanyProductBean implements Serializable {
                 categories = Arrays.asList(
                     "Medicines",
                     "Supplements",
-                    "Equipment"
+                    "Equipment",
+                    "Other"
                 );
             }
 
+            // GYM & FITNESS
+            else if (businessType != null &&
+                     businessType.toLowerCase().contains("gym")) {
+
+                categories = Arrays.asList(
+                    "Protein",
+                    "Gym Equipment",
+                    "Workout Accessories",
+                    "Membership Plans",
+                    "Fitness Wear",
+                    "Other"
+                );
+            }
+
+            // SALON & BEAUTY
+            else if (businessType != null &&
+                     businessType.toLowerCase().contains("salon")) {
+
+                categories = Arrays.asList(
+                    "Hair Care",
+                    "Skin Care",
+                    "Beauty Products",
+                    "Spa Services",
+                    "Cosmetics",
+                    "Other"
+                );
+            }
+
+            // OTHER BUSINESS TYPE
             else {
 
                 categories = Arrays.asList(
-                    "General"
+                    "General",
+                    "Other"
                 );
             }
 
@@ -157,9 +192,9 @@ public class CompanyProductBean implements Serializable {
 
     public void loadProducts() {
 
-        products =
-            productService.getProductsByCompany(companyId);
-    }
+    products =
+        productService.getProductsByCompany(companyId);
+}
 
     // =========================
     // ADD PRODUCT
@@ -232,22 +267,31 @@ public class CompanyProductBean implements Serializable {
             product.setImage(fileName);
         }
 
-        // SAVE PRODUCT
-        productService.addProduct(product);
+        // CUSTOM CATEGORY
+        if ("Other".equals(product.getCategory())
+                && customCategory != null
+                && !customCategory.isEmpty()) {
 
-        // RELOAD
-        loadProducts();
+            product.setCategory(customCategory);
+        }
 
-        // RESET
-        product = new Products();
+                // SAVE PRODUCT
+                productService.addProduct(product);
 
-        uploadedFile = null;
+                // RELOAD
+                loadProducts();
 
-    } catch (Exception e) {
+                // RESET
+                product = new Products();
 
-        e.printStackTrace();
-    }
-}
+                uploadedFile = null;
+                customCategory = null;
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+        }
     // =========================
     // EDIT
     // =========================
@@ -263,20 +307,78 @@ public class CompanyProductBean implements Serializable {
 
     public void updateProduct() {
 
-        try {
+    try {
 
-            productService.updateProduct(product);
+        // =========================
+        // IMAGE UPDATE
+        // =========================
 
-            loadProducts();
+        if (uploadedFile != null
+                && uploadedFile.getFileName() != null
+                && !uploadedFile.getFileName().isEmpty()) {
 
-            product = new Products();
+            String fileName =
+                    System.currentTimeMillis()
+                    + "_"
+                    + uploadedFile.getFileName();
 
-        } catch (Exception e) {
+            String uploadPath =
+                    System.getProperty("com.sun.aas.instanceRoot")
+                    + File.separator
+                    + "product-images"
+                    + File.separator;
 
-            e.printStackTrace();
+            File folder = new File(uploadPath);
+
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            File file = new File(folder, fileName);
+
+            try (
+                    InputStream input = uploadedFile.getInputStream();
+                    FileOutputStream output =
+                            new FileOutputStream(file)
+            ) {
+
+                byte[] buffer = new byte[1024];
+
+                int length;
+
+                while ((length = input.read(buffer)) > 0) {
+
+                    output.write(buffer, 0, length);
+                }
+            }
+
+            // SAVE NEW IMAGE
+            product.setImage(fileName);
         }
-    }
 
+        // CUSTOM CATEGORY
+        if ("Other".equals(product.getCategory())
+                && customCategory != null
+                && !customCategory.isEmpty()) {
+
+            product.setCategory(customCategory);
+        }
+
+        productService.updateProduct(product);
+
+        loadProducts();
+
+        product = new Products();
+
+        uploadedFile = null;
+
+        customCategory = null;
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+    }
+}
     // =========================
     // ACTIVATE
     // =========================
@@ -298,6 +400,17 @@ public class CompanyProductBean implements Serializable {
 
         loadProducts();
     }
+    
+    public void openAddDialog() {
+
+    product = new Products();
+
+    product.setIsActive(true);
+
+    uploadedFile = null;
+
+    customCategory = null;
+}
 
     // =========================
     // GETTERS & SETTERS
@@ -333,5 +446,13 @@ public class CompanyProductBean implements Serializable {
 
     public void setCategories(List<String> categories) {
         this.categories = categories;
+    }
+    
+    public String getCustomCategory() {
+        return customCategory;
+    }
+
+    public void setCustomCategory(String customCategory) {
+        this.customCategory = customCategory;
     }
 }

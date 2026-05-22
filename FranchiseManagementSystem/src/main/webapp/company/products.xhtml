@@ -16,104 +16,95 @@
 
             <!-- ================= HEADER ================= -->
 
-            <!-- ================= HEADER ================= -->
 
-            <div class="bg-gradient-to-r
-                        from-slate-900
-                        via-zinc-900
-                        to-slate-800
-                        rounded-[28px]
-                        p-7
-                        shadow-2xl
-                        mb-8
-                        text-white">
+            <div class="bg-white
+            rounded-3xl
+            shadow-md
+            border border-slate-200
+            p-6
+            mb-8">
 
-                <div class="flex
+    <div class="flex
+                items-center
+                justify-between
+                flex-wrap
+                gap-6">
+
+        <!-- LEFT -->
+        <div class="flex items-center gap-5">
+
+            <!-- ICON -->
+            <div class="w-16
+                        h-16
+                        rounded-2xl
+                        bg-emerald-500
+                        flex
+                        items-center
+                        justify-center
+                        shadow-lg">
+
+                <i class="pi pi-box text-white text-2xl"></i>
+
+            </div>
+
+            <!-- TEXT -->
+            <div>
+
+                <h1 class="text-4xl
+                           font-black
+                           text-slate-800">
+
+                    Products
+
+                </h1>
+
+                <p class="text-slate-500 mt-1">
+
+                    Manage your company product catalog
+
+                </p>
+
+                <!-- COUNT -->
+                <div class="mt-3
+                            inline-flex
                             items-center
-                            justify-between
-                            flex-wrap
-                            gap-5">
+                            gap-2
+                            bg-emerald-50
+                            text-emerald-700
+                            px-4
+                            py-2
+                            rounded-xl
+                            font-semibold
+                            text-sm">
 
-                    <!-- LEFT -->
-                    <div class="flex items-center gap-5">
+                    <i class="pi pi-box"></i>
 
-                        <!-- ICON -->
-                        <div class="w-20
-                                    h-20
-                                    rounded-full
-                                    bg-white/20
-                                    backdrop-blur-md
-                                    flex
-                                    items-center
-                                    justify-center">
-
-                            <i class="pi pi-box text-3xl"></i>
-
-                        </div>
-
-                        <!-- TEXT -->
-                        <div>
-
-                            <h1 class="text-5xl
-                                       font-black
-                                       tracking-tight">
-
-                                Products
-
-                            </h1>
-
-                            <p class="text-lg
-                                      text-slate-300
-                                      mt-2">
-
-                                Manage your company product catalog
-
-                            </p>
-
-                            <!-- COUNT -->
-                            <div class="mt-4
-                                        inline-flex
-                                        items-center
-                                        gap-2
-                                        bg-white/15
-                                        backdrop-blur-md
-                                        px-4
-                                        py-2
-                                        rounded-2xl">
-
-                                <i class="pi pi-box"></i>
-
-                                <span class="font-bold text-base">
-
-                                    #{companyProductBean.products.size()} Products
-
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- BUTTON -->
-                    <p:commandButton
-                        value="Add Product"
-                        icon="pi pi-plus"
-                        type="button"
-                        onclick="PF('productDialog').show()"
-                        styleClass="!bg-white
-                                    !text-slate-900
-                                    hover:!bg-slate-100
-                                    !border-0
-                                    !rounded-2xl
-                                    !px-6
-                                    !py-3
-                                    !text-base
-                                    !font-bold"/>
+                    #{companyProductBean.products.size()} Products
 
                 </div>
 
             </div>
+
+        </div>
+
+        <!-- BUTTON -->
+        <p:commandButton
+            value="Add Product"
+            icon="pi pi-plus"
+            process="@this"
+            action="#{companyProductBean.openAddDialog}"
+            update=":productForm:dialogPanel"
+            oncomplete="PF('productDialog').show()"
+            styleClass="!bg-emerald-500
+                        hover:!bg-emerald-600
+                        !border-0
+                        !rounded-2xl
+                        !px-6
+                        !py-3
+                        !font-bold"/>
+    </div>
+
+</div>
 
             <!-- ================= EMPTY STATE ================= -->
 
@@ -160,40 +151,59 @@
 
                     <!-- CARD -->
                     <div class="bg-white
-                                rounded-[24px]
+                                rounded-3xl
                                 overflow-hidden
-                                shadow-lg
+                                shadow-md
                                 hover:shadow-2xl
                                 transition-all
-                                duration-500
-                                hover:-translate-y-1">
+                                duration-300
+                                border border-slate-100">
 
                         <!-- IMAGE -->
-                        <div class="relative
-                                    overflow-hidden
-                                    h-48">
+                        <div class="relative h-52 bg-slate-100">
 
-                           <img src="#{request.contextPath}/product-images/#{p.image}"
-                                class="w-full
-                                       h-full
-                                       object-cover
-                                       hover:scale-105
-                                       transition-all
-                                       duration-700"/>
+                            <!-- PRODUCT IMAGE -->
+                            <ui:fragment rendered="#{not empty p.image}">
 
-                            <!-- CATEGORY -->
+                                <img src="#{request.contextPath}/product-images/#{p.image}"
+                                     class="w-full
+                                            h-full
+                                            object-cover"/>
+
+                            </ui:fragment>
+
+                            <!-- NO IMAGE -->
+                            <ui:fragment rendered="#{empty p.image}">
+
+                                <div class="w-full
+                                            h-full
+                                            flex
+                                            items-center
+                                            justify-center">
+
+                                    <i class="pi pi-image
+                                              text-6xl
+                                              text-slate-300"></i>
+
+                                </div>
+
+                            </ui:fragment>
+
+                            <!-- STATUS BADGE -->
                             <div class="absolute top-3 right-3">
 
-                                <span class="bg-white/90
-                                            text-emerald-600
-                                             font-bold
-                                             px-3
-                                             py-1
-                                             rounded-full
-                                             text-xs
-                                             shadow">
+                                <span class="#{p.isActive
+                                                ? 'bg-emerald-500'
+                                                : 'bg-red-500'}
+                                               text-white
+                                               text-xs
+                                               font-bold
+                                               px-3
+                                               py-1
+                                               rounded-full
+                                               shadow">
 
-                                    #{p.category}
+                                    #{p.isActive ? 'ACTIVE' : 'INACTIVE'}
 
                                 </span>
 
@@ -202,38 +212,36 @@
                         </div>
 
                         <!-- CONTENT -->
-                        <div class="p-4">
+                        <div class="p-5">
 
                             <!-- NAME -->
                             <h2 class="text-2xl
                                        font-black
-                                       text-slate-900">
+                                       text-slate-800">
 
                                 #{p.productName}
 
                             </h2>
 
                             <!-- CATEGORY -->
-                            <p class="text-sm
-                                      text-slate-500
-                                      mt-1">
+                            <p class="text-slate-500
+                                      mt-1
+                                      text-sm">
 
                                 #{p.category}
 
                             </p>
 
                             <!-- PRICE -->
-                            <div class="mt-4">
+                            <div class="mt-5">
 
                                 <p class="text-slate-400 text-sm">
-
                                     Price
-
                                 </p>
 
-                                <h3 class="text-3xl
+                                <h3 class="text-4xl
                                            font-black
-                                           text-emerald-600
+                                           text-slate-900
                                            mt-1">
 
                                     ₹ #{p.price}
@@ -242,32 +250,62 @@
 
                             </div>
 
-                            <!-- BUTTON -->
-                            <div class="mt-5">
+                            <!-- BUTTONS -->
+                            <div class="grid
+                                        grid-cols-2
+                                        gap-3
+                                        mt-6">
 
+                                <!-- EDIT -->
                                 <p:commandButton
-                                    value="Edit Product"
+                                    value="Edit"
                                     icon="pi pi-pencil"
                                     process="@this"
                                     update=":productForm:dialogPanel"
                                     action="#{companyProductBean.edit(p)}"
                                     oncomplete="PF('productDialog').show()"
-                                    styleClass="w-full
-                                                !bg-orange-50
-                                                hover:!bg-orange-100
-                                                !text-emerald-600
+                                    styleClass="!bg-emerald-500
+                                                hover:!bg-emerald-600
                                                 !border-0
                                                 !rounded-2xl
                                                 !py-3
-                                                !font-bold
-                                                !text-sm"/>
+                                                !font-bold"/>
+
+                                <!-- DEACTIVATE -->
+                                <p:commandButton
+                                    rendered="#{p.isActive}"
+                                    value="Deactivate"
+                                    icon="pi pi-times"
+                                    process="@this"
+                                    update="@form"
+                                    action="#{companyProductBean.deactivate(p.pid)}"
+                                    styleClass="!bg-slate-700
+                                                hover:!bg-slate-800
+                                                !border-0
+                                                !rounded-2xl
+                                                !py-3
+                                                !font-bold"/>
+
+                                <!-- ACTIVATE -->
+                                <p:commandButton
+                                    rendered="#{not p.isActive}"
+                                    value="Activate"
+                                    icon="pi pi-check"
+                                    process="@this"
+                                    update="@form"
+                                    action="#{companyProductBean.activate(p.pid)}"
+                                    styleClass="!bg-emerald-500
+                                                hover:!bg-emerald-600
+                                                !border-0
+                                                !rounded-2xl
+                                                !py-3
+                                                !font-bold"/>
 
                             </div>
 
                         </div>
 
                     </div>
-
                 </ui:repeat>
 
             </div>
@@ -324,17 +362,40 @@
                             </label>
 
                             <p:selectOneMenu
-                                value="#{companyProductBean.product.category}"
-                                styleClass="w-full">
+                            value="#{companyProductBean.product.category}"
+                            styleClass="w-full">
 
-                                <f:selectItem
-                                    itemLabel="Select Category"
-                                    itemValue=""/>
+                            <p:ajax
+                                process="@this"
+                                update="otherCategoryWrapper"/>
 
-                                <f:selectItems
-                                    value="#{companyProductBean.categories}"/>
+                            <f:selectItem
+                                itemLabel="Select Category"
+                                itemValue=""/>
 
-                            </p:selectOneMenu>
+                            <f:selectItems
+                                value="#{companyProductBean.categories}"/>
+
+                        </p:selectOneMenu>
+
+                                      <h:panelGroup id="otherCategoryWrapper">
+
+                            <h:panelGroup
+                                rendered="#{companyProductBean.product.category eq 'Other'}">
+
+                                <div class="mt-4">
+
+                                    <p:inputText
+                                        value="#{companyProductBean.customCategory}"
+                                        placeholder="Enter Product Category"
+                                        styleClass="w-full"/>
+
+                                </div>
+
+                            </h:panelGroup>
+
+                        </h:panelGroup>              
+                               
 
                         </div>
 
@@ -398,6 +459,9 @@
                                         hover:!bg-emerald-600
                                         !border-0
                                         !rounded-2xl
+                                        hover:scale-105
+                                        transition-all
+                                        duration-300
                                         !px-5
                                         !py-3
                                         !font-bold"/>
@@ -415,6 +479,9 @@
                                         hover:!bg-blue-600
                                         !border-0
                                         !rounded-2xl
+                                        hover:scale-105
+                                        transition-all
+                                        duration-300
                                         !px-5
                                         !py-3
                                         !font-bold"/>

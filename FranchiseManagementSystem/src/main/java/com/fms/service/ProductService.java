@@ -76,6 +76,19 @@ public class ProductService implements ProductServiceLocal {
 
         return q.getResultList();
     }
+    
+    @Override
+public List<Products> getActiveProductsByCompany(int cid) {
+
+    return em.createQuery(
+        "SELECT p FROM Products p " +
+        "WHERE p.cid.cid = :cid " +
+        "AND p.isActive = true",
+        Products.class
+    )
+    .setParameter("cid", cid)
+    .getResultList();
+}
 
     // 6️⃣ Activate Product
     @Override
