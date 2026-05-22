@@ -53,6 +53,7 @@ public class FeedbackService implements FeedbackServiceLocal {
         feedback.setUid(user);
         feedback.setCid(company);
         feedback.setFeedbackDate(new Date());
+        feedback.setFeedbackType("COMPANY");
 
         em.persist(feedback);
         
@@ -100,4 +101,70 @@ public class FeedbackService implements FeedbackServiceLocal {
 
         return q.getResultList();
     }
+    @Override
+    public List<Feedbacks> getCompanyFeedbacks() {
+
+        return em.createQuery(
+            "SELECT f FROM Feedbacks f WHERE f.feedbackType = 'COMPANY'",
+            Feedbacks.class
+        ).getResultList();
+    }
+    
+    @Override
+    public List<Feedbacks> getFranchiseFeedbacks() {
+
+        return em.createQuery(
+            "SELECT f FROM Feedbacks f WHERE f.feedbackType = 'FRANCHISE'",
+            Feedbacks.class
+        ).getResultList();
+    }
+    
+    @Override
+    public List<Feedbacks> getBranchFeedbacks() {
+
+        return em.createQuery(
+            "SELECT f FROM Feedbacks f WHERE f.feedbackType = 'BRANCH'",
+            Feedbacks.class
+        ).getResultList();
+    }
+    
+    @Override
+    public List<Feedbacks> getStaffFeedbacks() {
+
+        return em.createQuery(
+            "SELECT f FROM Feedbacks f WHERE f.feedbackType = 'STAFF'",
+            Feedbacks.class
+        ).getResultList();
+    }
+    
+    @Override
+    public long getTotalFeedbacks() {
+
+        return em.createQuery(
+            "SELECT COUNT(f) FROM Feedbacks f",
+            Long.class
+        ).getSingleResult();
+    }
+
+        @Override
+    public long getNegativeFeedbacks() {
+
+        return em.createQuery(
+            "SELECT COUNT(f) FROM Feedbacks f WHERE f.rating <= 2",
+            Long.class
+        ).getSingleResult();
+    }
+    @Override
+    public double getAverageRating() {
+
+        Double avg = em.createQuery(
+            "SELECT AVG(f.rating) FROM Feedbacks f",
+            Double.class
+        ).getSingleResult();
+
+        return avg != null ? avg : 0;
+    }
+
 }
+    
+    

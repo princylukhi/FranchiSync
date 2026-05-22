@@ -24,4 +24,18 @@ public interface FeedbackServiceLocal {
     // Get all feedbacks (admin)
     public List<Feedbacks> getAllFeedbacks();
     
+    public List<Feedbacks> getCompanyFeedbacks();
+
+    public List<Feedbacks> getFranchiseFeedbacks();
+
+    public List<Feedbacks> getBranchFeedbacks();
+
+    public List<Feedbacks> getStaffFeedbacks();
+
+    public long getTotalFeedbacks();
+
+    public long getNegativeFeedbacks();
+
+    public double getAverageRating();
+    
 }

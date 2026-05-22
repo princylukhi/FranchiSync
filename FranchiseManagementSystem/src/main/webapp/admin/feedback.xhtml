@@ -1,11 +1,403 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/templates/layout.xhtml">
+
+    <ui:define name="content">
+
+        <h:form id="feedbackForm">
+
+            <!-- PAGE HEADER -->
+
+            <div class="mb-6">
+
+                <div class="
+                    bg-gradient-to-r
+                    from-slate-900
+                    to-slate-800
+                    rounded-[35px]
+                    shadow-2xl
+                    p-5
+                    text-white
+                    relative
+                    overflow-hidden">
+
+                    <div class="flex justify-between items-center flex-wrap gap-6">
+
+                        <div>
+
+                            <h1 class="
+                                text-3xl
+                                font-black
+                                tracking-tight
+                                mb-2">
+                                Feedback Analytics
+                            </h1>
+
+                            <p class="text-slate-300 text-1xl">
+                                Monitor company ecosystem feedback performance
+                            </p>
+
+                        </div>
+
+                        <div class="
+                            w-28
+                            h-28
+                            rounded-full
+                            bg-white/10
+                            flex
+                            items-center
+                            justify-center">
+
+                            <i class="pi pi-comments text-5xl text-cyan-300"/>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ANALYTICS CARDS -->
+
+            <div class="grid mb-6">
+
+                <!-- TOTAL -->
+
+                <div class="col-12 md:col-4">
+
+                    <div class="
+                        bg-white
+                        rounded-[28px]
+                        shadow-lg
+                        p-4
+                        border border-slate-100">
+
+                        <div class="flex justify-between items-center">
+
+                            <div>
+
+                                <p class="text-slate-400 text-lg mb-2">
+                                    Total Feedbacks
+                                </p>
+
+                                <h2 class="
+                                    text-3xl
+                                    font-black
+                                    text-slate-900">
+
+                                    #{adminFeedbackBean.totalFeedbacks}
+
+                                </h2>
+
+                            </div>
+
+                            <div class="
+                                w-16
+                                h-16
+                                rounded-2xl
+                                bg-cyan-100
+                                flex
+                                items-center
+                                justify-center">
+
+                                <i class="pi pi-comments text-3xl text-cyan-600"/>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+                <!-- NEGATIVE -->
+
+                <div class="col-12 md:col-4">
+
+                    <div class="
+                        bg-white
+                        rounded-[28px]
+                        shadow-lg
+                        p-4
+                        border border-red-100">
+
+                        <div class="flex justify-between items-center">
+
+                            <div>
+
+                                <p class="text-slate-400 text-lg mb-2">
+                                    Negative Feedbacks
+                                </p>
+
+                                <h2 class="
+                                    text-3xl
+                                    font-black
+                                    text-red-500">
+
+                                    #{adminFeedbackBean.negativeFeedbacks}
+
+                                </h2>
+
+                            </div>
+
+                            <div class="
+                                w-16
+                                h-16
+                                rounded-2xl
+                                bg-red-100
+                                flex
+                                items-center
+                                justify-center">
+
+                                <i class="pi pi-exclamation-circle text-3xl text-red-500"/>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+              
+
+                <!-- AVERAGE -->
+
+                <div class="col-12 md:col-4">
+
+                    <div class="
+                        bg-white
+                        rounded-[28px]
+                        shadow-lg
+                        p-4
+                        border border-yellow-100">
+
+                        <div class="flex justify-between items-center">
+
+                            <div>
+
+                                <p class="text-slate-400 text-lg mb-2">
+                                    Average Rating
+                                </p>
+
+                                <h2 class="
+                                    text-3xl
+                                    font-black
+                                    text-yellow-500">
+
+                                    #{adminFeedbackBean.averageRating}
+
+                                </h2>
+
+                            </div>
+
+                            <div class="
+                                w-16
+                                h-16
+                                rounded-2xl
+                                bg-yellow-100
+                                flex
+                                items-center
+                                justify-center">
+
+                                <i class="pi pi-star-fill text-3xl text-yellow-500"/>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- FEEDBACK TABS -->
+
+            <div class="
+                bg-white
+                rounded-[30px]
+                shadow-xl
+                p-4">
+
+<p:tabView styleClass="modern-tabs">
+
+    <!-- COMPANY FEEDBACK -->
+
+    <p:tab title="Company Feedback">
+
+        <p:dataTable
+            value="#{adminFeedbackBean.companyFeedbacks}"
+            var="f"
+            styleClass="border-0"
+            emptyMessage="No company feedback found">
+
+            <p:column headerText="User">
+                #{f.uid.name}
+            </p:column>
+
+            <p:column headerText="Company">
+                #{f.cid.companyName}
+            </p:column>
+
+            <p:column headerText="Message">
+                #{f.message}
+            </p:column>
+
+            <p:column headerText="Rating">
+                ⭐ #{f.rating}
+            </p:column>
+
+            <p:column headerText="Date">
+
+                <h:outputText value="#{f.feedbackDate}">
+                    <f:convertDateTime pattern="dd MMM yyyy"/>
+                </h:outputText>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </p:tab>
+
+    <!-- FRANCHISE FEEDBACK -->
+
+    <p:tab title="Franchise Feedback">
+
+        <p:dataTable
+            value="#{adminFeedbackBean.franchiseFeedbacks}"
+            var="f"
+            styleClass="border-0"
+            emptyMessage="No franchise feedback found">
+
+            <p:column headerText="User">
+                #{f.uid.name}
+            </p:column>
+
+            <p:column headerText="Company">
+                #{f.cid.companyName}
+            </p:column>
+
+            <p:column headerText="Franchise ID">
+                #{f.franchiseId}
+            </p:column>
+
+            <p:column headerText="Message">
+                #{f.message}
+            </p:column>
+
+            <p:column headerText="Rating">
+                ⭐ #{f.rating}
+            </p:column>
+
+            <p:column headerText="Date">
+
+                <h:outputText value="#{f.feedbackDate}">
+                    <f:convertDateTime pattern="dd MMM yyyy"/>
+                </h:outputText>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </p:tab>
+
+    <!-- BRANCH FEEDBACK -->
+
+    <p:tab title="Branch Feedback">
+
+        <p:dataTable
+            value="#{adminFeedbackBean.branchFeedbacks}"
+            var="f"
+            styleClass="border-0"
+            emptyMessage="No branch feedback found">
+
+            <p:column headerText="User">
+                #{f.uid.name}
+            </p:column>
+
+            <p:column headerText="Company">
+                #{f.cid.companyName}
+            </p:column>
+
+            <p:column headerText="Branch ID">
+                #{f.branchId}
+            </p:column>
+
+            <p:column headerText="Message">
+                #{f.message}
+            </p:column>
+
+            <p:column headerText="Rating">
+                ⭐ #{f.rating}
+            </p:column>
+
+            <p:column headerText="Date">
+
+                <h:outputText value="#{f.feedbackDate}">
+                    <f:convertDateTime pattern="dd MMM yyyy"/>
+                </h:outputText>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </p:tab>
+
+    <!-- STAFF FEEDBACK -->
+
+    <p:tab title="Staff Feedback">
+
+        <p:dataTable
+            value="#{adminFeedbackBean.staffFeedbacks}"
+            var="f"
+            styleClass="border-0"
+            emptyMessage="No staff feedback found">
+
+            <p:column headerText="User">
+                #{f.uid.name}
+            </p:column>
+
+            <p:column headerText="Company">
+                #{f.cid.companyName}
+            </p:column>
+
+            <p:column headerText="Staff ID">
+                #{f.staffId}
+            </p:column>
+
+            <p:column headerText="Message">
+                #{f.message}
+            </p:column>
+
+            <p:column headerText="Rating">
+                ⭐ #{f.rating}
+            </p:column>
+
+            <p:column headerText="Date">
+
+                <h:outputText value="#{f.feedbackDate}">
+                    <f:convertDateTime pattern="dd MMM yyyy"/>
+                </h:outputText>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </p:tab>
+
+</p:tabView>
+
+            </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
