@@ -400,8 +400,7 @@
 
                     </div>
 
-                    <!-- STAR RATING -->
-
+                    
                    <!-- STAR RATING -->
 
         <div class="mb-6">
@@ -418,30 +417,69 @@
 
             <style>
 
-                /* REMOVE BLUE BOX */
+                /* REMOVE ALL BLUE BOX / BORDER / OUTLINE */
 
-                .custom-rating .ui-rating-cancel,
-                .custom-rating .ui-rating-star a {
+                .custom-rating .ui-rating-star,
+                .custom-rating .ui-rating-star a,
+                .custom-rating .ui-rating-star-on,
+                .custom-rating .ui-rating-star-on a,
+                .custom-rating .ui-rating-star-hover,
+                .custom-rating .ui-rating-star-hover a {
+
+                    outline: none !important;
+                    border: none !important;
+                    box-shadow: none !important;
+                    background: transparent !important;
+
+                }
+
+                /* REMOVE FOCUS EFFECT */
+
+                .custom-rating *:focus {
+
                     outline: none !important;
                     box-shadow: none !important;
-                    border: none !important;
+
                 }
 
-                /* YELLOW STARS */
-
-                .custom-rating .ui-rating-star-on a {
-                    color: #facc15 !important;
-                }
+                /* STAR SIZE */
 
                 .custom-rating .ui-rating-star a {
-                    color: #9ca3af;
+
                     font-size: 2rem;
+                    color: #6b7280;
                     transition: 0.2s;
+
                 }
 
+                /* ACTIVE STAR */
+
+                .custom-rating .ui-rating-star-on a {
+
+                    color: #facc15 !important;
+
+                }
+
+                /* HOVER EFFECT */
+
                 .custom-rating .ui-rating-star a:hover {
+
                     color: #facc15 !important;
                     transform: scale(1.1);
+
+                }
+                
+                 .ui-dialog .ui-dialog-content {
+
+                    padding-top: 0.5rem !important;
+
+                }
+
+                .ui-dialog .ui-dialog-titlebar {
+
+                    padding-bottom: 0 !important;
+                    border: none !important;
+
                 }
 
             </style>
