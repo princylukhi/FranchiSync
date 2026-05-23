@@ -213,4 +213,25 @@ public class CompanyService implements CompanyServiceLocal {
                 Long.class
         ).getSingleResult();
     }
+    
+    @Override
+    public List<Companies> getApprovedCompanies() {
+
+        return em.createQuery(
+
+            "SELECT c FROM Companies c "
+          + "WHERE c.status = 'ACTIVE' "
+          + "ORDER BY c.companyName",
+
+            Companies.class
+
+        ).getResultList();
+    }
+    
+    @Override
+    public Companies findCompanyById(int companyId) {
+
+        return em.find(Companies.class, companyId);
+
+    }
 }

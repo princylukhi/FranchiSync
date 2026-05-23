@@ -28,5 +28,9 @@ public interface CompanyServiceLocal {
     public long getTotalCompanies();
 
     public long getPendingRequestCount();
+    
+    public List<Companies> getApprovedCompanies();
+    
+    public Companies findCompanyById(int companyId);
 
 }

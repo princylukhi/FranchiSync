@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+
+    <title>Apply Franchise | FranchiSync</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/primeicons/7.0.0/primeicons.min.css"/>
+
+</h:head>
+
+<h:body class="bg-slate-50">
+
+    <!-- TOP BAR -->
+    <div class="px-8 py-5 flex items-center">
+
+        <h:link outcome="/companies.xhtml"
+                styleClass="inline-flex items-center gap-2
+                            text-slate-600 hover:text-emerald-600
+                            font-semibold transition-all">
+
+            <i class="pi pi-arrow-left"></i>
+
+            <span>Back to Companies</span>
+
+        </h:link>
+
+    </div>
+
+    <!-- HERO -->
+    <section class="py-12 px-6">
+
+        <div class="max-w-4xl mx-auto text-center">
+
+            <span class="inline-flex items-center
+                         gap-2 px-5 py-2 rounded-full
+                         bg-emerald-100 text-emerald-700
+                         font-semibold text-sm">
+
+                🚀 Franchise Application
+
+            </span>
+
+            <h1 class="text-5xl font-black
+                       text-slate-900 mt-6">
+
+                Apply For Franchise
+
+            </h1>
+
+            <p class="text-slate-500 text-lg
+                      mt-5 max-w-2xl mx-auto">
+
+                Submit your franchise request and
+                become a part of our growing business network.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- FORM SECTION -->
+    <section class="pb-20 px-6">
+
+        <div class="max-w-3xl mx-auto">
+
+            <div class="bg-white rounded-3xl
+                        shadow-xl p-10">
+
+                <h:form id="applyForm">
+
+                    <!-- MESSAGE -->
+                    <p:growl id="msg"
+                             showDetail="true"
+                             life="3000"/>
+
+                    <div class="grid grid-cols-1
+                                md:grid-cols-2
+                                gap-6">
+
+                        <!-- OWNER NAME -->
+                        <div>
+
+                            <label class="block mb-2
+                                          font-semibold
+                                          text-slate-700">
+
+                                Owner Name
+
+                            </label>
+
+                            <p:inputText
+                                value="#{franchiseApplyBean.request.ownerName}"
+                                required="true"
+                                styleClass="w-full rounded-xl"/>
+
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div>
+
+                            <label class="block mb-2
+                                          font-semibold
+                                          text-slate-700">
+
+                                Email Address
+
+                            </label>
+
+                            <p:inputText
+                                value="#{franchiseApplyBean.request.email}"
+                                required="true"
+                                styleClass="w-full rounded-xl"/>
+
+                        </div>
+
+                        <!-- PHONE -->
+                        <div>
+
+                            <label class="block mb-2
+                                          font-semibold
+                                          text-slate-700">
+
+                                Phone Number
+
+                            </label>
+
+                            <p:inputText
+                                value="#{franchiseApplyBean.request.phone}"
+                                required="true"
+                                styleClass="w-full rounded-xl"/>
+
+                        </div>
+
+                        <!-- COMPANY -->
+                        <div>
+
+                            <label class="block mb-2
+                                          font-semibold
+                                          text-slate-700">
+
+                                Selected Company
+
+                            </label>
+
+                            <p:inputText
+                                value="#{franchiseApplyBean.company.companyName}"
+                                readonly="true"
+                                styleClass="w-full rounded-xl
+                                            bg-slate-100"/>
+
+                        </div>
+
+                    </div>
+
+                    <!-- MESSAGE -->
+                    <div class="mt-6">
+
+                        <label class="block mb-2
+                                      font-semibold
+                                      text-slate-700">
+
+                            Why Do You Want This Franchise?
+
+                        </label>
+
+                        <p:inputTextarea
+                            value="#{franchiseApplyBean.request.reason}"
+                            rows="5"
+                            autoResize="false"
+                            styleClass="w-full rounded-xl"/>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <div class="mt-10 text-center">
+
+                        <p:commandButton
+                            value="Submit Franchise Request"
+                            icon="pi pi-send"
+                            action="#{franchiseApplyBean.submitRequest}"
+                            update="applyForm msg"
+                            styleClass="!bg-emerald-500
+                                        hover:!bg-emerald-600
+                                        !border-0
+                                        !rounded-2xl
+                                        !px-10
+                                        !py-4
+                                        !text-lg"/>
+
+                    </div>
+
+                </h:form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</h:body>
+
+</html>
