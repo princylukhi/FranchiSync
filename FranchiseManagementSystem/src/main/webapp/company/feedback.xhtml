@@ -14,59 +14,85 @@
 
             <!-- HEADER -->
 
-            <div class="mb-6">
+            
+<div class="mb-7">
+
+    <div class="bg-white
+            rounded-3xl
+            shadow-md
+            border border-slate-200
+            p-6
+            mb-8">
+
+        <div class="flex justify-between items-center flex-wrap gap-6">
+
+            <!-- LEFT -->
+
+            <div class="flex items-center gap-5">
 
                 <div class="
-                    bg-gradient-to-r
-                    from-slate-900
-                    to-slate-800
-                    rounded-[35px]
-                    shadow-2xl
-                    p-5
-                    text-white">
+                    w-24
+                    h-24
+                    rounded-[28px]
+                    bg-emerald-500
+                    flex
+                    items-center
+                    justify-center
+                    shadow-lg">
 
-                    <div class="flex justify-between items-center">
+                    <i class="pi pi-comments text-4xl text-white"/>
 
-                        <div>
+                </div>
 
-                            <h1 class="
-                                text-4xl
-                                font-black
-                                mb-2">
+                <div>
 
-                                Company Feedback
+                    <h1 class="
+                        text-3xl
+                        font-black
+                        tracking-tight
+                        mb-2">
 
-                            </h1>
+                      Company Feedback 
 
-                            <p class="text-slate-300 text-lg">
+                    </h1>
 
-                                Monitor and manage your company feedback
+                    <p class="text-2xl
+                           font-black
+                           text-slate-800">
+                        Monitor company ecosystem feedback performance
+                    </p>
 
-                            </p>
 
-                        </div>
-
-                        <div class="
-                            w-24
-                            h-24
-                            rounded-full
-                            bg-white/10
-                            flex
-                            items-center
-                            justify-center">
-
-                            <i class="
-                                pi pi-comments
-                                text-5xl
-                                text-cyan-300"/>
-
-                        </div>
-
-                    </div>
 
                 </div>
 
             </div>
+            
+            <div>
+
+                <p:commandButton
+                    value="Give Feedback"
+                    icon="pi pi-star"
+                    type="button"
+                    onclick="PF('feedbackDialog').show()"
+                    styleClass="
+                        !bg-emerald-500
+                        hover:!bg-emerald-600
+                        !border-0
+                        !rounded-2xl
+                        !px-5
+                        !py-3
+                        !text-lg
+                        !font-semibold"/>
+
+            </div>
+  
+
+        </div>
+
+    </div>
+
+</div>
 
             <!-- ANALYTICS -->
 
@@ -91,7 +117,7 @@
                                 </p>
 
                                 <h2 class="
-                                    text-4xl
+                                    text-3xl
                                     font-black
                                     text-slate-900">
 
@@ -142,7 +168,7 @@
                                 </p>
 
                                 <h2 class="
-                                    text-4xl
+                                    text-3xl
                                     font-black
                                     text-red-500">
 
@@ -193,7 +219,7 @@
                                 </p>
 
                                 <h2 class="
-                                    text-4xl
+                                    text-3xl
                                     font-black
                                     text-yellow-500">
 
@@ -313,87 +339,147 @@
 
             </div>
 
-            <!-- GIVE FEEDBACK -->
+            <!-- FEEDBACK DIALOG -->
 
-            <div class="
-                bg-white
-                rounded-[30px]
-                shadow-xl
-                p-5">
+            <p:dialog
+                widgetVar="feedbackDialog"
+                modal="true"
+                closable="true"
+                draggable="false"
+                resizable="false"
+                responsive="true"
+                styleClass="rounded-3xl overflow-hidden"
+                width="500">
 
-                <h2 class="
-                    text-2xl
-                    font-bold
-                    text-slate-800
-                    mb-2">
+                <div class="p-3">
 
-                    Give Feedback to Platform
+                    <!-- TITLE -->
 
-                </h2>
+                    <div class="mb-5">
 
-                <p class="text-slate-400 mb-5">
+                        <h2 class="
+                            text-3xl
+                            font-black
+                            text-slate-800
+                            mb-2">
 
-                    Share your experience about FranchiseSync
+                            Share Your Experience
 
-                </p>
+                        </h2>
 
-                <div class="grid">
+                        <p class="text-slate-400 text-lg">
+
+                            Tell us about your FranchiseSync experience
+
+                        </p>
+
+                    </div>
 
                     <!-- MESSAGE -->
 
-                    <div class="col-12 mb-4">
+                    <div class="mb-5">
+
+                        <label class="
+                            block
+                            text-slate-700
+                            font-semibold
+                            mb-2">
+
+                            Feedback Message
+
+                        </label>
 
                         <p:inputTextarea
                             value="#{companyFeedbackBean.feedback.message}"
                             rows="5"
                             autoResize="false"
                             placeholder="Write your feedback..."
-                            styleClass="w-full rounded-2xl"/>
+                            styleClass="
+                                w-full
+                                rounded-2xl"/>
 
                     </div>
 
-                    <!-- RATING -->
+                    <!-- STAR RATING -->
 
-                    <div class="col-12 md:col-4 mb-4">
+                   <!-- STAR RATING -->
 
-                        <p:selectOneMenu
-                            value="#{companyFeedbackBean.feedback.rating}"
-                            styleClass="w-full rounded-xl">
+        <div class="mb-6">
 
-                            <f:selectItem itemLabel="Select Rating" itemValue="" />
+            <label class="
+                block
+                text-slate-700
+                font-semibold
+                mb-3">
 
-                            <f:selectItem itemLabel="⭐ 1" itemValue="1"/>
-                            <f:selectItem itemLabel="⭐ 2" itemValue="2"/>
-                            <f:selectItem itemLabel="⭐ 3" itemValue="3"/>
-                            <f:selectItem itemLabel="⭐ 4" itemValue="4"/>
-                            <f:selectItem itemLabel="⭐ 5" itemValue="5"/>
+                Rating
 
-                        </p:selectOneMenu>
+            </label>
 
-                    </div>
+            <style>
+
+                /* REMOVE BLUE BOX */
+
+                .custom-rating .ui-rating-cancel,
+                .custom-rating .ui-rating-star a {
+                    outline: none !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                }
+
+                /* YELLOW STARS */
+
+                .custom-rating .ui-rating-star-on a {
+                    color: #facc15 !important;
+                }
+
+                .custom-rating .ui-rating-star a {
+                    color: #9ca3af;
+                    font-size: 2rem;
+                    transition: 0.2s;
+                }
+
+                .custom-rating .ui-rating-star a:hover {
+                    color: #facc15 !important;
+                    transform: scale(1.1);
+                }
+
+            </style>
+
+            <p:rating
+                value="#{companyFeedbackBean.feedback.rating}"
+                stars="5"
+                cancel="false"
+                styleClass="custom-rating"/>
+
+        </div>
 
                     <!-- BUTTON -->
 
-                    <div class="col-12">
+                    <div class="flex justify-start">
 
                         <p:commandButton
                             value="Submit Feedback"
                             icon="pi pi-send"
                             action="#{companyFeedbackBean.submitPlatformFeedback}"
                             update="@form"
+                            oncomplete="PF('feedbackDialog').hide()"
                             styleClass="
                                 !bg-emerald-500
                                 hover:!bg-emerald-600
                                 !border-0
                                 !rounded-2xl
                                 !px-5
-                                !py-3"/>
+                                !py-3
+                                !font-semibold"/>
 
                     </div>
 
                 </div>
 
-            </div>
+            </p:dialog>
+
+            
 
         </h:form>
 
