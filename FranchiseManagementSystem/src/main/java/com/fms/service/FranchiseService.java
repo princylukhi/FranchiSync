@@ -117,4 +117,18 @@ public class FranchiseService implements FranchiseServiceLocal {
                 Long.class
         ).getSingleResult();
     }
+    
+    @Override
+        public List<FranchiseRequests>
+        getRequestsByCompany(int companyId) {
+
+            return em.createQuery(
+                "SELECT f FROM FranchiseRequests f " +
+                "WHERE f.cid.cid = :cid " +
+                "ORDER BY f.requestDate DESC",
+                FranchiseRequests.class
+            )
+            .setParameter("cid", companyId)
+            .getResultList();
+        }
 }

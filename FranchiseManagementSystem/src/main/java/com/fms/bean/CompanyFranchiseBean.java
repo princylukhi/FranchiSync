@@ -26,30 +26,50 @@ public class CompanyFranchiseBean implements Serializable {
 
     private int companyId;
 
-    @PostConstruct
-    public void init() {
+  @PostConstruct
+public void init() {
+
+    try {
 
         HttpSession session =
             (HttpSession) FacesContext.getCurrentInstance()
             .getExternalContext()
             .getSession(false);
 
+        // SESSION NULL CHECK
+        if (session == null) {
+            return;
+        }
+
         Users user =
             (Users) session.getAttribute("user");
 
-        if (user != null && user.getCid() != null) {
-
-            companyId = user.getCid().getCid();
-
-            loadRequests();
+        // USER NULL CHECK
+        if (user == null) {
+            return;
         }
+
+        // COMPANY NULL CHECK
+        if (user.getCid() == null) {
+            return;
+        }
+
+        companyId = user.getCid().getCid();
+
+        loadRequests();
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
     }
+}
 
     // LOAD REQUESTS
     public void loadRequests() {
 
         requests =
-            franchiseService.getPendingRequests();
+            franchiseService
+            .getRequestsByCompany(companyId);
     }
 
     // APPROVE
