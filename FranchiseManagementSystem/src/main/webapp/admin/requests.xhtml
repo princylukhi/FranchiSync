@@ -43,26 +43,52 @@
                 tableStyle="min-width:1400px"
                 styleClass="rounded-2xl overflow-hidden">
 
-    <!-- COMPANY -->
-    <p:column headerText="Company">
+                <!-- LOGO -->
+                <p:column headerText="Logo" style="width:120px;">
 
-        #{r.companyName}
+                    <div class="w-16 h-16 rounded-2xl
+                                overflow-hidden bg-slate-100
+                                flex items-center justify-center">
 
-    </p:column>
+                        <!-- COMPANY LOGO -->
+                        <ui:fragment rendered="#{not empty r.logo}">
 
-    <!-- EMAIL -->
-   <!-- EMAIL -->
-<p:column headerText="Email"
-          style="min-width:260px;">
+                            <h:graphicImage
+                                value="/company-logo/#{r.logo}"
+                                styleClass="w-full h-full object-cover"/>
 
-    <div style="white-space: nowrap;
-                overflow: visible;">
+                        </ui:fragment>
 
-        #{r.email}
+                        <!-- DEFAULT -->
+                        <ui:fragment rendered="#{empty r.logo}">
 
-    </div>
+                            <span class="text-2xl">🏢</span>
 
-</p:column>
+                        </ui:fragment>
+
+                    </div>
+
+                </p:column>
+                    <!-- COMPANY -->
+                    <p:column headerText="Company">
+
+                        #{r.companyName}
+
+                    </p:column>
+
+                    <!-- EMAIL -->
+                   <!-- EMAIL -->
+                <p:column headerText="Email"
+                          style="min-width:260px;">
+
+                    <div style="white-space: nowrap;
+                                overflow: visible;">
+
+                        #{r.email}
+
+                    </div>
+
+                </p:column>
 
 
     <!-- BUSINESS -->

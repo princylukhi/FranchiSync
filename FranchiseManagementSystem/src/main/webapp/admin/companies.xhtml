@@ -111,6 +111,33 @@
             reflow="true"
             tableStyle="min-width:1400px"
             styleClass="rounded-2xl overflow-hidden">
+           
+           <!-- LOGO -->
+            <p:column headerText="Logo">
+
+                <div class="w-16 h-16 rounded-2xl
+                            overflow-hidden bg-slate-100
+                            flex items-center justify-center">
+
+                    <!-- SHOW LOGO -->
+                    <ui:fragment rendered="#{not empty c.logo}">
+
+                        <h:graphicImage
+                            value="/company-logo/#{c.logo}"
+                            styleClass="w-full h-full object-cover"/>
+
+                    </ui:fragment>
+
+                    <!-- DEFAULT ICON -->
+                    <ui:fragment rendered="#{empty c.logo}">
+
+                        <span class="text-2xl">🏢</span>
+
+                    </ui:fragment>
+
+                </div>
+
+            </p:column>
 
             <!-- COMPANY -->
             <p:column headerText="Company">
