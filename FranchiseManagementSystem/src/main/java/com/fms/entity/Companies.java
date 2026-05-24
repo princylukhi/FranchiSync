@@ -80,6 +80,8 @@ public class Companies implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+    @Column(name = "logo")
+    private String logo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cid")
     private Collection<Franchises> franchisesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cid")
@@ -178,6 +180,14 @@ public class Companies implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+    
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     @XmlTransient

@@ -102,6 +102,7 @@ public class CompanyService implements CompanyServiceLocal {
             company.setPhone(req.getPhone());
             company.setBusinessType(req.getBusinessType());
             company.setCity(req.getCity());
+            company.setLogo(req.getLogo());
             company.setStatus("ACTIVE");
             company.setCreatedDate(new Date());
 
