@@ -208,9 +208,14 @@ public class NotificationService implements NotificationServiceLocal {
     @Override
     public List<Notifications> getAllNotifications() {
 
-        Query q = em.createNamedQuery("Notifications.findAll");
+        return em.createQuery(
 
-        return q.getResultList();
+            "SELECT n FROM Notifications n " +
+            "ORDER BY n.sentDate DESC",
+
+            Notifications.class
+
+        ).getResultList();
     }
 
     // Company Request Received

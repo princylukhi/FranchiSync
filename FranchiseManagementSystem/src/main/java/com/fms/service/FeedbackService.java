@@ -84,13 +84,18 @@ public class FeedbackService implements FeedbackServiceLocal {
     @Override
     public List<Feedbacks> getFeedbacksByCompany(int companyId) {
 
-        Query q = em.createQuery(
-                "SELECT f FROM Feedbacks f WHERE f.cid.cid = :cid"
-        );
+        return em.createQuery(
 
-        q.setParameter("cid", companyId);
+            "SELECT f FROM Feedbacks f " +
+            "WHERE f.cid.cid = :cid " +
+            "AND f.feedbackType <> 'COMPANY' " +
+            "ORDER BY f.feedbackDate DESC",
 
-        return q.getResultList();
+            Feedbacks.class
+
+        )
+        .setParameter("cid", companyId)
+        .getResultList();
     }
 
     // 3️⃣ Admin - All Feedbacks
