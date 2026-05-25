@@ -21,6 +21,9 @@ public class FranchiseService implements FranchiseServiceLocal {
     
     @EJB
     private NotificationServiceLocal notificationService;
+    
+    @EJB
+    private UserServiceLocal userService;
 
     @Override
     public void submitFranchiseRequest(FranchiseRequests request) {
@@ -30,18 +33,13 @@ public class FranchiseService implements FranchiseServiceLocal {
 
         em.persist(request);
         
-       notificationService.sendNotification(
-
-        "franchisync@gmail.com",
-
-        "New Franchise Request",
-
-        request.getOwnerName()
-        + " submitted a new franchise request.",
-
-        "ADMIN_REQUEST"
-
-    );
+     
+       
+       // SEND CONFIRMATION EMAIL
+       notificationService
+        .sendFranchiseRequestReceivedEmail(
+                request.getEmail()
+        );
     }
 
     @Override
@@ -55,7 +53,7 @@ public class FranchiseService implements FranchiseServiceLocal {
     }
 
     @Override
-    public void approveFranchise(int requestId, int ownerUserId) {
+    public void approveFranchise(int requestId) {
 
         FranchiseRequests req =
                 em.find(FranchiseRequests.class, requestId);
@@ -63,20 +61,50 @@ public class FranchiseService implements FranchiseServiceLocal {
         req.setStatus("APPROVED");
         req.setApprovedDate(new Date());
 
+        em.merge(req);
+
         Companies company = req.getCid();
 
-        Users owner = em.find(Users.class, ownerUserId);
+        // CREATE FRANCHISE OWNER USER
+        Users owner = new Users();
 
-        Franchises franchise = new Franchises();
+        owner.setName(req.getOwnerName());
+        owner.setEmail(req.getEmail());
+        owner.setPassword("owner123");
+
+        // ROLE ID = 3 (FRANCHISE_OWNER)
+        userService.createUser(
+                owner,
+                3,
+                company.getCid(),
+                null
+        );
+
+        // FETCH SAVED USER
+        Users savedOwner =
+                userService.findUserByEmail(req.getEmail());
+
+        // CREATE FRANCHISE
+        Franchises franchise =
+                new Franchises();
 
         franchise.setCid(company);
-        franchise.setOwnerUserId(owner);
+        franchise.setOwnerUserId(savedOwner);
         franchise.setStatus("ACTIVE");
         franchise.setCreatedDate(new Date());
 
         em.persist(franchise);
-        
-        notificationService.sendFranchiseApproval(owner.getEmail());
+
+        // SEND APPROVAL MAIL
+        notificationService.sendFranchiseApproval(
+                req.getEmail()
+        );
+
+        // SEND LOGIN CREDENTIALS
+        notificationService.sendFranchiseCredentials(
+                req.getEmail(),
+                "owner123"
+        );
     }
 
     @Override
@@ -89,12 +117,9 @@ public class FranchiseService implements FranchiseServiceLocal {
 
         em.merge(req);
         
-        notificationService.sendNotification(
-            req.getEmail(),
-            "Franchise Rejected",
-            "Your franchise request has been rejected.",
-            "FRANCHISE_REJECTION"
-    );
+        notificationService.sendFranchiseRejection(
+            req.getEmail()
+        );
         
     }
 

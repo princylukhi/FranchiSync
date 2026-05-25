@@ -36,23 +36,13 @@ public class CompanyService implements CompanyServiceLocal {
 
         em.persist(request);
         
-        notificationService.sendNotification(
-
-        "franchisync@gmail.com",
-
-        "New Company Request",
-
-        "A new company registration request has been submitted by "
-        + request.getCompanyName(),
-
-        "ADMIN_REQUEST"
-
-        );
+       
         
         em.flush();
 
         // SEND EMAIL AFTER SUBMISSION
-        notificationService.sendRequestReceivedEmail(
+        notificationService
+        .sendCompanyRequestReceivedEmail(
                 request.getEmail()
         );
     }

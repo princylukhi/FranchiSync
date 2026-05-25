@@ -77,9 +77,7 @@ public void init() {
 
         // TEMP USER ID
         franchiseService.approveFranchise(
-            requestId,
-            1
-        );
+            requestId);
 
         loadRequests();
     }

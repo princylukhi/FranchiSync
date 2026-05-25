@@ -77,7 +77,8 @@
             <p:column headerText="Sent Date">
 
                 <h:outputText value="#{n.sentDate}">
-                    <f:convertDateTime pattern="dd MMM yyyy hh:mm a"/>
+                    <f:convertDateTime pattern="dd MMM yyyy hh:mm a"
+                    timeZone="Asia/Kolkata"/>
                 </h:outputText>
 
             </p:column>

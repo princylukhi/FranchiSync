@@ -30,8 +30,6 @@ public class UserService implements UserServiceLocal {
     @Override
     public void createUser(Users user, int roleId, int companyId, Integer branchId) {
 
-        String plainPassword = user.getPassword();   // ✅ store original
-
         Roles role = em.find(Roles.class, roleId);
         Companies company = em.find(Companies.class, companyId);
 
@@ -49,22 +47,6 @@ public class UserService implements UserServiceLocal {
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
 
         em.persist(user);
-        
-        notificationService.sendNotification(
-
-        "franchisync@gmail.com",
-
-        "New User Created",
-
-        user.getName()
-        + " account has been created.",
-
-        "ADMIN_USER"
-
-        );
-
-        // 📧 Send plain password to user
-        notificationService.sendCredentials(user.getEmail(), plainPassword);
     }
     
     

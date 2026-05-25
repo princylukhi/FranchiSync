@@ -12,7 +12,7 @@ public interface FranchiseServiceLocal {
 
     public List<FranchiseRequests> getPendingRequests();
 
-    public void approveFranchise(int requestId, int ownerUserId);
+    public void approveFranchise(int requestId);
 
     public void rejectFranchise(int requestId);
 

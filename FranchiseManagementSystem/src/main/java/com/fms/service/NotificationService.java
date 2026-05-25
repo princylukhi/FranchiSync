@@ -90,15 +90,55 @@ public class NotificationService implements NotificationServiceLocal {
         );
     }
 
-    // 4️⃣ Franchise Approved
     @Override
     public void sendFranchiseApproval(String email) {
 
         sendNotification(
-                email,
-                "Franchise Approved",
-                "Your franchise request has been approved.",
-                "FRANCHISE_APPROVAL"
+
+            email,
+
+            "Franchise Request Approved",
+
+            "Dear Applicant,\n\n"
+
+            + "Congratulations! Your franchise "
+            + "request has been approved successfully.\n\n"
+
+            + "You can now access your franchise dashboard "
+            + "using the login credentials sent to your email.\n\n"
+
+            + "Welcome to FranchiSync.\n\n"
+
+            + "Regards,\n"
+            + "FranchiSync Team",
+
+            "FRANCHISE_APPROVAL"
+        );
+    }
+    
+    // Franchise Rejected
+    @Override
+    public void sendFranchiseRejection(String email) {
+
+        sendNotification(
+
+            email,
+
+            "Franchise Request Rejected",
+
+            "Dear Applicant,\n\n"
+
+            + "We regret to inform you that your "
+            + "franchise request has been rejected "
+            + "after review.\n\n"
+
+            + "You may apply again later with "
+            + "updated information.\n\n"
+
+            + "Regards,\n"
+            + "FranchiSync Team",
+
+            "FRANCHISE_REJECTION"
         );
     }
 
@@ -130,6 +170,39 @@ public class NotificationService implements NotificationServiceLocal {
         "CREDENTIALS"
     );
     }
+    
+    // Franchise Owner Credentials
+    @Override
+    public void sendFranchiseCredentials(
+            String email,
+            String password) {
+
+        sendNotification(
+
+            email,
+
+            "Franchise Login Credentials",
+
+            "Dear Franchise Owner,\n\n"
+
+            + "Your franchise account has been "
+            + "created successfully.\n\n"
+
+            + "You can now login to FranchiSync "
+            + "using the following credentials:\n\n"
+
+            + "Email: " + email + "\n"
+            + "Password: " + password + "\n\n"
+
+            + "Please change your password after "
+            + "first login for security purposes.\n\n"
+
+            + "Regards,\n"
+            + "FranchiSync Team",
+
+            "FRANCHISE_CREDENTIALS"
+        );
+    }
 
     // 6️⃣ Get all notifications (for admin panel)
     @Override
@@ -140,19 +213,21 @@ public class NotificationService implements NotificationServiceLocal {
         return q.getResultList();
     }
 
+    // Company Request Received
     @Override
-    public void sendRequestReceivedEmail(String email) {
+    public void sendCompanyRequestReceivedEmail(
+            String email) {
 
         try {
 
             String subject =
-                    "Registration Request Received";
+                    "Company Registration Request Received";
 
             String message =
 
                     "Dear Company,\n\n"
 
-                    + "Your franchise registration request "
+                    + "Your company registration request "
                     + "has been received successfully.\n\n"
 
                     + "Our admin team is currently reviewing "
@@ -164,7 +239,44 @@ public class NotificationService implements NotificationServiceLocal {
                     + "Thank you,\n"
                     + "FranchiSync Team";
 
-            // ONLY SEND EMAIL
+            emailService.sendEmail(
+                    email,
+                    subject,
+                    message
+            );
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+    }
+    
+    @Override
+    public void sendFranchiseRequestReceivedEmail(
+            String email) {
+
+        try {
+
+            String subject =
+                    "Franchise Request Received";
+
+            String message =
+
+                    "Dear Applicant,\n\n"
+
+                    + "Your franchise request "
+                    + "has been received successfully.\n\n"
+
+                    + "Our team is currently reviewing "
+                    + "your application.\n\n"
+
+                    + "You will receive another email once "
+                    + "your request is approved or rejected.\n\n"
+
+                    + "Thank you,\n"
+                    + "FranchiSync Team";
+
             emailService.sendEmail(
                     email,
                     subject,
