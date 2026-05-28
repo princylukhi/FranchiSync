@@ -212,5 +212,69 @@ public class UserService implements UserServiceLocal {
 
         return count > 0;
     }
+    
+    @Override
+    public List<Users> getStaffByBranch(int branchId) {
+
+        return em.createQuery(
+
+            "SELECT u FROM Users u " +
+            "WHERE u.bid.bid = :bid " +
+            "AND u.rid.roleName = 'STAFF'",
+
+            Users.class
+
+        )
+        .setParameter("bid", branchId)
+        .getResultList();
+    }
+    
+    @Override
+    public void createStaffUser(
+            Users staff,
+            int companyId,
+            int branchId) {
+
+        // DEFAULT PASSWORD
+        String plainPassword = "staff123";
+
+        // SET PLAIN PASSWORD TEMP
+        staff.setPassword(plainPassword);
+
+        // ROLE
+        Roles role =
+                em.find(Roles.class, 5);
+
+        // COMPANY
+        Companies company =
+                em.find(Companies.class, companyId);
+
+        // BRANCH
+        Branches branch =
+                em.find(Branches.class, branchId);
+
+        // SET DATA
+        staff.setRid(role);
+        staff.setCid(company);
+        staff.setBid(branch);
+
+        staff.setStatus("ACTIVE");
+
+        staff.setCreatedDate(new Date());
+
+        // HASH PASSWORD
+        staff.setPassword(
+            PasswordUtil.hashPassword(plainPassword)
+        );
+
+        // SAVE
+        em.persist(staff);
+
+        // SEND EMAIL
+        notificationService.sendStaffCredentials(
+            staff.getEmail(),
+            plainPassword
+        );
+    }
 }
 

@@ -90,6 +90,11 @@ public class Users implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+    @Column(name = "designation")
+    private String designation;
+    @Column(name = "joining_date")
+    @Temporal(TemporalType.DATE)
+    private Date joiningDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerUserId")
     private Collection<Franchises> franchisesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "uid")
@@ -200,6 +205,22 @@ public class Users implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+    
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public Date getJoiningDate() {
+        return joiningDate;
+    }
+
+    public void setJoiningDate(Date joiningDate) {
+        this.joiningDate = joiningDate;
     }
 
     @XmlTransient

@@ -33,4 +33,9 @@ public interface NotificationServiceLocal {
     
     public List<Notifications> getNotificationsByEmail(String email);
     
+    public void sendStaffCredentials(
+        String email,
+        String password
+    );
+
 }

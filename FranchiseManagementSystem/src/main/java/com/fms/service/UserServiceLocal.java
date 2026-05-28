@@ -44,4 +44,12 @@ public interface UserServiceLocal {
 
     public boolean branchHasManager(int branchId);
     
+    public List<Users> getStaffByBranch(int branchId);
+    
+    public void createStaffUser(
+        Users staff,
+        int companyId,
+        int branchId
+    );
+    
 }

@@ -310,6 +310,33 @@ public class NotificationService implements NotificationServiceLocal {
 
         return q.getResultList();
     }
+    
+    @Override
+    public void sendStaffCredentials(
+            String email,
+            String password) {
+
+        sendNotification(
+
+            email,
+
+            "Staff Login Credentials",
+
+            "Dear Staff,\n\n"
+
+            + "Your account has been created successfully.\n\n"
+
+            + "You can login using:\n\n"
+
+            + "Email: " + email + "\n"
+            + "Password: " + password + "\n\n"
+
+            + "Regards,\n"
+            + "FranchiSync Team",
+
+            "STAFF_CREDENTIALS"
+        );
+    }
 }
 
        
