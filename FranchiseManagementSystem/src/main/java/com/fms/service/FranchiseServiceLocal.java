@@ -10,7 +10,8 @@ public interface FranchiseServiceLocal {
 
     public void submitFranchiseRequest(FranchiseRequests request);
 
-    public List<FranchiseRequests> getPendingRequests();
+    public List<FranchiseRequests>
+    getPendingRequests(int companyId);
 
     public void approveFranchise(int requestId);
 
@@ -22,5 +23,13 @@ public interface FranchiseServiceLocal {
     
     public List<FranchiseRequests>
     getRequestsByCompany(int companyId);
+    
+    public long getApprovedFranchiseCount(int companyId);
+
+    public long getPendingFranchiseCount(int companyId);
+
+    public List<FranchiseRequests> getRecentRequests(int companyId);
+    
+   
 
 }

@@ -43,13 +43,17 @@ public class FranchiseService implements FranchiseServiceLocal {
     }
 
     @Override
-    public List<FranchiseRequests> getPendingRequests() {
+    public List<FranchiseRequests> getPendingRequests(int companyId) {
 
-        Query q = em.createNamedQuery("FranchiseRequests.findByStatus");
-
-        q.setParameter("status", "PENDING");
-
-        return q.getResultList();
+        return em.createQuery(
+            "SELECT f FROM FranchiseRequests f " +
+            "WHERE f.cid.cid = :cid " +
+            "AND f.status = 'PENDING' " +
+            "ORDER BY f.requestDate DESC",
+            FranchiseRequests.class
+        )
+        .setParameter("cid", companyId)
+        .getResultList();
     }
 
     @Override
@@ -156,4 +160,54 @@ public class FranchiseService implements FranchiseServiceLocal {
             .setParameter("cid", companyId)
             .getResultList();
         }
-}
+        
+        
+        @Override
+    public long getApprovedFranchiseCount(int companyId) {
+
+        return em.createQuery(
+
+            "SELECT COUNT(f) FROM Franchises f " +
+            "WHERE f.cid.cid = :cid",
+
+            Long.class
+
+        )
+        .setParameter("cid", companyId)
+        .getSingleResult();
+    }
+
+    @Override
+    public long getPendingFranchiseCount(int companyId) {
+
+        return em.createQuery(
+
+            "SELECT COUNT(fr) FROM FranchiseRequests fr " +
+            "WHERE fr.cid.cid = :cid " +
+            "AND fr.status = 'PENDING'",
+
+            Long.class
+
+        )
+        .setParameter("cid", companyId)
+        .getSingleResult();
+    }
+
+    @Override
+        public List<FranchiseRequests> getRecentRequests(int companyId) {
+
+            return em.createQuery(
+
+                "SELECT fr FROM FranchiseRequests fr " +
+                "WHERE fr.cid.cid = :cid " +
+                "AND fr.status = 'PENDING' " +
+                "ORDER BY fr.requestDate DESC",
+
+                FranchiseRequests.class
+
+            )
+            .setParameter("cid", companyId)
+            .setMaxResults(5)
+            .getResultList();
+        }
+    }
