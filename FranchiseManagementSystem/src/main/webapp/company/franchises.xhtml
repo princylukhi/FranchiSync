@@ -31,73 +31,77 @@
                 <div class="flex gap-4 mb-8 flex-wrap">
 
                     <!-- ALL -->
-                    <p:commandButton
-                        value="All"
-                        action="#{companyFranchiseBean.filterRequests('ALL')}"
-                        update="@form"
-                        process="@this"
-                        styleClass="
-                        #{companyFranchiseBean.selectedStatus eq 'ALL'
-                        ? '!bg-emerald-500 !text-white'
-                        : '!bg-slate-800 !text-white'}
-                        hover:!bg-emerald-600
-                        !border-0
-                        !rounded-2xl
-                        !px-8
-                        !py-4
-                        !shadow-lg"/>
+                <p:commandButton
+                    value="All"
+                    icon="pi pi-list"
+                    action="#{companyFranchiseBean.filterRequests('ALL')}"
+                    update="@form"
+                    process="@this"
+                    styleClass="
+                    #{companyFranchiseBean.selectedStatus eq 'ALL'
+                    ? '!bg-emerald-500 !text-white'
+                    : '!bg-slate-800 !text-white'}
+                    hover:!bg-emerald-600
+                    !border-0
+                    !rounded-2xl
+                    !px-6
+                    !py-3
+                    !shadow-lg"/>
 
-                    <!-- APPROVED -->
-                    <p:commandButton
-                        value="Approved"
-                        action="#{companyFranchiseBean.filterRequests('APPROVED')}"
-                        update="@form"
-                        process="@this"
-                        styleClass="
-                        #{companyFranchiseBean.selectedStatus eq 'APPROVED'
-                        ? '!bg-emerald-500 !text-white'
-                        : '!bg-slate-800 !text-white'}
-                        hover:!bg-emerald-600
-                        !border-0
-                        !rounded-2xl
-                        !px-8
-                        !py-4
-                        !shadow-lg"/>
+                <!-- APPROVED -->
+                <p:commandButton
+                    value="Approved"
+                    icon="pi pi-check-circle"
+                    action="#{companyFranchiseBean.filterRequests('APPROVED')}"
+                    update="@form"
+                    process="@this"
+                    styleClass="
+                    #{companyFranchiseBean.selectedStatus eq 'APPROVED'
+                    ? '!bg-emerald-500 !text-white'
+                    : '!bg-slate-800 !text-white'}
+                    hover:!bg-emerald-600
+                    !border-0
+                    !rounded-2xl
+                    !px-6
+                    !py-3
+                    !shadow-lg"/>
 
-                    <!-- REJECTED -->
-                    <p:commandButton
-                        value="Rejected"
-                        action="#{companyFranchiseBean.filterRequests('REJECTED')}"
-                        update="@form"
-                        process="@this"
-                        styleClass="
-                        #{companyFranchiseBean.selectedStatus eq 'REJECTED'
-                        ? '!bg-emerald-500 !text-white'
-                        : '!bg-slate-800 !text-white'}
-                        hover:!bg-emerald-600
-                        !border-0
-                        !rounded-2xl
-                        !px-8
-                        !py-4
-                        !shadow-lg"/>
+                <!-- REJECTED -->
+                <p:commandButton
+                    value="Rejected"
+                    icon="pi pi-times-circle"
+                    action="#{companyFranchiseBean.filterRequests('REJECTED')}"
+                    update="@form"
+                    process="@this"
+                    styleClass="
+                    #{companyFranchiseBean.selectedStatus eq 'REJECTED'
+                    ? '!bg-red-500 !text-white'
+                    : '!bg-slate-800 !text-white'}
+                    hover:!bg-red-600
+                    !border-0
+                    !rounded-2xl
+                    !px-6
+                    !py-3
+                    !shadow-lg"/>
 
-                    <!-- PENDING -->
-                    <p:commandButton
-                        value="Pending"
-                        action="#{companyFranchiseBean.filterRequests('PENDING')}"
-                        update="@form"
-                        process="@this"
-                        styleClass="
-                        #{companyFranchiseBean.selectedStatus eq 'PENDING'
-                        ? '!bg-emerald-500 !text-white'
-                        : '!bg-slate-800 !text-white'}
-                        hover:!bg-emerald-600
-                        !border-0
-                        !rounded-2xl
-                        !px-8
-                        !py-4
-                        !shadow-lg"/>
-
+                <!-- PENDING -->
+                <p:commandButton
+                    value="Pending"
+                    icon="pi pi-clock"
+                    action="#{companyFranchiseBean.filterRequests('PENDING')}"
+                    update="@form"
+                    process="@this"
+                    styleClass="
+                    #{companyFranchiseBean.selectedStatus eq 'PENDING'
+                    ? '!bg-yellow-500 !text-white'
+                    : '!bg-slate-800 !text-white'}
+                    hover:!bg-yellow-600
+                    !border-0
+                    !rounded-2xl
+                    !px-6
+                    !py-3
+                    !shadow-lg"/>
+                
                 </div>
 
             <!-- TABLE -->
@@ -162,11 +166,19 @@
                     <p:column headerText="Request Date">
 
                         <h:outputText value="#{r.requestDate}">
-                            <f:convertDateTime pattern="dd MMM yyyy"/>
+                            <f:convertDateTime pattern="dd MMM yyyy" timeZone="Asia/Kolkata"/>
                         </h:outputText>
 
                     </p:column>
 
+                    <!-- APPROVED/REJECTED DATE -->
+                    <p:column headerText="Approved/Rejected Date">
+
+                        <h:outputText value="#{r.approvedDate}">
+                            <f:convertDateTime pattern="dd MMM yyyy" timeZone="Asia/Kolkata"/>
+                        </h:outputText>
+
+                    </p:column>
                    
                    
 
