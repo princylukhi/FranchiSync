@@ -23,5 +23,13 @@ public interface FranchiseServiceLocal {
     
     public List<FranchiseRequests>
     getRequestsByCompany(int companyId);
+    
+    public long getApprovedFranchiseCount(int companyId);
+
+    public long getPendingFranchiseCount(int companyId);
+
+    public List<FranchiseRequests> getRecentRequests(int companyId);
+    
+   
 
 }
