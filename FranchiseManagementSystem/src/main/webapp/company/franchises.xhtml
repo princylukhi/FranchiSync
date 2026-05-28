@@ -1,11 +1,181 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <h:form id="franchiseForm">
+
+            <!-- TITLE -->
+            <div class="mb-8">
+
+                <h1 class="text-4xl font-bold text-slate-900">
+                    Franchises
+                </h1>
+
+                <p class="text-slate-500 text-xl mt-2">
+                    Manage company franchise requests.
+                </p>
+
+            </div>
+
+            <!-- FILTERS -->
+
+                <div class="flex gap-4 mb-8 flex-wrap">
+
+                    <!-- ALL -->
+                    <p:commandButton
+                        value="All"
+                        action="#{companyFranchiseBean.filterRequests('ALL')}"
+                        update="@form"
+                        process="@this"
+                        styleClass="
+                        #{companyFranchiseBean.selectedStatus eq 'ALL'
+                        ? '!bg-emerald-500 !text-white'
+                        : '!bg-slate-800 !text-white'}
+                        hover:!bg-emerald-600
+                        !border-0
+                        !rounded-2xl
+                        !px-8
+                        !py-4
+                        !shadow-lg"/>
+
+                    <!-- APPROVED -->
+                    <p:commandButton
+                        value="Approved"
+                        action="#{companyFranchiseBean.filterRequests('APPROVED')}"
+                        update="@form"
+                        process="@this"
+                        styleClass="
+                        #{companyFranchiseBean.selectedStatus eq 'APPROVED'
+                        ? '!bg-emerald-500 !text-white'
+                        : '!bg-slate-800 !text-white'}
+                        hover:!bg-emerald-600
+                        !border-0
+                        !rounded-2xl
+                        !px-8
+                        !py-4
+                        !shadow-lg"/>
+
+                    <!-- REJECTED -->
+                    <p:commandButton
+                        value="Rejected"
+                        action="#{companyFranchiseBean.filterRequests('REJECTED')}"
+                        update="@form"
+                        process="@this"
+                        styleClass="
+                        #{companyFranchiseBean.selectedStatus eq 'REJECTED'
+                        ? '!bg-emerald-500 !text-white'
+                        : '!bg-slate-800 !text-white'}
+                        hover:!bg-emerald-600
+                        !border-0
+                        !rounded-2xl
+                        !px-8
+                        !py-4
+                        !shadow-lg"/>
+
+                    <!-- PENDING -->
+                    <p:commandButton
+                        value="Pending"
+                        action="#{companyFranchiseBean.filterRequests('PENDING')}"
+                        update="@form"
+                        process="@this"
+                        styleClass="
+                        #{companyFranchiseBean.selectedStatus eq 'PENDING'
+                        ? '!bg-emerald-500 !text-white'
+                        : '!bg-slate-800 !text-white'}
+                        hover:!bg-emerald-600
+                        !border-0
+                        !rounded-2xl
+                        !px-8
+                        !py-4
+                        !shadow-lg"/>
+
+                </div>
+
+            <!-- TABLE -->
+            <div class="bg-white rounded-3xl shadow-lg p-6">
+
+                <p:dataTable
+                    id="franchiseTable"
+                    value="#{companyFranchiseBean.requests}"
+                    var="r"
+                    reflow="true"
+                    tableStyle="min-width:1400px">
+
+                    <!-- OWNER -->
+                    <p:column headerText="Owner">
+
+                        #{r.ownerName}
+
+                    </p:column>
+
+                    <!-- EMAIL -->
+              
+                    <p:column
+                        headerText="Email"
+                        style="min-width:300px;">
+
+                        <div style="
+                            white-space: nowrap;
+                            overflow: visible;
+                            text-overflow: unset;">
+
+                            #{r.email}
+
+                        </div>
+
+                    </p:column>
+
+                    <!-- PHONE -->
+                    <p:column headerText="Phone">
+
+                        #{r.phone}
+
+                    </p:column>
+
+                    <!-- STATUS -->
+                    <p:column headerText="Status">
+
+                        <span class="#{r.status eq 'APPROVED'
+                        ? 'bg-emerald-100 text-emerald-700'
+                        : r.status eq 'REJECTED'
+                        ? 'bg-red-100 text-red-700'
+                        : 'bg-yellow-100 text-yellow-700'}
+                        px-3 py-1 rounded-full
+                        text-xs font-semibold">
+
+                            #{r.status}
+
+                        </span>
+
+                    </p:column>
+
+                    <!-- DATE -->
+                    <p:column headerText="Request Date">
+
+                        <h:outputText value="#{r.requestDate}">
+                            <f:convertDateTime pattern="dd MMM yyyy"/>
+                        </h:outputText>
+
+                    </p:column>
+
+                   
+                   
+
+                </p:dataTable>
+
+            </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

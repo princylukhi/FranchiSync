@@ -210,4 +210,23 @@ public class FranchiseService implements FranchiseServiceLocal {
             .setMaxResults(3)
             .getResultList();
         }
+        
+        @Override
+        public List<FranchiseRequests>
+        getRequestsByStatus(int companyId, String status) {
+
+            return em.createQuery(
+
+                "SELECT f FROM FranchiseRequests f " +
+                "WHERE f.cid.cid = :cid " +
+                "AND f.status = :status " +
+                "ORDER BY f.requestDate DESC",
+
+                FranchiseRequests.class
+
+            )
+            .setParameter("cid", companyId)
+            .setParameter("status", status)
+            .getResultList();
+        }
     }

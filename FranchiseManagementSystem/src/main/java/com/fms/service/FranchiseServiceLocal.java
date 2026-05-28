@@ -30,6 +30,9 @@ public interface FranchiseServiceLocal {
 
     public List<FranchiseRequests> getRecentRequests(int companyId);
     
+    public List<FranchiseRequests>
+    getRequestsByStatus(int companyId, String status);
+    
    
 
 }

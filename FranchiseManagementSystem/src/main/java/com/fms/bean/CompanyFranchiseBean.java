@@ -23,64 +23,86 @@ public class CompanyFranchiseBean implements Serializable {
     private FranchiseServiceLocal franchiseService;
 
     private List<FranchiseRequests> requests;
+    
+    private List<FranchiseRequests> pendingRequests;
 
     private int companyId;
 
-  @PostConstruct
-public void init() {
+    private String selectedStatus = "ALL";
 
-    try {
+    @PostConstruct
+    public void init() {
 
-        HttpSession session =
-            (HttpSession) FacesContext.getCurrentInstance()
-            .getExternalContext()
-            .getSession(false);
+        try {
 
-        // SESSION NULL CHECK
-        if (session == null) {
-            return;
+            HttpSession session =
+                (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSession(false);
+
+            if (session == null) {
+                return;
+            }
+
+            Users user =
+                (Users) session.getAttribute("user");
+
+            if (user == null || user.getCid() == null) {
+                return;
+            }
+
+            companyId = user.getCid().getCid();
+
+            loadRequests();
+            loadPendingRequests();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
         }
-
-        Users user =
-            (Users) session.getAttribute("user");
-
-        // USER NULL CHECK
-        if (user == null) {
-            return;
-        }
-
-        // COMPANY NULL CHECK
-        if (user.getCid() == null) {
-            return;
-        }
-
-        companyId = user.getCid().getCid();
-
-        loadRequests();
-
-    } catch (Exception e) {
-
-        e.printStackTrace();
     }
-}
 
-    // LOAD REQUESTS
+    // LOAD ALL
+    public void loadRequests() {
 
-        public void loadRequests() {
+        requests =
+            franchiseService
+            .getRequestsByCompany(companyId);
+    }
+    
+    public void loadPendingRequests() {
 
-            requests =
+            pendingRequests =
                 franchiseService
                 .getPendingRequests(companyId);
         }
 
+    // FILTER
+    public void filterRequests(String status) {
+
+        selectedStatus = status;
+
+        if(status.equals("ALL")) {
+
+            requests =
+                franchiseService
+                .getRequestsByCompany(companyId);
+
+        } else {
+
+            requests =
+                franchiseService
+                .getRequestsByStatus(companyId, status);
+        }
+    }
+
     // APPROVE
     public void approve(int requestId) {
 
-        // TEMP USER ID
-        franchiseService.approveFranchise(
-            requestId);
+        franchiseService.approveFranchise(requestId);
 
         loadRequests();
+        loadPendingRequests();
     }
 
     // REJECT
@@ -89,15 +111,20 @@ public void init() {
         franchiseService.rejectFranchise(requestId);
 
         loadRequests();
+        loadPendingRequests();
     }
 
-    // GETTERS / SETTERS
+    // GETTERS
 
     public List<FranchiseRequests> getRequests() {
         return requests;
     }
 
-    public void setRequests(List<FranchiseRequests> requests) {
-        this.requests = requests;
+    public String getSelectedStatus() {
+        return selectedStatus;
     }
+    
+    public List<FranchiseRequests> getPendingRequests() {
+            return pendingRequests;
+        }
 }
