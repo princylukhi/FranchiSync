@@ -185,13 +185,13 @@ public class UserService implements UserServiceLocal {
         ).getSingleResult();
     }
     
-    @Override
+   @Override
     public List<Users> getManagersByCompany(int companyId) {
 
         return em.createQuery(
             "SELECT u FROM Users u " +
             "WHERE u.cid.cid = :cid " +
-            "AND u.rid.roleName = 'MANAGER'",
+            "AND u.rid.roleName = 'BRANCH_MANAGER'",
             Users.class
         )
         .setParameter("cid", companyId)
@@ -204,7 +204,7 @@ public class UserService implements UserServiceLocal {
         Long count = em.createQuery(
             "SELECT COUNT(u) FROM Users u " +
             "WHERE u.bid.bid = :bid " +
-            "AND u.rid.roleName = 'MANAGER'",
+            "AND u.rid.roleName = 'BRANCH_MANAGER'",
             Long.class
         )
         .setParameter("bid", branchId)

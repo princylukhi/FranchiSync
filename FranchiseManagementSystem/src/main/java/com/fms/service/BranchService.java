@@ -70,7 +70,7 @@ public class BranchService implements BranchServiceLocal {
                 "AND b.bid NOT IN (" +
                 "   SELECT u.bid.bid FROM Users u " +
                 "   WHERE u.bid IS NOT NULL " +
-                "   AND u.rid.roleName = 'MANAGER'" +
+                "   AND u.rid.roleName = 'BRANCH_MANAGER'" +
                 ")"
 
             );

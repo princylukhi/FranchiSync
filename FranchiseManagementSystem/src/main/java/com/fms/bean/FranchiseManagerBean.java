@@ -117,7 +117,7 @@ public class FranchiseManagerBean implements Serializable {
 
             userService.createUser(
                 manager,
-                6, // MANAGER ROLE ID
+                4,
                 loggedInUser.getCid().getCid(),
                 selectedBranchId
             );
