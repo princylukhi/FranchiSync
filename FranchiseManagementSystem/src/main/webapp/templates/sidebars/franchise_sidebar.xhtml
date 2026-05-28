@@ -70,7 +70,7 @@
 
             <!-- Dashboard -->
             <h:link outcome="/franchise/dashboard.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg">
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl #{request.requestURI.contains('/franchise/dashboard.xhtml') ? 'bg-emerald-500 text-white font-medium shadow-lg' : 'text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-home"></i>
 
@@ -80,7 +80,7 @@
 
             <!-- Branches -->
             <h:link outcome="/franchise/branches.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl #{request.requestURI.contains('/franchise/branches.xhtml') ? 'bg-emerald-500 text-white font-medium shadow-lg' : 'text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-building"></i>
 
@@ -90,7 +90,7 @@
 
             <!-- Managers -->
             <h:link outcome="/franchise/managers.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl #{request.requestURI.contains('/franchise/managers.xhtml') ? 'bg-emerald-500 text-white font-medium shadow-lg' : 'text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-users"></i>
 
@@ -99,8 +99,8 @@
             </h:link>
 
             <!-- Sales -->
-            <h:link outcome="/franchise/sales.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+          <h:link outcome="/franchise/sales.xhtml"
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl #{request.requestURI.contains('/franchise/sales.xhtml') ? 'bg-emerald-500 text-white font-medium shadow-lg' : 'text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-shopping-cart"></i>
 
@@ -110,7 +110,7 @@
 
             <!-- Royalty -->
             <h:link outcome="/franchise/royalty.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl #{request.requestURI.contains('/franchise/royalty.xhtml') ? 'bg-emerald-500 text-white font-medium shadow-lg' : 'text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-wallet"></i>
 
@@ -120,7 +120,7 @@
 
             <!-- Reports -->
             <h:link outcome="/franchise/reports.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl #{request.requestURI.contains('/franchise/reports.xhtml') ? 'bg-emerald-500 text-white font-medium shadow-lg' : 'text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-chart-bar"></i>
 
@@ -130,7 +130,7 @@
             
             <!-- Notifications -->
             <h:link outcome="/franchise/notifications.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl #{request.requestURI.contains('/franchise/notifications.xhtml') ? 'bg-emerald-500 text-white font-medium shadow-lg' : 'text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-bell"></i>
 
@@ -140,7 +140,7 @@
 
             <!-- Feedback -->
             <h:link outcome="/franchise/feedback.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl #{request.requestURI.contains('/franchise/feedback.xhtml') ? 'bg-emerald-500 text-white font-medium shadow-lg' : 'text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-comments"></i>
 

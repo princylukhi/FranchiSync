@@ -40,4 +40,8 @@ public interface UserServiceLocal {
     
     public long getTotalUsers();
     
+    public List<Users> getManagersByCompany(int companyId);
+
+    public boolean branchHasManager(int branchId);
+    
 }

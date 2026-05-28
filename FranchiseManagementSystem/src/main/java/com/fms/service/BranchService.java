@@ -58,4 +58,25 @@ public class BranchService implements BranchServiceLocal {
 
         em.merge(branch);
     }
+    
+    @Override
+        public List<Branches> getAvailableBranches(int franchiseId) {
+
+            Query q = em.createQuery(
+
+                "SELECT b FROM Branches b " +
+                "WHERE b.fid.fid = :fid " +
+                "AND b.status = 'ACTIVE' " +
+                "AND b.bid NOT IN (" +
+                "   SELECT u.bid.bid FROM Users u " +
+                "   WHERE u.bid IS NOT NULL " +
+                "   AND u.rid.roleName = 'MANAGER'" +
+                ")"
+
+            );
+
+            q.setParameter("fid", franchiseId);
+
+            return q.getResultList();
+        }
 }

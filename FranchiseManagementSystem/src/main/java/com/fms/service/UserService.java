@@ -184,5 +184,33 @@ public class UserService implements UserServiceLocal {
                 Long.class
         ).getSingleResult();
     }
+    
+    @Override
+    public List<Users> getManagersByCompany(int companyId) {
+
+        return em.createQuery(
+            "SELECT u FROM Users u " +
+            "WHERE u.cid.cid = :cid " +
+            "AND u.rid.roleName = 'MANAGER'",
+            Users.class
+        )
+        .setParameter("cid", companyId)
+        .getResultList();
+    }
+
+    @Override
+    public boolean branchHasManager(int branchId) {
+
+        Long count = em.createQuery(
+            "SELECT COUNT(u) FROM Users u " +
+            "WHERE u.bid.bid = :bid " +
+            "AND u.rid.roleName = 'MANAGER'",
+            Long.class
+        )
+        .setParameter("bid", branchId)
+        .getSingleResult();
+
+        return count > 0;
+    }
 }
 

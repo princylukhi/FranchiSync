@@ -1,11 +1,476 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="jakarta.faces.core">
+
+    <ui:define name="content">
+
+        <h:form id="managerForm">
+
+            <!-- HEADER -->
+
+            <div class="bg-white
+                        rounded-3xl
+                        shadow-md
+                        border border-slate-200
+                        p-6
+                        mb-8">
+
+                <div class="flex
+                            items-center
+                            justify-between
+                            flex-wrap
+                            gap-6">
+
+                    <!-- LEFT -->
+
+                    <div class="flex items-center gap-5">
+
+                        <!-- ICON -->
+
+                        <div class="w-16
+                                    h-16
+                                    rounded-2xl
+                                    bg-emerald-500
+                                    flex
+                                    items-center
+                                    justify-center
+                                    shadow-lg">
+
+                            <i class="pi pi-users text-white text-2xl"></i>
+
+                        </div>
+
+                        <!-- TEXT -->
+
+                        <div>
+
+                            <h1 class="text-4xl
+                                       font-black
+                                       text-slate-800">
+
+                                Branch Managers
+
+                            </h1>
+
+                            <p class="text-slate-500 mt-1">
+
+                                Manage branch managers
+
+                            </p>
+
+                            <!-- COUNT -->
+
+                            <div class="mt-3
+                                        inline-flex
+                                        items-center
+                                        gap-2
+                                        bg-emerald-50
+                                        text-emerald-700
+                                        px-4
+                                        py-2
+                                        rounded-xl
+                                        font-semibold
+                                        text-sm">
+
+                                <i class="pi pi-users"></i>
+
+                                #{franchiseManagerBean.managers.size()}
+                                Managers
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- BUTTON -->
+
+                    <p:commandButton
+                        value="Add Manager"
+                        icon="pi pi-plus"
+                        process="@this"
+                        action="#{franchiseManagerBean.openAddDialog}"
+                        update=":managerForm:dialogPanel"
+                        oncomplete="PF('managerDialog').show()"
+                        styleClass="!bg-emerald-500
+                                    hover:!bg-emerald-600
+                                    !border-0
+                                    !rounded-2xl
+                                    !px-6
+                                    !py-3
+                                    !font-bold"/>
+
+                </div>
+
+            </div>
+
+            <!-- EMPTY -->
+
+            <ui:fragment
+                rendered="#{empty franchiseManagerBean.managers}">
+
+                <div class="bg-white
+                            rounded-3xl
+                            shadow-lg
+                            p-12
+                            text-center">
+
+                    <i class="pi pi-users
+                              text-7xl
+                              text-slate-300"></i>
+
+                    <h2 class="text-3xl
+                               font-bold
+                               text-slate-700
+                               mt-5">
+
+                        No Managers Yet
+
+                    </h2>
+
+                    <p class="text-slate-500 mt-3">
+
+                        Start adding branch managers.
+
+                    </p>
+
+                </div>
+
+            </ui:fragment>
+
+            <!-- GRID -->
+
+            <div class="grid
+                        grid-cols-1
+                        md:grid-cols-2
+                        xl:grid-cols-3
+                        gap-5">
+
+                <ui:repeat
+                    value="#{franchiseManagerBean.managers}"
+                    var="m">
+
+                    <!-- CARD -->
+
+                    <div class="bg-white
+                                rounded-3xl
+                                shadow-md
+                                border border-slate-100
+                                p-6
+                                flex
+                                flex-col
+                                h-full">
+
+                        <!-- TOP -->
+
+                        <div class="flex justify-between items-start">
+
+                            <div>
+
+                                <h2 class="text-2xl
+                                           font-black
+                                           text-slate-800">
+
+                                    #{m.name}
+
+                                </h2>
+
+                                <p class="text-slate-500 mt-1">
+
+                                    #{m.email}
+
+                                </p>
+
+                            </div>
+
+                            <!-- STATUS -->
+
+                            <span class="#{m.status eq 'ACTIVE'
+                                            ? 'bg-emerald-100 text-emerald-700'
+                                            : 'bg-red-100 text-red-700'}
+                                           px-3 py-1
+                                           rounded-full
+                                           text-xs
+                                           font-bold">
+
+                                #{m.status}
+
+                            </span>
+
+                        </div>
+
+                        <!-- PHONE -->
+
+                        <div class="mt-5">
+
+                            <p class="text-slate-400 text-sm">
+
+                                Phone
+
+                            </p>
+
+                            <h3 class="text-lg
+                                       font-semibold
+                                       text-slate-700
+                                       mt-1">
+
+                                #{m.phone}
+
+                            </h3>
+
+                        </div>
+
+                        <!-- BRANCH -->
+
+                        <div class="mt-4">
+
+                            <p class="text-slate-400 text-sm">
+
+                                Assigned Branch
+
+                            </p>
+
+                            <h3 class="text-lg
+                                       font-semibold
+                                       text-slate-700
+                                       mt-1">
+
+                                #{m.bid.branchName}
+
+                            </h3>
+
+                        </div>
+
+                        <!-- BUTTONS -->
+
+                        <div class="grid
+                                    grid-cols-2
+                                    gap-3
+                                    mt-auto
+                                    pt-6">
+
+                            <!-- EDIT -->
+
+                            <p:commandButton
+                                value="Edit"
+                                icon="pi pi-pencil"
+                                process="@this"
+                                update=":managerForm:dialogPanel"
+                                actionListener="#{franchiseManagerBean.edit(m)}"
+                                oncomplete="PF('managerDialog').show()"
+                                styleClass="!bg-emerald-500
+                                            hover:!bg-emerald-600
+                                            !border-0
+                                            !rounded-2xl
+                                            !py-3
+                                            !font-bold"/>
+
+                            <!-- DEACTIVATE -->
+
+                            <p:commandButton
+                                rendered="#{m.status eq 'ACTIVE'}"
+                                value="Deactivate"
+                                icon="pi pi-times"
+                                process="@this"
+                                update="@form"
+                                actionListener="#{franchiseManagerBean.deactivate(m.uid)}"
+                                styleClass="!bg-slate-700
+                                            hover:!bg-slate-800
+                                            !border-0
+                                            !rounded-2xl
+                                            !py-3
+                                            !font-bold"/>
+
+                            <!-- ACTIVATE -->
+
+                            <p:commandButton
+                                rendered="#{m.status eq 'INACTIVE'}"
+                                value="Activate"
+                                icon="pi pi-check"
+                                process="@this"
+                                update="@form"
+                                actionListener="#{franchiseManagerBean.activate(m.uid)}"
+                                styleClass="!bg-emerald-500
+                                            hover:!bg-emerald-600
+                                            !border-0
+                                            !rounded-2xl
+                                            !py-3
+                                            !font-bold"/>
+
+                        </div>
+
+                    </div>
+
+                </ui:repeat>
+
+            </div>
+
+            <!-- DIALOG -->
+
+            <p:dialog
+                header="Manager Details"
+                widgetVar="managerDialog"
+                modal="true"
+                responsive="true"
+                width="500"
+                closable="true"
+                draggable="false"
+                resizable="false">
+
+                <h:panelGroup id="dialogPanel">
+
+                    <div class="grid
+                                grid-cols-1
+                                gap-5
+                                p-3">
+
+                        <!-- NAME -->
+
+                        <div>
+
+                            <label class="block
+                                         text-slate-700
+                                         font-semibold
+                                         mb-2">
+
+                                Manager Name
+
+                            </label>
+
+                            <p:inputText
+                                value="#{franchiseManagerBean.manager.name}"
+                                required="true"
+                                styleClass="w-full"/>
+
+                        </div>
+
+                        <!-- EMAIL -->
+
+                        <div>
+
+                            <label class="block
+                                         text-slate-700
+                                         font-semibold
+                                         mb-2">
+
+                                Email
+
+                            </label>
+
+                            <p:inputText
+                                value="#{franchiseManagerBean.manager.email}"
+                                required="true"
+                                styleClass="w-full"/>
+
+                        </div>
+
+                        <!-- PHONE -->
+
+                        <div>
+
+                            <label class="block
+                                         text-slate-700
+                                         font-semibold
+                                         mb-2">
+
+                                Phone
+
+                            </label>
+
+                            <p:inputText
+                                value="#{franchiseManagerBean.manager.phone}"
+                                styleClass="w-full"/>
+
+                        </div>
+
+                        <!-- BRANCH -->
+
+                        <div>
+
+                            <label class="block
+                                         text-slate-700
+                                         font-semibold
+                                         mb-2">
+
+                                Assign Branch
+
+                            </label>
+
+                            <p:selectOneMenu
+                                value="#{franchiseManagerBean.selectedBranchId}"
+                                styleClass="w-full">
+
+                                <f:selectItem
+                                    itemLabel="Select Branch"
+                                    itemValue="#{null}"/>
+
+                                <f:selectItems
+                                    value="#{franchiseManagerBean.branches}"
+                                    var="b"
+                                    itemLabel="#{b.branchName}"
+                                    itemValue="#{b.bid}"/>
+
+                            </p:selectOneMenu>
+
+                        </div>
+
+                    </div>
+
+                    <!-- BUTTONS -->
+
+                    <div class="flex gap-3 pt-6">
+
+                        <!-- SAVE -->
+
+                        <p:commandButton
+                            value="Save Manager"
+                            rendered="#{franchiseManagerBean.manager.uid == null}"
+                            action="#{franchiseManagerBean.addManager}"
+                            update="@form"
+                            process="@form"
+                            icon="pi pi-check"
+                            oncomplete="if(!args.validationFailed) PF('managerDialog').hide()"
+                            styleClass="!bg-emerald-500
+                                        hover:!bg-emerald-600
+                                        !border-0
+                                        !rounded-2xl
+                                        !px-5
+                                        !py-3
+                                        !font-bold"/>
+
+                        <!-- UPDATE -->
+
+                        <p:commandButton
+                            value="Update Manager"
+                            rendered="#{franchiseManagerBean.manager.uid != null}"
+                            action="#{franchiseManagerBean.updateManager}"
+                            update="@form"
+                            process="@form"
+                            icon="pi pi-pencil"
+                            oncomplete="PF('managerDialog').hide()"
+                            styleClass="!bg-blue-500
+                                        hover:!bg-blue-600
+                                        !border-0
+                                        !rounded-2xl
+                                        !px-5
+                                        !py-3
+                                        !font-bold"/>
+
+                    </div>
+
+                </h:panelGroup>
+
+            </p:dialog>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
