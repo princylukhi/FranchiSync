@@ -207,7 +207,7 @@ public class FranchiseService implements FranchiseServiceLocal {
 
             )
             .setParameter("cid", companyId)
-            .setMaxResults(5)
+            .setMaxResults(3)
             .getResultList();
         }
     }
