@@ -10,7 +10,8 @@ public interface FranchiseServiceLocal {
 
     public void submitFranchiseRequest(FranchiseRequests request);
 
-    public List<FranchiseRequests> getPendingRequests();
+    public List<FranchiseRequests>
+    getPendingRequests(int companyId);
 
     public void approveFranchise(int requestId);
 

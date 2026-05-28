@@ -43,13 +43,17 @@ public class FranchiseService implements FranchiseServiceLocal {
     }
 
     @Override
-    public List<FranchiseRequests> getPendingRequests() {
+    public List<FranchiseRequests> getPendingRequests(int companyId) {
 
-        Query q = em.createNamedQuery("FranchiseRequests.findByStatus");
-
-        q.setParameter("status", "PENDING");
-
-        return q.getResultList();
+        return em.createQuery(
+            "SELECT f FROM FranchiseRequests f " +
+            "WHERE f.cid.cid = :cid " +
+            "AND f.status = 'PENDING' " +
+            "ORDER BY f.requestDate DESC",
+            FranchiseRequests.class
+        )
+        .setParameter("cid", companyId)
+        .getResultList();
     }
 
     @Override

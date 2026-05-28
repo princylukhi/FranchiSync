@@ -65,12 +65,13 @@ public void init() {
 }
 
     // LOAD REQUESTS
-    public void loadRequests() {
 
-        requests =
-            franchiseService
-            .getRequestsByCompany(companyId);
-    }
+        public void loadRequests() {
+
+            requests =
+                franchiseService
+                .getPendingRequests(companyId);
+        }
 
     // APPROVE
     public void approve(int requestId) {
