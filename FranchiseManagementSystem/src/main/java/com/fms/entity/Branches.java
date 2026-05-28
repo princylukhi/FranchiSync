@@ -55,6 +55,18 @@ public class Branches implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "location")
     private String location;
+  
+    @Size(max = 50)
+    @Column(name = "branch_code")
+    private String branchCode;
+
+    @Column(name = "address")
+    private String address;
+
+    @Size(max = 15)
+    @Column(name = "contact_number")
+    private String contactNumber;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -107,6 +119,32 @@ public class Branches implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+    
+    
 
     public String getStatus() {
         return status;
