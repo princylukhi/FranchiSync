@@ -154,6 +154,30 @@ public class FranchiseManagerBean implements Serializable {
                 manager.getEmail(),
                 "manager123"
             );
+            
+            Branches assignedBranch = branches.stream()
+                .filter(b -> b.getBid().equals(selectedBranchId))
+                .findFirst()
+                .orElse(null);
+
+            String branchName =
+                assignedBranch != null
+                ? assignedBranch.getBranchName()
+                : "Assigned Branch";
+
+            notificationService.sendNotification(
+
+                manager.getEmail(),
+
+                "Branch Manager Assigned",
+
+                "Dear " + manager.getName() + ",\n\n"
+                + "You have been assigned as Branch Manager for "
+                + branchName + ".\n\n"
+                + "You can now manage branch operations through FranchiSync.",
+
+                "MANAGER_ASSIGNMENT"
+            );
 
             loadManagers();
 

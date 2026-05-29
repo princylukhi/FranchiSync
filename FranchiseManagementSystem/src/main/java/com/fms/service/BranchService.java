@@ -7,12 +7,16 @@ import jakarta.persistence.Query;
 import java.util.List;
 
 import com.fms.entity.Branches;
+import jakarta.ejb.EJB;
 
 @Stateless
 public class BranchService implements BranchServiceLocal {
 
     @PersistenceContext(unitName = "FranchisePU")
     private EntityManager em;
+    
+    @EJB
+    private NotificationServiceLocal notificationService;
 
     @Override
     public void addBranch(Branches branch) {
@@ -47,6 +51,19 @@ public class BranchService implements BranchServiceLocal {
         branch.setStatus("ACTIVE");
 
         em.merge(branch);
+        
+        notificationService.sendNotification(
+
+        branch.getFid().getOwnerUserId().getEmail(),
+
+        "Branch Activated",
+
+        "Branch '" + branch.getBranchName()
+        + "' (" + branch.getBranchCode()
+        + ") has been activated successfully.",
+
+        "BRANCH_STATUS"
+    );
     }
 
     @Override
@@ -57,6 +74,21 @@ public class BranchService implements BranchServiceLocal {
         branch.setStatus("INACTIVE");
 
         em.merge(branch);
+        
+        notificationService.sendNotification(
+
+        branch.getFid()
+              .getOwnerUserId()
+              .getEmail(),
+
+        "Branch Deactivated",
+
+        "Branch '" + branch.getBranchName()
+        + "' (" + branch.getBranchCode()
+        + ") has been deactivated.",
+
+        "BRANCH_STATUS"
+    );
     }
     
     @Override

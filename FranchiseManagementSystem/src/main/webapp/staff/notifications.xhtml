@@ -1,11 +1,94 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="content">
+
+<h:form id="notificationForm">
+
+    <!-- TOP BAR -->
+    <div class="flex items-center gap-4 mb-6">
+
+        <div>
+
+            <h1 class="text-4xl font-bold text-slate-900">
+                Notifications
+            </h1>
+
+            <p class="text-slate-500 mt-1 text-lg">
+                View all staff notifications and updates.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- TABLE CARD -->
+    <div class="bg-white rounded-3xl shadow-lg p-6 overflow-x-auto">
+
+        <p:dataTable
+            id="notificationTable"
+            value="#{notificationBean.notifications}"
+            var="n"
+            reflow="true"
+            tableStyle="width:100%"
+            styleClass="rounded-2xl overflow-hidden">
+
+            <!-- SUBJECT -->
+            <p:column headerText="Subject">
+
+                #{n.subject}
+
+            </p:column>
+
+            <!-- MESSAGE -->
+            <p:column headerText="Message"
+                      style="min-width:400px;">
+
+                <div style="white-space: normal;">
+
+                    #{n.message}
+
+                </div>
+
+            </p:column>
+
+            <!-- TYPE -->
+            <p:column headerText="Type">
+
+                <span class="bg-blue-100 text-blue-700
+                              px-3 py-1 rounded-full
+                              text-xs font-semibold">
+
+                    #{n.notificationType}
+
+                </span>
+
+            </p:column>
+
+            <!-- DATE -->
+            <p:column headerText="Sent Date">
+
+                <h:outputText value="#{n.sentDate}">
+                    <f:convertDateTime pattern="dd MMM yyyy hh:mm a"
+                    timeZone="Asia/Kolkata"/>
+                </h:outputText>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </div>
+
+</h:form>
+
+</ui:define>
+
+</ui:composition>
