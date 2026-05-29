@@ -113,12 +113,25 @@ public class CompanyService implements CompanyServiceLocal {
         admin.setPassword("admin123");
 
 
+        
         // SEND APPROVAL MAIL
         notificationService.sendCompanyApproval(
-                req.getEmail()
+            req.getEmail()
         );
-        
-        userService.createUser(admin, 2, company.getCid(), null);
+
+        // CREATE COMPANY ADMIN
+        userService.createUser(
+            admin,
+            2,
+            company.getCid(),
+            null
+        );
+
+        // SEND LOGIN CREDENTIALS
+        notificationService.sendCredentials(
+            req.getEmail(),
+            "admin123"
+        );
     }
 
     @Override

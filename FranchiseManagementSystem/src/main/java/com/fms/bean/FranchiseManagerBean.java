@@ -150,7 +150,7 @@ public class FranchiseManagerBean implements Serializable {
 
             // SEND MAIL
 
-            notificationService.sendFranchiseCredentials(
+            notificationService.sendBranchManagerCredentials(
                 manager.getEmail(),
                 "manager123"
             );

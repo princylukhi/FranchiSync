@@ -37,5 +37,12 @@ public interface NotificationServiceLocal {
         String email,
         String password
     );
+    
+    public void sendBranchManagerCredentials(
+            String email,
+            String password
+        );
+    
+   
 
 }
