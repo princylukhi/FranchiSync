@@ -229,4 +229,26 @@ public class FranchiseService implements FranchiseServiceLocal {
             .setParameter("status", status)
             .getResultList();
         }
+        
+        @Override
+public Franchises getFranchiseByOwner(int userId) {
+
+    try {
+
+        return em.createQuery(
+
+            "SELECT f FROM Franchises f " +
+            "WHERE f.ownerUserId.uid = :uid",
+
+            Franchises.class
+
+        )
+        .setParameter("uid", userId)
+        .getSingleResult();
+
+    } catch (Exception e) {
+
+        return null;
+    }
+}
     }

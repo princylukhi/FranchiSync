@@ -18,5 +18,9 @@ public interface BranchServiceLocal {
     public void deactivateBranch(int branchId);
     
     public List<Branches> getAvailableBranches(int franchiseId);
+    
+    public long getTotalBranchesByFranchise(int franchiseId);
+    
+    public String getBranchNameById(int branchId);
 
 }

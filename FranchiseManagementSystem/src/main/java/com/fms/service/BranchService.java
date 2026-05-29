@@ -79,4 +79,30 @@ public class BranchService implements BranchServiceLocal {
 
             return q.getResultList();
         }
+        
+        @Override
+        public long getTotalBranchesByFranchise(int franchiseId) {
+
+            return em.createQuery(
+
+                "SELECT COUNT(b) FROM Branches b " +
+                "WHERE b.fid.fid = :fid",
+
+                Long.class
+
+            )
+            .setParameter("fid", franchiseId)
+            .getSingleResult();
+        }
+        
+        @Override
+        public String getBranchNameById(int branchId) {
+
+            Branches branch =
+                em.find(Branches.class, branchId);
+
+            return branch != null
+                    ? branch.getBranchName()
+                    : "Unknown Branch";
+        }
 }

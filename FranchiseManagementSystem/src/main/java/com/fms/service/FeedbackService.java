@@ -169,6 +169,103 @@ public class FeedbackService implements FeedbackServiceLocal {
 
         return avg != null ? avg : 0;
     }
+    
+    @Override
+    public List<Feedbacks> getBranchFeedbacksByFranchise(
+            int franchiseId) {
+
+        return em.createQuery(
+
+            "SELECT f FROM Feedbacks f " +
+            "WHERE f.feedbackType='BRANCH' " +
+            "AND f.franchiseId=:fid " +
+            "ORDER BY f.feedbackDate DESC",
+
+            Feedbacks.class
+
+        )
+        .setParameter("fid", franchiseId)
+        .getResultList();
+    }
+    
+    @Override
+    public long getTotalBranchFeedbacks(
+            int franchiseId) {
+
+        return em.createQuery(
+
+            "SELECT COUNT(f) FROM Feedbacks f " +
+            "WHERE f.feedbackType='BRANCH' " +
+            "AND f.franchiseId=:fid",
+
+            Long.class
+
+        )
+        .setParameter("fid", franchiseId)
+        .getSingleResult();
+    }
+    
+    @Override
+    public long getNegativeBranchFeedbacks(
+            int franchiseId) {
+
+        return em.createQuery(
+
+            "SELECT COUNT(f) FROM Feedbacks f " +
+            "WHERE f.feedbackType='BRANCH' " +
+            "AND f.franchiseId=:fid " +
+            "AND f.rating<=2",
+
+            Long.class
+
+        )
+        .setParameter("fid", franchiseId)
+        .getSingleResult();
+    }
+    
+    @Override
+    public double getAverageBranchRating(
+            int franchiseId) {
+
+        Double avg = em.createQuery(
+
+            "SELECT AVG(f.rating) FROM Feedbacks f " +
+            "WHERE f.feedbackType='BRANCH' " +
+            "AND f.franchiseId=:fid",
+
+            Double.class
+
+        )
+        .setParameter("fid", franchiseId)
+        .getSingleResult();
+
+        return avg != null ? avg : 0;
+    }
+    
+    @Override
+    public void submitFranchiseFeedback(
+            Feedbacks feedback,
+            int userId,
+            int companyId,
+            int franchiseId) {
+
+        Users user = em.find(Users.class, userId);
+
+        Companies company = em.find(
+                Companies.class,
+                companyId);
+
+        feedback.setUid(user);
+        feedback.setCid(company);
+
+        feedback.setFeedbackDate(new Date());
+
+        feedback.setFeedbackType("FRANCHISE");
+
+        feedback.setFranchiseId(franchiseId);
+
+        em.persist(feedback);
+    }
 
 }
     

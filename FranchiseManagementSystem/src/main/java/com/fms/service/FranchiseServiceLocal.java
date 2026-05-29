@@ -33,6 +33,8 @@ public interface FranchiseServiceLocal {
     public List<FranchiseRequests>
     getRequestsByStatus(int companyId, String status);
     
+    public Franchises getFranchiseByOwner(int userId);
+    
    
 
 }

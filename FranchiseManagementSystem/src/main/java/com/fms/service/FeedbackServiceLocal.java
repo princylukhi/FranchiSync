@@ -38,4 +38,20 @@ public interface FeedbackServiceLocal {
 
     public double getAverageRating();
     
+    List<Feedbacks> getBranchFeedbacksByFranchise(int franchiseId);
+
+    long getTotalBranchFeedbacks(int franchiseId);
+
+    long getNegativeBranchFeedbacks(int franchiseId);
+
+    double getAverageBranchRating(int franchiseId);
+    
+    public void submitFranchiseFeedback(
+        Feedbacks feedback,
+        int userId,
+        int companyId,
+        int franchiseId);
+    
+    
+    
 }
