@@ -52,6 +52,21 @@ public interface FeedbackServiceLocal {
         int companyId,
         int franchiseId);
     
+    List<Feedbacks> getStaffFeedbacksByBranch(int branchId);
+
+    long getTotalStaffFeedbacks(int branchId);
+
+    long getNegativeStaffFeedbacks(int branchId);
+
+    double getAverageStaffRating(int branchId);
+
+    void submitBranchFeedback(
+            Feedbacks feedback,
+            int userId,
+            int companyId,
+            int branchId,
+            int franchiseId);
+    
     
     
 }

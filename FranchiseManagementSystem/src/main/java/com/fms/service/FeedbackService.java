@@ -53,7 +53,10 @@ public class FeedbackService implements FeedbackServiceLocal {
         feedback.setUid(user);
         feedback.setCid(company);
         feedback.setFeedbackDate(new Date());
-        feedback.setFeedbackType("COMPANY");
+       if(feedback.getFeedbackType() == null) {
+
+            feedback.setFeedbackType("COMPANY");
+        }
 
         em.persist(feedback);
         
@@ -266,7 +269,108 @@ public class FeedbackService implements FeedbackServiceLocal {
 
         em.persist(feedback);
     }
+    
+    @Override
+    public List<Feedbacks> getStaffFeedbacksByBranch(
+            int branchId) {
 
+        return em.createQuery(
+
+            "SELECT f FROM Feedbacks f " +
+            "WHERE f.feedbackType = 'STAFF' " +
+            "AND f.branchId = :bid " +
+            "ORDER BY f.feedbackDate DESC",
+
+            Feedbacks.class
+
+        )
+        .setParameter("bid", branchId)
+        .getResultList();
+    }
+    
+         @Override
+        public long getTotalStaffFeedbacks(
+                int branchId) {
+
+            return em.createQuery(
+
+                "SELECT COUNT(f) FROM Feedbacks f " +
+                "WHERE f.feedbackType='STAFF' " +
+                "AND f.branchId=:bid",
+
+                Long.class
+
+            )
+            .setParameter("bid", branchId)
+            .getSingleResult();
+        }
+
+        
+        @Override
+        public long getNegativeStaffFeedbacks(
+                int branchId) {
+
+            return em.createQuery(
+
+                "SELECT COUNT(f) FROM Feedbacks f " +
+                "WHERE f.feedbackType='STAFF' " +
+                "AND f.branchId=:bid " +
+                "AND f.rating <= 2",
+
+                Long.class
+
+            )
+            .setParameter("bid", branchId)
+            .getSingleResult();
+        }
+        
+        @Override
+        public double getAverageStaffRating(
+                int branchId) {
+
+            Double avg = em.createQuery(
+
+                "SELECT AVG(f.rating) FROM Feedbacks f " +
+                "WHERE f.feedbackType='STAFF' " +
+                "AND f.branchId=:bid",
+
+                Double.class
+
+            )
+            .setParameter("bid", branchId)
+            .getSingleResult();
+
+            return avg != null ? avg : 0;
+        }
+        
+        @Override
+        public void submitBranchFeedback(
+                Feedbacks feedback,
+                int userId,
+                int companyId,
+                int branchId,
+                int franchiseId) {
+
+            Users user =
+                em.find(Users.class, userId);
+
+            Companies company =
+                em.find(Companies.class, companyId);
+
+            feedback.setUid(user);
+
+            feedback.setCid(company);
+
+            feedback.setFeedbackDate(new Date());
+
+            feedback.setFeedbackType("BRANCH");
+
+            feedback.setBranchId(branchId);
+
+            feedback.setFranchiseId(franchiseId);
+
+            em.persist(feedback);
+        }
 }
     
     

@@ -296,5 +296,33 @@ public class UserService implements UserServiceLocal {
             em.merge(user);
         }
     }
-}
+    
+    @Override
+    public String getUserName(int userId) {
+
+        Users user =
+            em.find(Users.class, userId);
+
+        return user != null
+                ? user.getName()
+                : "Unknown User";
+    }
+    
+    
+    @Override
+    public long getStaffCountByBranch(int branchId) {
+
+        return em.createQuery(
+
+            "SELECT COUNT(u) FROM Users u " +
+            "WHERE u.bid.bid = :bid " +
+            "AND u.rid.roleName = 'STAFF'",
+
+            Long.class
+
+        )
+        .setParameter("bid", branchId)
+        .getSingleResult();
+    }
+} 
 

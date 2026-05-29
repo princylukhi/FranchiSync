@@ -56,4 +56,8 @@ public interface UserServiceLocal {
         int userId,
         String password
     );
+    
+    public String getUserName(int userId);
+    
+    long getStaffCountByBranch(int branchId);
 }
