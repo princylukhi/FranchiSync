@@ -41,22 +41,36 @@ public class FranchiseManagerBean implements Serializable {
 
     private Users loggedInUser;
 
-    @PostConstruct
-    public void init() {
+   @PostConstruct
+        public void init() {
 
-        HttpSession session =
-            (HttpSession) FacesContext
-            .getCurrentInstance()
-            .getExternalContext()
-            .getSession(false);
+            try {
 
-        loggedInUser =
-            (Users) session.getAttribute("user");
+                HttpSession session =
+                        (HttpSession) FacesContext
+                                .getCurrentInstance()
+                                .getExternalContext()
+                                .getSession(false);
 
-        loadManagers();
+                if (session == null) {
+                    return;
+                }
 
-        loadBranches();
-    }
+                loggedInUser =
+                        (Users) session.getAttribute("user");
+
+                if (loggedInUser == null) {
+                    return;
+                }
+
+                loadManagers();
+                loadBranches();
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+        }
 
     // LOAD MANAGERS
 
@@ -73,15 +87,27 @@ public class FranchiseManagerBean implements Serializable {
 
     public void loadBranches() {
 
-        int franchiseId =
-            loggedInUser.getFranchisesCollection()
-            .iterator()
-            .next()
-            .getFid();
+            branches = new ArrayList<>();
 
-       branches =
-           branchService.getAvailableBranches(franchiseId);
-    }
+            if (loggedInUser == null) {
+                return;
+            }
+
+            if (loggedInUser.getFranchisesCollection() == null
+                    || loggedInUser.getFranchisesCollection().isEmpty()) {
+
+                return;
+            }
+
+            int franchiseId =
+                    loggedInUser.getFranchisesCollection()
+                            .iterator()
+                            .next()
+                            .getFid();
+
+            branches =
+                    branchService.getAvailableBranches(franchiseId);
+        }
 
     // OPEN DIALOG
 
