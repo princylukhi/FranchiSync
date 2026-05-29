@@ -151,18 +151,24 @@ public class NotificationService implements NotificationServiceLocal {
 
         "FranchiSync Login Credentials",
 
-        "Dear Company,\n\n"
+        "Dear Company Administrator,\n\n"
 
-        + "Your account has been created successfully.\n\n"
+        + "Welcome to FranchiSync.\n\n"
 
-        + "You can now login to FranchiSync using "
-        + "the following credentials:\n\n"
+        + "Your company registration has been approved "
+        + "and your company account has been created successfully.\n\n"
+
+        + "Using this account you can:\n"
+        + "• Manage franchise requests\n"
+        + "• Monitor franchise performance\n"
+        + "• View reports and feedback\n\n"
+
+        + "Login Credentials:\n\n"
 
         + "Email: " + email + "\n"
         + "Password: " + password + "\n\n"
 
-        + "Please change your password after first login "
-        + "for security purposes.\n\n"
+        + "Please change your password after first login.\n\n"
 
         + "Regards,\n"
         + "FranchiSync Team",
@@ -185,17 +191,21 @@ public class NotificationService implements NotificationServiceLocal {
 
             "Dear Franchise Owner,\n\n"
 
-            + "Your franchise account has been "
-            + "created successfully.\n\n"
+            + "Congratulations on becoming a franchise partner.\n\n"
 
-            + "You can now login to FranchiSync "
-            + "using the following credentials:\n\n"
+            + "Your franchise account is now active.\n\n"
+
+            + "Using this account you can:\n"
+            + "• Manage branches\n"
+            + "• Assign branch managers\n"
+            + "• Monitor branch operations\n\n"
+
+            + "Login Credentials:\n\n"
 
             + "Email: " + email + "\n"
             + "Password: " + password + "\n\n"
 
-            + "Please change your password after "
-            + "first login for security purposes.\n\n"
+            + "Please change your password after first login.\n\n"
 
             + "Regards,\n"
             + "FranchiSync Team",
@@ -322,19 +332,60 @@ public class NotificationService implements NotificationServiceLocal {
 
             "Staff Login Credentials",
 
-            "Dear Staff,\n\n"
+            "Dear Staff Member,\n\n"
 
-            + "Your account has been created successfully.\n\n"
+            + "Your staff account has been created successfully.\n\n"
 
-            + "You can login using:\n\n"
+            + "Using this account you can:\n"
+            + "• Access assigned tasks\n"
+            + "• Manage daily operations\n"
+            + "• Update work related information\n\n"
+
+            + "Login Credentials:\n\n"
 
             + "Email: " + email + "\n"
             + "Password: " + password + "\n\n"
+
+            + "Please change your password after first login.\n\n"
 
             + "Regards,\n"
             + "FranchiSync Team",
 
             "STAFF_CREDENTIALS"
+        );
+    }
+    
+    @Override
+    public void sendBranchManagerCredentials(
+            String email,
+            String password) {
+
+        sendNotification(
+
+            email,
+
+            "Branch Manager Login Credentials",
+
+            "Dear Branch Manager,\n\n"
+
+            + "You have been assigned to manage a branch in FranchiSync.\n\n"
+
+            + "Using this account you can:\n"
+            + "• Manage branch staff\n"
+            + "• Handle inventory\n"
+            + "• Track sales activities\n\n"
+
+            + "Login Credentials:\n\n"
+
+            + "Email: " + email + "\n"
+            + "Password: " + password + "\n\n"
+
+            + "Please change your password after first login.\n\n"
+
+            + "Regards,\n"
+            + "FranchiSync Team",
+
+            "BRANCH_MANAGER_CREDENTIALS"
         );
     }
 }
