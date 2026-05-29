@@ -28,9 +28,11 @@ implements Serializable {
     @PostConstruct
     public void init() {
 
+        String email =
+            loginBean.getLoggedUser().getEmail();
+
         notifications =
-            notificationService.getAllNotifications();
-        
+            notificationService.getNotificationsByEmail(email);
     }
 
     public List<Notifications> getNotifications() {

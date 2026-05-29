@@ -9,6 +9,10 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 import java.io.Serializable;
 
@@ -18,6 +22,8 @@ public class LoginBean implements Serializable {
 
     private String email;
     private String password;
+    
+    private boolean rememberMe;
 
     private Users loggedUser;
 
@@ -26,6 +32,25 @@ public class LoginBean implements Serializable {
 
     @EJB
     private UserServiceLocal userService;
+    
+    @PostConstruct
+    public void init() {
+
+        Map<String, Object> cookies =
+                FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestCookieMap();
+
+        Cookie cookie =
+                (Cookie) cookies.get("rememberEmail");
+
+        if (cookie != null) {
+
+            email = cookie.getValue();
+
+            rememberMe = true;
+        }
+    }
 
     // 🔐 LOGIN METHOD
     public String login() {
@@ -44,6 +69,48 @@ public class LoginBean implements Serializable {
 
             session.setAttribute("user", user);
             session.setAttribute("role", user.getRid().getRoleName());
+            
+            if (rememberMe) {
+
+            Cookie cookie =
+                    new Cookie(
+                            "rememberEmail",
+                            user.getEmail()
+                    );
+
+            cookie.setMaxAge(
+                    60 * 60 * 24 * 30
+            ); // 30 days
+
+            cookie.setPath("/");
+
+            ((HttpServletResponse)
+                    FacesContext
+                    .getCurrentInstance()
+                    .getExternalContext()
+                    .getResponse())
+                    .addCookie(cookie);
+            }
+            
+            else {
+
+                Cookie cookie =
+                        new Cookie(
+                                "rememberEmail",
+                                ""
+                        );
+
+                cookie.setMaxAge(0);
+
+                cookie.setPath("/");
+
+                ((HttpServletResponse)
+                        FacesContext
+                        .getCurrentInstance()
+                        .getExternalContext()
+                        .getResponse())
+                        .addCookie(cookie);
+            }
 
             // Avoid null company error
             if (user.getCid() != null) {
@@ -100,6 +167,7 @@ public class LoginBean implements Serializable {
         return null;
     }
 
+    
     // 🚪 LOGOUT
     public String logout() {
 
@@ -172,5 +240,13 @@ public class LoginBean implements Serializable {
 
     public void setSidebarPage(String sidebarPage) {
         this.sidebarPage = sidebarPage;
+    }
+    
+    public boolean isRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 }

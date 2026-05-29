@@ -4,6 +4,7 @@ import com.fms.entity.PasswordResetTokens;
 import com.fms.entity.Users;
 
 import com.fms.service.EmailServiceLocal;
+import com.fms.service.NotificationServiceLocal;
 import com.fms.service.PasswordResetServiceLocal;
 import com.fms.service.UserServiceLocal;
 
@@ -31,6 +32,9 @@ implements Serializable {
 
     @EJB
     private EmailServiceLocal emailService;
+    
+    @EJB
+    private NotificationServiceLocal notificationService;
 
     public void sendResetLink() {
 
@@ -98,6 +102,22 @@ implements Serializable {
                     + "Regards,\n"
                     + "FranchiSync Team"
             );
+            
+            notificationService.sendNotification(
+
+                user.getEmail(),
+
+                "Password Reset Requested",
+
+                "Password reset link generated for "
+                + user.getName()
+                + " ("
+                + user.getEmail()
+                + "). The reset link is valid for 5 minutes.",
+
+                "PASSWORD_RESET"
+            );
+                
 
             FacesContext
                     .getCurrentInstance()
