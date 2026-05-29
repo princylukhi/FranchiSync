@@ -41,6 +41,8 @@ public class AuthFilter extends HttpFilter implements Filter {
                 path.contains("companies.xhtml") ||
                 path.contains("/company-logo/") ||
                 path.contains("apply_franchise.xhtml") ||
+                path.contains("forgot-password.xhtml") ||
+                path.contains("reset-password.xhtml") ||
                 path.contains("jakarta.faces.resource") ||
                 path.contains("/resources/");
 

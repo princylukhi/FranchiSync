@@ -276,5 +276,25 @@ public class UserService implements UserServiceLocal {
             plainPassword
         );
     }
+    
+    @Override
+    public void updatePassword(
+            int userId,
+            String password
+    ) {
+
+        Users user =
+                em.find(
+                        Users.class,
+                        userId
+                );
+
+        if(user != null) {
+
+            user.setPassword(password);
+
+            em.merge(user);
+        }
+    }
 }
 

@@ -52,4 +52,8 @@ public interface UserServiceLocal {
         int branchId
     );
     
+    public void updatePassword(
+        int userId,
+        String password
+    );
 }
