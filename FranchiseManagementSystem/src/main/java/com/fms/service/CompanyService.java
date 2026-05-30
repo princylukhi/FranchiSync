@@ -238,4 +238,48 @@ public class CompanyService implements CompanyServiceLocal {
         return em.find(Companies.class, companyId);
 
     }
+    
+    @Override
+    public List<Object[]> getTopCompaniesByFranchiseCount() {
+
+        return em.createQuery(
+
+            "SELECT c.companyName, COUNT(f) " +
+            "FROM Companies c " +
+            "LEFT JOIN c.franchisesCollection f " +
+            "GROUP BY c.companyName " +
+            "ORDER BY COUNT(f) DESC",
+
+            Object[].class
+
+        )
+        .setMaxResults(5)
+        .getResultList();
+    }
+    
+    @Override
+        public List<Object[]> getMonthlyCompanyRegistrations() {
+
+            return em.createNativeQuery(
+
+                "SELECT MONTH(created_date), COUNT(*) " +
+                "FROM companies " +
+                "GROUP BY MONTH(created_date) " +
+                "ORDER BY MONTH(created_date)"
+
+            ).getResultList();
+        }
+        
+        @Override
+        public List<Object[]> getWeeklyCompanyRegistrations() {
+
+            return em.createNativeQuery(
+
+                "SELECT WEEK(created_date), COUNT(*) " +
+                "FROM companies " +
+                "GROUP BY WEEK(created_date) " +
+                "ORDER BY WEEK(created_date)"
+
+            ).getResultList();
+        }
 }

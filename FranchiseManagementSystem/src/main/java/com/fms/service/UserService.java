@@ -324,5 +324,31 @@ public class UserService implements UserServiceLocal {
         .setParameter("bid", branchId)
         .getSingleResult();
     }
+    
+    @Override
+    public List<Object[]> getMonthlyUserRegistrations() {
+
+        return em.createNativeQuery(
+
+            "SELECT MONTH(created_date), COUNT(*) " +
+            "FROM users " +
+            "GROUP BY MONTH(created_date) " +
+            "ORDER BY MONTH(created_date)"
+
+        ).getResultList();
+    }
+    
+    @Override
+    public List<Object[]> getWeeklyUserRegistrations() {
+
+        return em.createNativeQuery(
+
+            "SELECT WEEK(created_date), COUNT(*) " +
+            "FROM users " +
+            "GROUP BY WEEK(created_date) " +
+            "ORDER BY WEEK(created_date)"
+
+        ).getResultList();
+    }
 } 
 

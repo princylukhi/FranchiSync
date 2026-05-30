@@ -231,24 +231,50 @@ public class FranchiseService implements FranchiseServiceLocal {
         }
         
         @Override
-public Franchises getFranchiseByOwner(int userId) {
+        public Franchises getFranchiseByOwner(int userId) {
 
-    try {
+            try {
 
-        return em.createQuery(
+                return em.createQuery(
 
-            "SELECT f FROM Franchises f " +
-            "WHERE f.ownerUserId.uid = :uid",
+                    "SELECT f FROM Franchises f " +
+                    "WHERE f.ownerUserId.uid = :uid",
 
-            Franchises.class
+                    Franchises.class
 
-        )
-        .setParameter("uid", userId)
-        .getSingleResult();
+                )
+                .setParameter("uid", userId)
+                .getSingleResult();
 
-    } catch (Exception e) {
+            } catch (Exception e) {
 
-        return null;
-    }
-}
+                return null;
+            }
+        }
+        
+        @Override
+        public List<Object[]> getMonthlyFranchiseRegistrations() {
+
+            return em.createNativeQuery(
+
+                "SELECT MONTH(created_date), COUNT(*) " +
+                "FROM franchises " +
+                "GROUP BY MONTH(created_date) " +
+                "ORDER BY MONTH(created_date)"
+
+            ).getResultList();
+        }
+        
+        @Override
+        public List<Object[]> getWeeklyFranchiseRegistrations() {
+
+            return em.createNativeQuery(
+
+                "SELECT WEEK(created_date), COUNT(*) " +
+                "FROM franchises " +
+                "GROUP BY WEEK(created_date) " +
+                "ORDER BY WEEK(created_date)"
+
+            ).getResultList();
+        }
     }

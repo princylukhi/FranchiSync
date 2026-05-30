@@ -35,6 +35,10 @@ public interface FranchiseServiceLocal {
     
     public Franchises getFranchiseByOwner(int userId);
     
+    List<Object[]> getMonthlyFranchiseRegistrations();
+
+    List<Object[]> getWeeklyFranchiseRegistrations();
+    
    
 
 }

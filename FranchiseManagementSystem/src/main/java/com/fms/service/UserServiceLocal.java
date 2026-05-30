@@ -60,4 +60,8 @@ public interface UserServiceLocal {
     public String getUserName(int userId);
     
     long getStaffCountByBranch(int branchId);
+    
+    List<Object[]> getMonthlyUserRegistrations();
+
+    List<Object[]> getWeeklyUserRegistrations();
 }

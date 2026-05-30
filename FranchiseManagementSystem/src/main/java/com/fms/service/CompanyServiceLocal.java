@@ -32,5 +32,11 @@ public interface CompanyServiceLocal {
     public List<Companies> getApprovedCompanies();
     
     public Companies findCompanyById(int companyId);
+    
+    List<Object[]> getTopCompaniesByFranchiseCount();
+
+    List<Object[]> getMonthlyCompanyRegistrations();
+
+    List<Object[]> getWeeklyCompanyRegistrations();
 
 }
