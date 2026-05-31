@@ -371,6 +371,23 @@ public class FeedbackService implements FeedbackServiceLocal {
 
             em.persist(feedback);
         }
+        
+       @Override
+        public List<Object[]> getBranchFeedbackDistribution(
+                int franchiseId) {
+
+            return em.createNativeQuery(
+
+                "SELECT b.branch_name, COUNT(f.fid) " +
+                "FROM feedbacks f " +
+                "JOIN branches b ON f.branch_id = b.bid " +
+                "WHERE f.franchise_id = ? " +
+                "GROUP BY b.branch_name"
+
+            )
+            .setParameter(1, franchiseId)
+            .getResultList();
+        }
 }
     
     

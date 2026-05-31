@@ -67,6 +67,8 @@ public interface FeedbackServiceLocal {
             int branchId,
             int franchiseId);
     
+    List<Object[]> getBranchFeedbackDistribution(int franchiseId);
+    
     
     
 }

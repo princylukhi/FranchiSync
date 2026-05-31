@@ -22,5 +22,11 @@ public interface BranchServiceLocal {
     public long getTotalBranchesByFranchise(int franchiseId);
     
     public String getBranchNameById(int branchId);
+    
+    List<Object[]> getStaffDistribution(int franchiseId);
+
+    long getTotalStaffByFranchise(int franchiseId);
+
+    List<Object[]> getTopPerformingBranches(int franchiseId);
 
 }
