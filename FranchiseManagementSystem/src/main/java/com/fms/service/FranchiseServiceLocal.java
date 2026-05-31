@@ -39,6 +39,12 @@ public interface FranchiseServiceLocal {
 
     List<Object[]> getWeeklyFranchiseRegistrations();
     
+    List<Object[]> getMonthlyFranchiseGrowth(int companyId);
+
+    List<Object[]> getBranchDistribution(int companyId);
+
+    List<Object[]> getTopPerformingFranchises(int companyId);
+    
    
 
 }

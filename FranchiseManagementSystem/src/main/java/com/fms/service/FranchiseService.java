@@ -277,4 +277,59 @@ public class FranchiseService implements FranchiseServiceLocal {
 
             ).getResultList();
         }
+        
+        @Override
+        public List<Object[]> getMonthlyFranchiseGrowth(int companyId) {
+
+            return em.createNativeQuery(
+
+                "SELECT MONTH(created_date), COUNT(*) " +
+                "FROM franchises " +
+                "WHERE cid = ? " +
+                "GROUP BY MONTH(created_date) " +
+                "ORDER BY MONTH(created_date)"
+
+            )
+            .setParameter(1, companyId)
+            .getResultList();
+        }
+        
+       @Override
+        public List<Object[]> getBranchDistribution(int companyId) {
+
+            return em.createQuery(
+
+                "SELECT f.ownerUserId.name, COUNT(b) " +
+                "FROM Franchises f " +
+                "LEFT JOIN f.branchesCollection b " +
+                "WHERE f.cid.cid = :cid " +
+                "GROUP BY f.ownerUserId.name",
+
+                Object[].class
+
+            )
+            .setParameter("cid", companyId)
+            .getResultList();
+        }
+        
+        @Override
+        public List<Object[]> getTopPerformingFranchises(int companyId) {
+
+            return em.createNativeQuery(
+
+                "SELECT " +
+                "u.name, " +
+                "(COUNT(DISTINCT b.bid) + COUNT(DISTINCT fb.fid)) score " +
+                "FROM franchises f " +
+                "LEFT JOIN branches b ON f.fid = b.fid " +
+                "LEFT JOIN feedbacks fb ON f.fid = fb.franchise_id " +
+                "LEFT JOIN users u ON f.owner_user_id = u.uid " +
+                "WHERE f.cid = ? " +
+                "GROUP BY u.name " +
+                "ORDER BY score DESC"
+
+            )
+            .setParameter(1, companyId)
+            .getResultList();
+        }
     }
