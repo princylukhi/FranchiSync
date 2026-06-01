@@ -388,6 +388,57 @@ public class FeedbackService implements FeedbackServiceLocal {
             .setParameter(1, franchiseId)
             .getResultList();
         }
+        
+        @Override
+        public List<Object[]> getMonthlyFeedbackTrend(int branchId) {
+
+            return em.createNativeQuery(
+
+                "SELECT MONTH(feedback_date), COUNT(*) " +
+                "FROM feedbacks " +
+                "WHERE branch_id = ? " +
+                "GROUP BY MONTH(feedback_date) " +
+                "ORDER BY MONTH(feedback_date)"
+
+            )
+            .setParameter(1, branchId)
+            .getResultList();
+        }
+        
+        @Override
+        public List<Object[]> getFeedbackCountByType(int branchId) {
+
+            return em.createQuery(
+
+                "SELECT f.feedbackType, COUNT(f) " +
+                "FROM Feedbacks f " +
+                "WHERE f.branchId = :branchId " +
+                "GROUP BY f.feedbackType",
+
+                Object[].class
+
+            )
+            .setParameter("branchId", branchId)
+            .getResultList();
+        }
+        
+        @Override
+        public List<Object[]> getRatingDistribution(int branchId) {
+
+            return em.createQuery(
+
+                "SELECT f.rating, COUNT(f) " +
+                "FROM Feedbacks f " +
+                "WHERE f.branchId = :branchId " +
+                "GROUP BY f.rating " +
+                "ORDER BY f.rating",
+
+                Object[].class
+
+            )
+            .setParameter("branchId", branchId)
+            .getResultList();
+        }
 }
     
     

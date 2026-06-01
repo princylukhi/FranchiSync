@@ -64,4 +64,12 @@ public interface UserServiceLocal {
     List<Object[]> getMonthlyUserRegistrations();
 
     List<Object[]> getWeeklyUserRegistrations();
+    
+    List<Object[]> getStaffPerformance(int branchId);
+
+    List<Object[]> getStaffRatingAnalysis(int branchId);
+    
+    List<Object[]> getMonthlyStaffJoiningTrend(int branchId);
+
+    List<Object[]> getStaffStatusDistribution(int branchId);
 }
