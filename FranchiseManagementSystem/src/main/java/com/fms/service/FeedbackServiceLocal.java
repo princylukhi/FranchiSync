@@ -69,6 +69,12 @@ public interface FeedbackServiceLocal {
     
     List<Object[]> getBranchFeedbackDistribution(int franchiseId);
     
+    List<Object[]> getMonthlyFeedbackTrend(int branchId);
+    
+    List<Object[]> getFeedbackCountByType(int branchId);
+
+    List<Object[]> getRatingDistribution(int branchId);
+    
     
     
 }

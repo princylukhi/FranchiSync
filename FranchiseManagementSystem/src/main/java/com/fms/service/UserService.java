@@ -350,5 +350,79 @@ public class UserService implements UserServiceLocal {
 
         ).getResultList();
     }
+    
+    @Override
+    public List<Object[]> getStaffPerformance(int branchId) {
+
+        return em.createQuery(
+
+            "SELECT u.name, COUNT(f) " +
+            "FROM Users u, Feedbacks f " +
+            "WHERE u.uid = f.staffId " +
+            "AND f.branchId = :branchId " +
+            "GROUP BY u.name " +
+            "ORDER BY COUNT(f) DESC",
+
+            Object[].class
+
+        )
+        .setParameter("branchId", branchId)
+        .getResultList();
+    }
+    
+    @Override
+    public List<Object[]> getStaffRatingAnalysis(int branchId) {
+
+        return em.createQuery(
+
+            "SELECT u.name, AVG(f.rating) " +
+            "FROM Users u, Feedbacks f " +
+            "WHERE u.uid = f.staffId " +
+            "AND f.branchId = :branchId " +
+            "GROUP BY u.name",
+
+            Object[].class
+
+        )
+        .setParameter("branchId", branchId)
+        .getResultList();
+    }
+    
+   
+@Override
+public List<Object[]> getMonthlyStaffJoiningTrend(
+        int branchId) {
+
+    return em.createNativeQuery(
+
+        "SELECT MONTH(created_date), COUNT(*) " +
+        "FROM users " +
+        "WHERE bid = ? " +
+        "AND rid = 5 " +
+        "GROUP BY MONTH(created_date) " +
+        "ORDER BY MONTH(created_date)"
+
+    )
+    .setParameter(1, branchId)
+    .getResultList();
+}
+
+@Override
+public List<Object[]> getStaffStatusDistribution(
+        int branchId) {
+
+    return em.createQuery(
+
+        "SELECT u.status, COUNT(u) " +
+        "FROM Users u " +
+        "WHERE u.bid.bid = :bid " +
+        "GROUP BY u.status",
+
+        Object[].class
+
+    )
+    .setParameter("bid", branchId)
+    .getResultList();
+}
 } 
 
