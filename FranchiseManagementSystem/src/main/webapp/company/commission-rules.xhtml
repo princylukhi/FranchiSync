@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="content">
+
+<h:form id="commissionForm">
+    
+    <p:messages id="msgs"
+            showDetail="true"
+            closable="true"/>
+
+    <!-- HEADER -->
+
+    <div class="bg-white
+                rounded-3xl
+                shadow-md
+                border border-slate-200
+                p-6
+                mb-8">
+
+        <div class="flex
+                    items-center
+                    justify-between
+                    flex-wrap
+                    gap-6">
+
+            <!-- LEFT -->
+
+            <div class="flex items-center gap-5">
+
+                <div class="w-16
+                            h-16
+                            rounded-2xl
+                            bg-emerald-500
+                            flex
+                            items-center
+                            justify-center
+                            shadow-lg">
+
+                    <i class="pi pi-percentage
+                              text-white
+                              text-2xl"></i>
+
+                </div>
+
+                <div>
+
+                    <h1 class="text-4xl
+                               font-black
+                               text-slate-800">
+
+                        Commission Rules
+
+                    </h1>
+
+                    <p class="text-slate-500 mt-1">
+
+                        Manage sales-based commission slabs for franchises
+
+                    </p>
+
+                    <div class="mt-3
+                                inline-flex
+                                items-center
+                                gap-2
+                                bg-emerald-50
+                                text-emerald-700
+                                px-4
+                                py-2
+                                rounded-xl
+                                font-semibold
+                                text-sm">
+
+                        <i class="pi pi-percentage"></i>
+
+                        #{companyCommissionBean.rules.size()} Rules
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BUTTON -->
+
+            <p:commandButton
+                value="Add Rule"
+                icon="pi pi-plus"
+                process="@this"
+                action="#{companyCommissionBean.openAddDialog}"
+                update=":commissionForm:dialogPanel"
+                oncomplete="PF('addRuleDialog').show()"
+                styleClass="!bg-emerald-500
+                            hover:!bg-emerald-600
+                            !border-0
+                            !rounded-2xl
+                            !px-6
+                            !py-3
+                            !font-bold"/>
+
+                    </div>
+
+    </div>
+
+    <!-- TABLE -->
+
+    <div class="bg-white
+                rounded-3xl
+                shadow-lg
+                p-6">
+
+        <p:dataTable
+            value="#{companyCommissionBean.rules}"
+            var="r"
+            reflow="true"
+            tableStyle="width:100%">
+
+            <p:column headerText="Sales From">
+
+                ₹ #{r.minSales}
+
+            </p:column>
+
+            <p:column headerText="Sales To">
+
+                ₹ #{r.maxSales}
+
+            </p:column>
+
+            <p:column headerText="Commission">
+
+                #{r.coPercentage} %
+
+            </p:column>
+
+            <p:column headerText="Status">
+
+                <span class="#{r.status eq 'ACTIVE'
+                                ? 'bg-green-100 text-green-700'
+                                : 'bg-red-100 text-red-700'}
+                                px-3 py-1 rounded-full
+                                text-xs font-semibold">
+
+                    #{r.status}
+
+                </span>
+
+            </p:column>
+
+            <p:column headerText="Created">
+
+                <h:outputText value="#{r.createdDate}">
+                    <f:convertDateTime pattern="dd MMM yyyy"/>
+                </h:outputText>
+
+            </p:column>
+
+            <p:column headerText="Actions">
+
+                <!-- EDIT -->
+
+                <p:commandButton
+                    icon="pi pi-pencil"
+                    action="#{companyCommissionBean.edit(r)}"
+                    process="@this"
+                    update=":commissionForm:editPanel"
+                    oncomplete="PF('editRuleDialog').show()"
+                    styleClass="!bg-emerald-100
+                                hover:!bg-emerald-200
+                                !text-emerald-700
+                                !border-0
+                                mr-2"/>
+
+                <!-- ACTIVATE -->
+
+                <p:commandButton
+                    rendered="#{r.status eq 'INACTIVE'}"    
+                    icon="pi pi-check"
+                    action="#{companyCommissionBean.activate(r.coid)}"
+                    process="@this"
+                    update="@form"
+                    styleClass="!bg-emerald-500
+                                hover:!bg-emerald-600
+                                !border-0"/>
+
+                <!-- DEACTIVATE -->
+
+                <p:commandButton
+                    rendered="#{r.status eq 'ACTIVE'}"
+                    icon="pi pi-times"
+                    action="#{companyCommissionBean.deactivate(r.coid)}"
+                    process="@this"
+                    update="@form"
+                    styleClass="!bg-slate-700
+                                hover:!bg-slate-800
+                                !border-0"/>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </div>
+
+    <!-- ADD DIALOG -->
+    <p:dialog
+        header="Add Commission Rule"
+        widgetVar="addRuleDialog"
+        modal="true"
+        width="500">
+
+        <h:panelGroup id="dialogPanel">
+
+            <h:panelGrid columns="2" cellpadding="10">
+
+                <h:outputText value="Minimum Sales"/>
+
+                <p:inputNumber 
+                value="#{companyCommissionBean.rule.minSales}"
+                required="true"/>
+
+                <h:outputText value="Maximum Sales"/>
+
+                <p:inputNumber
+                value="#{companyCommissionBean.rule.maxSales}"
+                required="true"/>
+                
+                <h:outputText value="Commission (%)"/>
+
+                <p:inputNumber 
+                value="#{companyCommissionBean.rule.coPercentage}"
+                required="true"/>
+
+            </h:panelGrid>
+
+        </h:panelGroup>
+
+        <f:facet name="footer">
+
+            <p:commandButton
+                value="Save"
+                icon="pi pi-check"
+                action="#{companyCommissionBean.addRule}"
+                process="@this dialogPanel"
+                update="@form"
+                styleClass="!bg-emerald-500
+                                            hover:!bg-emerald-600
+                                            !border-0
+                                            !rounded-2xl
+                                            hover:scale-105
+                                            transition-all
+                                            duration-300
+                                            !px-5
+                                            !py-3
+                                            !font-bold"/>
+
+        </f:facet>
+
+    </p:dialog>
+
+    <!-- EDIT DIALOG -->
+
+    <p:dialog
+        header="Edit Commission Rule"
+        widgetVar="editRuleDialog"
+        modal="true"
+        width="500">
+
+        <h:panelGrid
+            id="editPanel"
+            columns="2"
+            cellpadding="10">
+
+            <h:outputText value="Minimum Sales"/>
+
+            <p:inputNumber
+                value="#{companyCommissionBean.rule.minSales}"/>
+
+            <h:outputText value="Maximum Sales"/>
+
+            <p:inputNumber
+                value="#{companyCommissionBean.rule.maxSales}"/>
+
+            <h:outputText value="Commission (%)"/>
+
+            <p:inputNumber
+                value="#{companyCommissionBean.rule.coPercentage}"/>
+
+        </h:panelGrid>
+
+        <f:facet name="footer">
+
+            <p:commandButton
+                value="Update"
+                icon="pi pi-pencil"
+                action="#{companyCommissionBean.updateRule}"
+                process="@this editPanel"
+                update="@form"
+                oncomplete="PF('editRuleDialog').hide()"
+                 styleClass="!bg-emerald-500
+                                        hover:!bg-emerald-600
+                                        !border-0
+                                        !rounded-2xl
+                                        hover:scale-105
+                                        transition-all
+                                        duration-300
+                                        !px-5
+                                        !py-3
+                                        !font-bold"/>
+        </f:facet>
+
+    </p:dialog>
+
+</h:form>
+
+</ui:define>
+
+</ui:composition>
