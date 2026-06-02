@@ -35,10 +35,14 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:c="jakarta.tags.core">
 
 <h:body>
 
+    <c:set var="currentPage"
+       value="#{request.servletPath}" />
+    
     <div class="h-full flex flex-col bg-zinc-950">
 
         <!-- TITLE -->
@@ -59,7 +63,9 @@
 
             <!-- Dashboard -->
             <h:link outcome="/staff/dashboard.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg">
+        styleClass="#{currentPage eq '/staff/dashboard.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-home"></i>
 
@@ -69,7 +75,9 @@
 
             <!-- Billing -->
             <h:link outcome="/staff/billing.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+        styleClass="#{currentPage eq '/staff/billing.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-shopping-cart"></i>
 
@@ -78,8 +86,10 @@
             </h:link>
 
             <!-- Invoices -->
-            <h:link outcome="/staff/invoices.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+           <h:link outcome="/staff/invoices.xhtml"
+            styleClass="#{currentPage eq '/staff/invoices.xhtml'
+            ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+            : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-file"></i>
 
@@ -89,7 +99,9 @@
 
             <!-- Sales History -->
             <h:link outcome="/staff/sales_history.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+        styleClass="#{currentPage eq '/staff/sales_history.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-history"></i>
 
@@ -99,7 +111,9 @@
             
             <!-- Notifications -->
             <h:link outcome="/staff/notifications.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+            styleClass="#{currentPage eq '/staff/notifications.xhtml'
+            ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+            : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-bell"></i>
 
@@ -109,7 +123,9 @@
 
             <!-- Feedback -->
             <h:link outcome="/staff/feedback.xhtml"
-                    styleClass="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200">
+            styleClass="#{currentPage eq '/staff/feedback.xhtml'
+            ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+            : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
 
                 <i class="pi pi-comments"></i>
 
