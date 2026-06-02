@@ -388,6 +388,53 @@ public class NotificationService implements NotificationServiceLocal {
             "BRANCH_MANAGER_CREDENTIALS"
         );
     }
+    
+    @Override
+public void sendFranchiseCredentialsWithCertificate(
+        String email,
+        String password,
+        String certificatePath) {
+
+    String subject =
+            "Franchise Login Credentials & Certificate";
+
+    String message =
+
+            "Dear Franchise Owner,\n\n"
+
+            + "Congratulations on becoming an "
+            + "authorized franchise partner.\n\n"
+
+            + "Your franchise account has been "
+            + "activated successfully.\n\n"
+
+            + "Login Credentials:\n\n"
+
+            + "Email: "
+            + email
+            + "\n"
+
+            + "Password: "
+            + password
+            + "\n\n"
+
+            + "Your official franchise certificate "
+            + "is attached with this email.\n\n"
+
+            + "Regards,\n"
+            + "FranchiSync Team";
+
+    emailService.sendEmailWithAttachment(
+
+            email,
+
+            subject,
+
+            message,
+
+            certificatePath
+    );
+}
 }
 
        

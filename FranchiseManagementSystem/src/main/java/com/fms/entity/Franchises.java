@@ -57,6 +57,8 @@ public class Franchises implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+    @Column(name = "certificate_file")
+    private String certificateFile;
     @JoinColumn(name = "cid", referencedColumnName = "cid")
     @ManyToOne(optional = false)
     private Companies cid;
@@ -65,6 +67,7 @@ public class Franchises implements Serializable {
     private Users ownerUserId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fid")
     private Collection<Branches> branchesCollection;
+    
 
     public Franchises() {
     }
@@ -117,6 +120,14 @@ public class Franchises implements Serializable {
 
     public void setOwnerUserId(Users ownerUserId) {
         this.ownerUserId = ownerUserId;
+    }
+    
+    public String getCertificateFile() {
+        return certificateFile;
+    }
+
+    public void setCertificateFile(String certificateFile) {
+        this.certificateFile = certificateFile;
     }
 
     @XmlTransient

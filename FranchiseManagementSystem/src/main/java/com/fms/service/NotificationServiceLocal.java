@@ -43,6 +43,12 @@ public interface NotificationServiceLocal {
             String password
         );
     
+    void sendFranchiseCredentialsWithCertificate(
+            String email,
+            String password,
+            String certificatePath
+    );
+    
    
 
 }

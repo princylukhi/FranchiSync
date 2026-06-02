@@ -24,6 +24,9 @@ public class FranchiseService implements FranchiseServiceLocal {
     
     @EJB
     private UserServiceLocal userService;
+    
+    @EJB
+    private CertificateServiceLocal certificateService;
 
     @Override
     public void submitFranchiseRequest(FranchiseRequests request) {
@@ -99,16 +102,31 @@ public class FranchiseService implements FranchiseServiceLocal {
 
         em.persist(franchise);
 
+        em.flush();
+
+        String certificatePath =
+                certificateService
+                .generateCertificate(
+                        franchise
+                );
+
+        em.merge(franchise);
+
         // SEND APPROVAL MAIL
         notificationService.sendFranchiseApproval(
                 req.getEmail()
         );
 
-        // SEND LOGIN CREDENTIALS
-        notificationService.sendFranchiseCredentials(
-                req.getEmail(),
-                "owner123"
-        );
+        // SEND LOGIN CREDENTIALS + PDF
+        notificationService
+                .sendFranchiseCredentialsWithCertificate(
+
+                        req.getEmail(),
+
+                        "owner123",
+
+                        certificatePath
+                );
     }
 
     @Override
