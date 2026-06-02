@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="jakarta.faces.facelets">
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
 
 <h:body>
 
@@ -38,15 +39,62 @@
             </div>
 
             <!-- SEARCH -->
-            <div class="hidden md:flex items-center bg-slate-800 rounded-xl px-4 py-2 w-96">
+            <h:form id="searchForm">
 
-                <i class="pi pi-search text-slate-400 mr-3"></i>
+                <div class="relative w-96">
 
-                <input type="text"
-                       placeholder="Search..."
-                       class="bg-transparent outline-none text-white w-full placeholder-slate-500"/>
+                    <div class="flex items-center bg-slate-800 rounded-xl px-4 py-2">
 
-            </div>
+                        <i class="pi pi-search text-slate-400 mr-3"></i>
+
+                        <p:inputText
+                            value="#{searchBean.keyword}"
+                            placeholder="Search companies, users, branches..."
+                            styleClass="!bg-transparent !border-0 !shadow-none !text-white w-full">
+
+                            <p:ajax
+                                event="keyup"
+                                listener="#{searchBean.search}"
+                                update="searchResults"/>
+
+                        </p:inputText>
+
+                    </div>
+
+                    <!-- RESULTS -->
+
+                    <h:panelGroup id="searchResults">
+
+                        <ui:fragment rendered="#{not empty searchBean.results}">
+
+                            <div class="absolute top-14 left-0 w-full bg-white rounded-xl shadow-2xl z-50 max-h-80 overflow-y-auto">
+
+                                <ui:repeat value="#{searchBean.results}" var="r">
+
+                                   <h:link outcome="#{searchBean.getRedirectUrl(r)}"
+                                            styleClass="block p-3 border-b border-slate-100 hover:bg-slate-50">
+
+                                        <div class="font-semibold text-slate-800">
+                                            #{r.name}
+                                        </div>
+
+                                        <div class="text-xs text-slate-500">
+                                            #{r.type} - #{r.extra}
+                                        </div>
+
+                                    </h:link>
+
+                                </ui:repeat>
+
+                            </div>
+
+                        </ui:fragment>
+
+                    </h:panelGroup>
+
+                </div>
+
+</h:form>
 
         </div>
 
