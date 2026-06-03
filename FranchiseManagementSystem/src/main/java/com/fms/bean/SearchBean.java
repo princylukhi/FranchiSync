@@ -155,6 +155,12 @@ public class SearchBean implements Serializable {
 
             return "#";
         }
+            
+    public void clearSearch() {
+
+        keyword = "";
+        results = new ArrayList<>();
+    }
 
     public String getKeyword() {
         return keyword;
