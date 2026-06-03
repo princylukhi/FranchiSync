@@ -16,6 +16,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 
+import com.lowagie.text.Rectangle;
+import java.awt.Color;
+
+
 @Stateless
 public class CertificateService
 implements CertificateServiceLocal {
@@ -75,215 +79,298 @@ implements CertificateServiceLocal {
 
         document.open();
         
+// OUTER BORDER
+
+Rectangle outerBorder =
+        new Rectangle(
+                20,
+                20,
+                575,
+                822);
+
+outerBorder.setBorder(
+        Rectangle.BOX);
+
+outerBorder.setBorderWidth(5);
+
+outerBorder.setBorderColor(
+        new Color(
+                16,
+                185,
+                129));
+
+document.add(outerBorder);
+
+
+// INNER BORDER
+
+Rectangle innerBorder =
+        new Rectangle(
+                35,
+                35,
+                560,
+                807);
+
+innerBorder.setBorder(
+        Rectangle.BOX);
+
+innerBorder.setBorderWidth(2);
+
+innerBorder.setBorderColor(
+        new Color(
+                52,
+                211,
+                153));
+
+document.add(innerBorder);
         
+        // LOGO
 
-        Font titleFont =
-            FontFactory.getFont(
-                FontFactory.HELVETICA_BOLD,
-                20
-            );
+//Image logo =
+//        Image.getInstance(logoPath);
+//
+//logo.scaleToFit(120, 120);
+//
+//logo.setAlignment(
+//        Element.ALIGN_CENTER);
+//
+//document.add(logo);
+//
+//document.add(
+//        new Paragraph(" ")
+//);
 
-        Font normalFont =
-            FontFactory.getFont(
+document.add(
+        new Paragraph("\n\n"));
+
+try {
+
+    Image logo =
+            Image.getInstance(
+                    logoPath);
+
+    logo.scaleToFit(
+            120,
+            120);
+
+    logo.setAlignment(
+            Element.ALIGN_CENTER);
+
+    document.add(logo);
+
+} catch(Exception e) {
+
+    e.printStackTrace();
+}
+// FONTS
+
+Font titleFont =
+        FontFactory.getFont(
+                FontFactory.TIMES_BOLD,
+                28);
+
+Font ownerFont =
+        FontFactory.getFont(
+                FontFactory.TIMES_BOLDITALIC,
+                30);
+
+Font companyFont =
+        FontFactory.getFont(
+                FontFactory.TIMES_BOLD,
+                26);
+
+Font normalFont =
+        FontFactory.getFont(
                 FontFactory.HELVETICA,
-                12
-            );
-        
-       
-        
-        Image logo =
-        Image.getInstance(logoPath);
+                13);
 
-        logo.scaleToFit(120,120);
+Font sealFont =
+        FontFactory.getFont(
+                FontFactory.HELVETICA_BOLD,
+                15);
 
-        logo.setAlignment(
-                Element.ALIGN_CENTER);
+// TITLE
 
-        document.add(logo);
+document.add(
+        new Paragraph("\n"));
 
-        Paragraph title =
-    new Paragraph(
-        "OFFICIAL FRANCHISE CERTIFICATE",
-        titleFont
-    );
+Paragraph title =
+        new Paragraph(
+                franchise.getCid()
+                         .getCompanyName()
+                         .toUpperCase()
+                + " FRANCHISE\nCERTIFICATE",
+                titleFont);
 
 title.setAlignment(
-    Element.ALIGN_CENTER
-);
+        Element.ALIGN_CENTER);
 
 document.add(title);
 
+
 document.add(
-    new Paragraph(" ")
-);
+        new Paragraph(" "));
+
+// SUBTITLE
+
+document.add(
+        new Paragraph("\n"));
 
 Paragraph subtitle =
-    new Paragraph(
-        "This Certificate is Proudly Awarded To",
-        normalFont
-    );
+        new Paragraph(
+        "This certificate is proudly presented to",
+        normalFont);
 
 subtitle.setAlignment(
-    Element.ALIGN_CENTER
-);
+        Element.ALIGN_CENTER);
 
 document.add(subtitle);
 
-document.add(
-    new Paragraph(" ")
-);
 
-Font ownerFont =
-    FontFactory.getFont(
-        FontFactory.HELVETICA_BOLD,
-        26
-    );
+// OWNER NAME
 
 Paragraph owner =
-    new Paragraph(
+        new Paragraph(
         franchise.getOwnerUserId()
-                 .getName()
-                 .toUpperCase(),
-        ownerFont
-    );
+                 .getName(),
+        ownerFont);
 
 owner.setAlignment(
-    Element.ALIGN_CENTER
-);
+        Element.ALIGN_CENTER);
 
 document.add(owner);
 
+Paragraph line =
+        new Paragraph(
+        "__________________________________");
+
+line.setAlignment(
+        Element.ALIGN_CENTER);
+
+document.add(line);
+
+// TEXT
+
 document.add(
-    new Paragraph(" ")
-);
+        new Paragraph(" "));
 
 Paragraph text =
-    new Paragraph(
-        "For being an officially authorized franchise owner of",
-        normalFont
-    );
+        new Paragraph(
+        "For becoming an officially licensed franchise partner of",
+        normalFont);
 
 text.setAlignment(
-    Element.ALIGN_CENTER
-);
+        Element.ALIGN_CENTER);
 
 document.add(text);
 
 document.add(
-    new Paragraph(" ")
-);
+        new Paragraph(" "));
 
-Font companyFont =
-    FontFactory.getFont(
-        FontFactory.HELVETICA_BOLD,
-        22
-    );
+// COMPANY NAME
 
 Paragraph company =
-    new Paragraph(
+        new Paragraph(
         franchise.getCid()
-                 .getCompanyName()
-                 .toUpperCase(),
-        companyFont
-    );
+                 .getCompanyName(),
+        companyFont);
 
 company.setAlignment(
-    Element.ALIGN_CENTER
-);
+        Element.ALIGN_CENTER);
 
 document.add(company);
 
+// CERTIFICATE NUMBER
 document.add(
-    new Paragraph(" ")
-);
-
-document.add(
-    new Paragraph(" ")
-);
+        new Paragraph("\n"));
 
 Paragraph certNo =
-    new Paragraph(
+        new Paragraph(
         "Certificate No : "
         + certificateNumber,
-        normalFont
-    );
+        normalFont);
 
 certNo.setAlignment(
-    Element.ALIGN_CENTER
-);
+        Element.ALIGN_CENTER);
 
 document.add(certNo);
 
-Paragraph fid =
-    new Paragraph(
-        "Franchise ID : "
-        + franchise.getFid(),
-        normalFont
-    );
-
-fid.setAlignment(
-    Element.ALIGN_CENTER
-);
-
-document.add(fid);
-
-Paragraph date =
-    new Paragraph(
+Paragraph issue =
+        new Paragraph(
         "Issue Date : "
         + new SimpleDateFormat(
-            "dd MMM yyyy"
-        ).format(
-            franchise.getCreatedDate()
-        ),
-        normalFont
-    );
+                "dd MMM yyyy")
+        .format(
+                franchise.getCreatedDate()),
+        normalFont);
 
-date.setAlignment(
-    Element.ALIGN_CENTER
-);
+issue.setAlignment(
+        Element.ALIGN_CENTER);
 
-document.add(date);
-        
-    document.add(
-    new Paragraph("\n\n\n")
-);
+document.add(issue);
 
-Paragraph sign =
-    new Paragraph(
-        "____________________________",
-        normalFont
-    );
+// VERIFICATION TEXT
 
-sign.setAlignment(
-    Element.ALIGN_RIGHT
-);
+document.add(
+        new Paragraph("\n"));
 
-document.add(sign);
+Paragraph verify =
+        new Paragraph(
+        "This certificate confirms that the holder "
+      + "has fulfilled all franchise requirements "
+      + "and is hereby recognized as an officially "
+      + "authorized franchise partner of "
+      + franchise.getCid()
+                 .getCompanyName()
+      + ".",
+        normalFont);
 
-Paragraph auth =
-    new Paragraph(
-        "Authorized Signatory",
-        normalFont
-    );
+verify.setAlignment(
+        Element.ALIGN_CENTER);
 
-auth.setAlignment(
-    Element.ALIGN_RIGHT
-);
+document.add(verify);
 
-document.add(auth);
+// SIGNATURE
 
-Paragraph companyAuth =
-    new Paragraph(
-        franchise.getCid()
-                 .getCompanyName(),
-        normalFont
-    );
 
-companyAuth.setAlignment(
-    Element.ALIGN_RIGHT
-);
 
-document.add(companyAuth);
+document.add(
+        new Paragraph("\n\n"));
+
+Font signFont =
+        FontFactory.getFont(
+                FontFactory.TIMES_ITALIC,
+                24);
+
+Paragraph companySignature =
+        new Paragraph(
+                franchise.getCid()
+                         .getCompanyName(),
+                signFont);
+
+companySignature.setAlignment(
+        Element.ALIGN_CENTER);
+
+document.add(companySignature);
+
+Paragraph signLine =
+        new Paragraph(
+                "____________________");
+
+signLine.setAlignment(
+        Element.ALIGN_CENTER);
+
+document.add(signLine);
+
+Paragraph authority =
+        new Paragraph(
+                "Authorized Company",
+                normalFont);
+
+authority.setAlignment(
+        Element.ALIGN_CENTER);
+
+document.add(authority);
         
 
         document.close();
