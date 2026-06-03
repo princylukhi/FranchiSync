@@ -27,10 +27,12 @@ implements CertificateServiceLocal {
     try {
 
         String folderPath =
-            "C:/Users/Public/Payara_Server/"
-          + "glassfish/domains/domain1/"
-          + "franchise-certificates/";
-
+        System.getProperty("com.sun.aas.instanceRoot")
+        + File.separator
+        + "franchise-certificates"
+        + File.separator;
+        
+        
         File folder =
             new File(folderPath);
 
@@ -53,10 +55,12 @@ implements CertificateServiceLocal {
             franchise.getFid()
         );
 
-        String logoPath =
-            "C:/Users/Public/Payara_Server/"
-            + "glassfish/domains/domain1/company-logos/"
-            + franchise.getCid().getLogo();
+       String logoPath =
+        System.getProperty("com.sun.aas.instanceRoot")
+        + File.separator
+        + "company-logos"
+        + File.separator
+        + franchise.getCid().getLogo();
         
         String fullPath =
             folderPath + fileName;

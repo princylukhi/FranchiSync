@@ -47,10 +47,11 @@ implements Serializable {
                 franchise.getCertificateFile();
 
         String fullPath =
-                "C:/Users/Public/Payara_Server/"
-                + "glassfish/domains/domain1/"
-                + "franchise-certificates/"
-                + fileName;
+        System.getProperty("com.sun.aas.instanceRoot")
+        + File.separator
+        + "franchise-certificates"
+        + File.separator
+        + fileName;
 
         File file =
                 new File(fullPath);
