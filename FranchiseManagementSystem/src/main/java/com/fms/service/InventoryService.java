@@ -112,4 +112,22 @@ public class InventoryService implements InventoryServiceLocal {
                 ? null
                 : list.get(0);
     }
+    
+    @Override
+    public List<Inventory> getAvailableInventory(
+            int branchId) {
+
+        return em.createQuery(
+
+            "SELECT i FROM Inventory i " +
+            "WHERE i.bid.bid = :bid " +
+            "AND i.quantity > 0 " +
+            "AND i.status = 'ACTIVE'",
+
+            Inventory.class
+
+        )
+        .setParameter("bid", branchId)
+        .getResultList();
+    }
 }

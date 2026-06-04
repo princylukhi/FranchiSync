@@ -58,6 +58,10 @@ public class Sales implements Serializable {
     private String paymentMode;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "status")
+    private String status;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "sale_date")
     @Temporal(TemporalType.DATE)
     private Date saleDate;
@@ -69,6 +73,9 @@ public class Sales implements Serializable {
     @JoinColumn(name = "staff_id", referencedColumnName = "uid")
     @ManyToOne(optional = false)
     private Users staffId;
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    @ManyToOne
+    private Customers customerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sid")
     private Collection<SaleItems> saleItemsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sid")
@@ -82,13 +89,15 @@ public class Sales implements Serializable {
     }
 
     public Sales(Integer sid,
-             BigDecimal totalAmount,
-             String paymentMode,
-             Date saleDate) {
+         BigDecimal totalAmount,
+         String paymentMode,
+         String status,
+         Date saleDate) {
 
         this.sid = sid;
         this.totalAmount = totalAmount;
         this.paymentMode = paymentMode;
+        this.status = status;
         this.saleDate = saleDate;
     }
 
@@ -114,6 +123,14 @@ public class Sales implements Serializable {
 
     public void setPaymentMode(String paymentMode) {
         this.paymentMode = paymentMode;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getSaleDate() {
@@ -147,6 +164,14 @@ public class Sales implements Serializable {
 
     public void setStaffId(Users staffId) {
         this.staffId = staffId;
+    }
+
+    public Customers getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Customers customerId) {
+        this.customerId = customerId;
     }
 
     @XmlTransient

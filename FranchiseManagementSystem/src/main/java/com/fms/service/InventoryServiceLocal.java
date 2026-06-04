@@ -23,5 +23,9 @@ public interface InventoryServiceLocal {
         int productId,
         int branchId
     );
+    
+    public List<Inventory> getAvailableInventory(
+        int branchId
+    );
 
 }

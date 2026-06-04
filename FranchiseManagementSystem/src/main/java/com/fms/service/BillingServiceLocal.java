@@ -13,5 +13,7 @@ public interface BillingServiceLocal {
     public void addSaleItem(int saleId, int productId, int quantity);
 
     public void completeSale(int saleId);
+    
+    public Sales findSaleById(int saleId);
 
 }

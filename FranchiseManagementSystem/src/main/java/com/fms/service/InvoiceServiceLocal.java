@@ -12,5 +12,9 @@ public interface InvoiceServiceLocal {
     public List<Invoices> getAllInvoices();
 
     public Invoices getInvoiceById(int id);
+    
+    List<Invoices> getInvoicesByBranch(int bid);
+    
+    
 
 }

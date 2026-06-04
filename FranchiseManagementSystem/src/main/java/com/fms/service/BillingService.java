@@ -137,4 +137,11 @@ public class BillingService implements BillingServiceLocal {
 
         invoiceService.createInvoice(invoice);
     }
+    
+    @Override
+    public Sales findSaleById(int saleId) {
+
+        return em.find(Sales.class, saleId);
+
+    }
 }
