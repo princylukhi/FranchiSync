@@ -18,6 +18,9 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.util.Date;
 
 /**
  *
@@ -47,6 +50,13 @@ public class Inventory implements Serializable {
     @NotNull
     @Column(name = "min_threshold")
     private int minThreshold;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "status")
+    private String status;
+    @Column(name = "last_updated")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdated;
     @JoinColumn(name = "bid", referencedColumnName = "bid")
     @ManyToOne(optional = false)
     private Branches bid;
@@ -89,6 +99,22 @@ public class Inventory implements Serializable {
 
     public void setMinThreshold(int minThreshold) {
         this.minThreshold = minThreshold;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+   
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
     public Branches getBid() {

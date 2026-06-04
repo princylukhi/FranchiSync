@@ -1,11 +1,288 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="content">
+
+<h:form id="inventoryForm">
+
+    <!-- TITLE -->
+
+    <div class="flex items-center justify-between mb-6">
+
+    <div>
+
+        <h1 class="text-4xl font-bold text-slate-900">
+            Inventory
+        </h1>
+
+        <p class="text-slate-500 mt-1 text-lg">
+            Manage branch inventory stock.
+        </p>
+
+    </div>
+
+    <p:commandButton
+
+        value="Add Inventory"
+        icon="pi pi-plus"
+
+        oncomplete="PF('addInventoryDialog').show()"
+
+        styleClass="
+            !bg-emerald-500
+            hover:!bg-emerald-600
+            !border-0
+            !rounded-2xl
+            hover:scale-105
+            transition-all
+            duration-300
+            !px-5
+            !py-3
+            !font-bold
+        "/>
+
+</div>
+
+    <!-- TABLE -->
+
+    <div class="bg-white rounded-3xl shadow-lg p-6">
+
+        <p:dataTable
+
+            value="#{branchInventoryBean.inventoryList}"
+            var="i"
+            reflow="true">
+
+            <p:column headerText="Product">
+
+                #{i.pid.productName}
+
+            </p:column>
+
+            <p:column headerText="Category">
+
+                #{i.pid.category}
+
+            </p:column>
+
+            <p:column headerText="Quantity">
+
+                #{i.quantity}
+
+            </p:column>
+
+            <p:column headerText="Threshold">
+
+                #{i.minThreshold}
+
+            </p:column>
+
+            <p:column headerText="Status">
+
+                <!-- OUT OF STOCK -->
+                <h:panelGroup
+                    rendered="#{i.quantity eq 0}">
+
+                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs">
+                        OUT OF STOCK
+                    </span>
+
+                </h:panelGroup>
+
+                <!-- LOW STOCK -->
+                <h:panelGroup
+                    rendered="#{i.quantity gt 0 and i.quantity le i.minThreshold}">
+
+                    <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs">
+                        LOW STOCK
+                    </span>
+
+                </h:panelGroup>
+
+                <!-- IN STOCK -->
+                <h:panelGroup
+                    rendered="#{i.quantity gt i.minThreshold}">
+
+                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                        IN STOCK
+                    </span>
+
+                </h:panelGroup>
+            </p:column>
+            
+            <p:column headerText="Last Updated" style="width:180px;">
+
+                <h:outputText
+                    value="#{i.lastUpdated}">
+
+                    <f:convertDateTime
+                        pattern="dd MMM yyyy hh:mm a" timeZone="Asia/Kolkata"/>
+
+                </h:outputText>
+
+            </p:column>
+
+            <p:column headerText="Action">
+
+                <p:commandButton
+
+                    icon="pi pi-pencil"
+
+                    process="@this"
+
+                    update=":inventoryForm:editPanel"
+
+                    action="#{branchInventoryBean.edit(i)}"
+
+                    oncomplete="PF('editDialog').show()"
+                    styleClass="
+                                !bg-emerald-500
+                                hover:!bg-emerald-600
+                                !border-0
+                                !rounded-xl
+                                hover:scale-105
+                                transition-all
+                                duration-300
+                            "/>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </div>
+
+    <!-- EDIT DIALOG -->
+
+    <p:dialog
+
+        header="Update Inventory"
+        widgetVar="editDialog"
+        modal="true"
+        width="450">
+
+        <h:panelGrid
+            id="editPanel"
+            columns="2"
+            cellpadding="10">
+
+            <h:outputText value="Quantity"/>
+
+            <p:inputNumber
+                value="#{branchInventoryBean.selectedInventory.quantity}"/>
+
+            <h:outputText value="Min Threshold"/>
+
+            <p:inputNumber
+                value="#{branchInventoryBean.selectedInventory.minThreshold}"/>
+
+        </h:panelGrid>
+
+        <f:facet name="footer">
+
+            <p:commandButton
+
+                value="Update"
+
+                action="#{branchInventoryBean.updateInventory}"
+
+                process="@form"
+                update="@form"
+
+                oncomplete="PF('editDialog').hide()"
+                
+                styleClass="!bg-emerald-500
+                                            hover:!bg-emerald-600
+                                            !border-0
+                                            !rounded-2xl
+                                            hover:scale-105
+                                            transition-all
+                                            duration-300
+                                            !px-5
+                                            !py-3
+                                            !font-bold"/>
+                
+
+        </f:facet>
+
+    </p:dialog>
+    
+    <p:dialog
+
+    header="Add Inventory"
+    widgetVar="addInventoryDialog"
+    modal="true"
+    width="500">
+
+    <h:panelGrid columns="2" cellpadding="10">
+
+        <h:outputText value="Product"/>
+
+        <p:selectOneMenu
+            value="#{branchInventoryBean.selectedProductId}">
+
+            <f:selectItems
+
+                value="#{branchInventoryBean.products}"
+
+                var="p"
+
+                itemValue="#{p.pid}"
+
+                itemLabel="#{p.productName}" />
+
+        </p:selectOneMenu>
+
+        <h:outputText value="Quantity"/>
+
+        <p:inputNumber
+            value="#{branchInventoryBean.newInventory.quantity}" />
+
+        <h:outputText value="Min Threshold"/>
+
+        <p:inputNumber
+            value="#{branchInventoryBean.newInventory.minThreshold}" />
+
+    </h:panelGrid>
+
+    <f:facet name="footer">
+
+        <p:commandButton
+
+            value="Save"
+
+            action="#{branchInventoryBean.addInventory}"
+
+            update="@form"
+
+            process="@form"
+
+            oncomplete="PF('addInventoryDialog').hide()" 
+            styleClass="!bg-emerald-500
+                                            hover:!bg-emerald-600
+                                            !border-0
+                                            !rounded-2xl
+                                            hover:scale-105
+                                            transition-all
+                                            duration-300
+                                            !px-5
+                                            !py-3
+                                            !font-bold"/>
+
+
+    </f:facet>
+
+</p:dialog>
+
+</h:form>
+
+</ui:define>
+
+</ui:composition>

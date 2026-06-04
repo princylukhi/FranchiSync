@@ -1,11 +1,97 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="content">
+
+<div class="mb-6">
+
+    <h1 class="text-4xl font-bold text-slate-900">
+        Low Stock Alerts
+    </h1>
+
+    <p class="text-slate-500 mt-1 text-lg">
+        Products that require replenishment.
+    </p>
+
+</div>
+
+<div class="bg-white rounded-3xl shadow-lg p-6">
+
+    <p:dataTable
+
+        value="#{branchLowStockBean.lowStockList}"
+        var="i"
+        reflow="true">
+
+        <p:column headerText="Product">
+
+            #{i.pid.productName}
+
+        </p:column>
+
+        <p:column headerText="Category">
+
+            #{i.pid.category}
+
+        </p:column>
+
+        <p:column headerText="Quantity">
+
+            #{i.quantity}
+
+        </p:column>
+
+        <p:column headerText="Threshold">
+
+            #{i.minThreshold}
+
+        </p:column>
+
+        <p:column headerText="Status">
+
+            <h:panelGroup
+                rendered="#{i.quantity eq 0}">
+
+                <span class="bg-red-100
+                             text-red-700
+                             px-3 py-1
+                             rounded-full
+                             text-xs">
+
+                    OUT OF STOCK
+
+                </span>
+
+            </h:panelGroup>
+
+            <h:panelGroup
+                rendered="#{i.quantity gt 0}">
+
+                <span class="bg-yellow-100
+                             text-yellow-700
+                             px-3 py-1
+                             rounded-full
+                             text-xs">
+
+                    LOW STOCK
+
+                </span>
+
+            </h:panelGroup>
+
+        </p:column>
+
+    </p:dataTable>
+
+</div>
+
+</ui:define>
+
+</ui:composition>
