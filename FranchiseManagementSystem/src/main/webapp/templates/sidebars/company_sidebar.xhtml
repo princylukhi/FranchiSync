@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+
+<h:body>
+
+    <div class="h-full flex flex-col bg-zinc-950">
+
+        <!-- TITLE -->
+        <div class="p-6 border-b border-zinc-800">
+
+            <h2 class="text-xl font-bold text-white">
+                Company Panel
+            </h2>
+
+            <p class="text-slate-400 text-sm mt-1">
+                Company Operations
+            </p>
+
+        </div>
+
+        <!-- MENU -->
+        <div class="flex-1 p-4 space-y-2">
+
+            <!-- Dashboard -->
+            <h:link outcome="/company/dashboard.xhtml"
+
+                    styleClass="#{request.requestURI.contains('dashboard.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-home"></i>
+
+                <span>Dashboard</span>
+
+            </h:link>
+            
+            <!-- Franchises -->
+            <h:link outcome="/company/franchises.xhtml"
+
+                    styleClass="#{request.requestURI.contains('franchises.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-sitemap"></i>
+
+                <span>Franchises</span>
+
+            </h:link>
+
+            <!-- Franchise Requests -->
+            <h:link outcome="/company/franchise_requests.xhtml"
+
+                    styleClass="#{request.requestURI.contains('franchise_requests.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+                
+                <i class="pi pi-send"></i>
+
+                <span>Franchise Requests</span>
+
+            </h:link>
+
+            <!-- Products -->
+            <h:link outcome="/company/products.xhtml"
+
+                    styleClass="#{request.requestURI.contains('products.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-box"></i>
+
+                <span>Products</span>
+
+            </h:link>
+
+            <!-- Commission Rules -->
+            <h:link outcome="/company/commission-rules.xhtml"
+
+                    styleClass="#{request.requestURI.contains('commission-rules.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-dollar"></i>
+
+                <span>Commission Rules</span>
+
+            </h:link>
+
+            <!-- Reports -->
+            <h:link outcome="/company/reports.xhtml"
+
+                    styleClass="#{request.requestURI.contains('reports.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-chart-line"></i>
+
+                <span>Reports</span>
+
+            </h:link>
+
+            <!-- Notifications -->
+            <h:link outcome="/company/notifications.xhtml"
+
+                    styleClass="#{request.requestURI.contains('notifications.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-bell"></i>
+
+                <span>Notifications</span>
+
+            </h:link>
+
+            <!-- Feedback -->
+            <h:link outcome="/company/feedback.xhtml"
+
+                    styleClass="#{request.requestURI.contains('feedback.xhtml')
+                    ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                    : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-comments"></i>
+
+                <span>Feedback</span>
+
+            </h:link>
+
+        </div>
+    </div>
+
+</h:body>
+</html>

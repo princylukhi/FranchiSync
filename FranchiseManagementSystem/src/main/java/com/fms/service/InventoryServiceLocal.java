@@ -18,5 +18,10 @@ public interface InventoryServiceLocal {
     public void decreaseStock(int inventoryId, int quantity);
 
     public List<Inventory> getLowStock(int bid);
+    
+    public Inventory getInventoryByProductAndBranch(
+        int productId,
+        int branchId
+    );
 
 }

@@ -1,0 +1,159 @@
+<ui:composition
+    template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <div class="max-w-4xl mx-auto">
+
+            <!-- Header Card -->
+            <div class="bg-gradient-to-r from-emerald-500 to-emerald-700
+                        text-white rounded-2xl shadow-lg p-8 mb-6">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <h1 class="text-3xl font-bold">
+                            Official Franchise Certificate
+                        </h1>
+
+                        <p class="mt-2 text-emerald-100">
+                            This certificate confirms that your franchise
+                            has been officially approved and verified by
+                            the company.
+                        </p>
+
+                    </div>
+
+                    <i class="pi pi-verified text-6xl"></i>
+
+                </div>
+
+            </div>
+
+            <!-- Certificate Info -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-6">
+
+                <h2 class="text-xl font-bold mb-4">
+                    Certificate Information
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="border rounded-xl p-4">
+
+                        <p class="text-slate-500 text-sm">
+                            Status
+                        </p>
+
+                        <p class="text-green-600 font-bold text-lg">
+                            Verified Franchise
+                        </p>
+
+                    </div>
+
+                    <div class="border rounded-xl p-4">
+
+                        <p class="text-slate-500 text-sm">
+                            Document Type
+                        </p>
+
+                        <p class="font-semibold">
+                            Franchise Authorization Certificate
+                        </p>
+
+                    </div>
+
+                    <div class="border rounded-xl p-4">
+
+                        <p class="text-slate-500 text-sm">
+                            Issued By
+                        </p>
+
+                        <p class="font-semibold">
+                            FranchiSync System
+                        </p>
+
+                    </div>
+
+                    <div class="border rounded-xl p-4">
+
+                        <p class="text-slate-500 text-sm">
+                            Format
+                        </p>
+
+                        <p class="font-semibold">
+                            PDF Document
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Benefits -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-6">
+
+                <h2 class="text-xl font-bold mb-4">
+                    What This Certificate Means
+                </h2>
+
+                <ul class="space-y-3">
+
+                    <li>
+                        ✅ Officially approved by the company.
+                    </li>
+
+                    <li>
+                        ✅ Recognized as an authorized franchise owner.
+                    </li>
+
+                    <li>
+                        ✅ Can be presented for business verification.
+                    </li>
+
+                    <li>
+                        ✅ Protects against unauthorized franchise claims.
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- Download Card -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+
+                <i class="pi pi-file-pdf text-red-500 text-6xl mb-4"></i>
+
+                <h2 class="text-2xl font-bold mb-2">
+                    Download Certificate
+                </h2>
+
+                <p class="text-slate-500 mb-6">
+                    Download and keep a copy of your official franchise
+                    authorization certificate.
+                </p>
+
+                <h:form>
+
+                    <p:commandButton
+                        value="Download PDF Certificate"
+                        icon="pi pi-download"
+                        ajax="false"
+                        action="#{franchiseCertificateBean.downloadCertificate}"
+                        styleClass="p-button-success"/>
+
+                </h:form>
+
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

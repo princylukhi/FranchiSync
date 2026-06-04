@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<h:body>
+
+    <!-- NAVBAR -->
+    <h:panelGroup layout="block" id="mainNavbar"
+    style="display:contents">
+    <nav class="h-20 bg-slate-900 border-b border-slate-800 px-8 flex items-center justify-between sticky top-0 z-50">
+        
+        <!-- LEFT -->
+        <div class="flex items-center gap-10">
+
+            <!-- LOGO -->
+            <div class="flex items-center gap-3">
+
+                <div class="w-11 h-11 rounded-xl bg-emerald-500 flex items-center justify-center">
+
+                    <i class="pi pi-building text-white text-xl"></i>
+
+                </div>
+
+                <div>
+
+                    <h1 class="text-white text-2xl font-bold tracking-wide">
+                        FranchiSync
+                    </h1>
+
+                    <p class="text-slate-400 text-xs">
+                        Franchise Management System
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- SEARCH -->
+            <h:form id="searchForm">
+
+<!--                <div class="relative w-96">-->
+
+                    <div class="relative w-[520px]">
+
+                    <div class="flex items-center bg-slate-800 rounded-xl px-4 py-2">
+
+                        <i class="pi pi-search text-slate-400 mr-3"></i>
+
+                        <p:inputText
+                            value="#{searchBean.keyword}"
+                            placeholder="Search companies, users, branches and products..."
+                            styleClass="!bg-transparent !border-0 !shadow-none !text-white flex-1">
+
+                            <p:ajax
+                                event="keyup"
+                                listener="#{searchBean.search}"
+                                update="searchResults clearBtn"/>
+
+                        </p:inputText>
+                        
+                       <h:panelGroup id="clearBtn">
+
+                        <ui:fragment rendered="#{not empty searchBean.keyword}">
+
+                            <p:commandLink
+                                ajax="true"
+                                process="@this"
+                                update="searchForm"
+                                action="#{searchBean.clearSearch}"
+                                styleClass="ml-2 flex items-center justify-center !no-underline">
+
+                                <i class="pi pi-times text-slate-400"></i>
+
+                            </p:commandLink>
+
+                        </ui:fragment>
+
+                    </h:panelGroup>
+                        
+                    </div>
+
+                    <!-- RESULTS -->
+
+                    <h:panelGroup id="searchResults">
+
+                        <ui:fragment rendered="#{not empty searchBean.results}">
+
+                            <div class="absolute top-14 left-0 w-full bg-white rounded-xl shadow-2xl z-50 max-h-80 overflow-y-auto">
+
+                                <ui:repeat value="#{searchBean.results}" var="r">
+
+                                   <h:link outcome="#{searchBean.getRedirectUrl(r)}"
+                                            styleClass="block p-3 border-b border-slate-100 hover:bg-emerald-50">
+
+                                        <div class="font-semibold text-slate-800">
+                                            #{r.name}
+                                        </div>
+
+                                        <div class="text-xs text-slate-500">
+                                            #{r.type} - #{r.extra}
+                                        </div>
+
+                                    </h:link>
+
+                                </ui:repeat>
+
+                            </div>
+
+                        </ui:fragment>
+
+                    </h:panelGroup>
+
+                </div>
+
+</h:form>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="flex items-center gap-5">
+
+            <!-- NOTIFICATION -->
+            <h:link outcome="#{loginBean.notificationPage}"
+            styleClass="relative w-11 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 transition flex items-center justify-center">
+
+                <i class="pi pi-bell text-white text-lg"></i>
+
+            </h:link>
+
+            <!-- PROFILE -->
+            <h:link outcome="/profile.xhtml"
+            styleClass="flex items-center gap-3 bg-slate-800 px-4 py-2 rounded-xl hover:bg-slate-700 transition-all duration-200">
+
+            <!-- DEFAULT ICON (no photo) -->
+            <ui:fragment rendered="#{empty loginBean.loggedUser.profilePhoto}">
+                <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center">
+                    <i class="pi pi-user text-white"></i>
+                </div>
+            </ui:fragment>
+
+            <!-- REAL PHOTO -->
+            <ui:fragment rendered="#{not empty loginBean.loggedUser.profilePhoto}">
+                <img src="#{request.contextPath}/uploads/#{loginBean.loggedUser.profilePhoto}"
+                     class="w-10 h-10 rounded-full object-cover"/>
+            </ui:fragment>
+
+                <div class="hidden md:block">
+
+                    <p class="text-white text-sm font-semibold">
+
+                        #{loginBean.loggedUser.name}
+
+                    </p>
+
+                    <p class="text-slate-400 text-xs">
+
+                        #{loginBean.loggedUser.rid.roleName}
+
+                    </p>
+
+                </div>
+
+            </h:link>
+
+            <!-- LOGOUT -->
+            <h:form>
+
+                <p:commandButton
+                    icon="pi pi-sign-out"
+                    action="#{loginBean.logout()}"
+                    styleClass="!bg-emerald-500 hover:!bg-emerald-600 !border-0 !rounded-xl !w-11 !h-11"/>
+
+            </h:form>
+
+        </div>
+
+    </nav>
+        
+    </h:panelGroup>
+</h:body>
+</html>

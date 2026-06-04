@@ -1,0 +1,159 @@
+<!--<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+
+<h:body>
+
+<div class="sidebar-container">
+
+    <div class="sidebar-title">BRANCH PANEL</div>
+
+    <h:link outcome="/branch/dashboard.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-home"></i>
+        <span>Dashboard</span>
+    </h:link>
+
+    <h:link outcome="/branch/inventory.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-database"></i>
+        <span>Inventory</span>
+    </h:link>
+
+    <h:link outcome="/branch/staff.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-users"></i>
+        <span>Staff</span>
+    </h:link>
+
+    <h:link outcome="/branch/low_stock.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-exclamation-triangle"></i>
+        <span>Low Stock</span>
+    </h:link>
+
+    <h:link outcome="/branch/reports.xhtml" styleClass="sidebar-link">
+        <i class="pi pi-chart-line"></i>
+        <span>Reports</span>
+    </h:link>
+
+</div>
+
+</h:body>
+</html>-->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:c="jakarta.tags.core">
+
+<h:body>
+    
+    <c:set var="currentPage"
+       value="#{request.servletPath}" />
+
+    <div class="h-full flex flex-col bg-zinc-950">
+
+        <!-- TITLE -->
+        <div class="p-6 border-b border-zinc-800">
+
+            <h2 class="text-xl font-bold text-white">
+                Branch Panel
+            </h2>
+
+            <p class="text-slate-400 text-sm mt-1">
+                Branch Operations
+            </p>
+
+        </div>
+
+        <!-- MENU -->
+        <div class="flex-1 p-4 space-y-2">
+
+            <!-- Dashboard -->
+          <h:link outcome="/branch/dashboard.xhtml"
+        styleClass="#{currentPage eq '/branch/dashboard.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-home"></i>
+
+                <span>Dashboard</span>
+
+            </h:link>
+
+            <!-- Inventory -->
+            <h:link outcome="/branch/inventory.xhtml"
+        styleClass="#{currentPage eq '/branch/inventory.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-database"></i>
+
+                <span>Inventory</span>
+
+            </h:link>
+
+            <!-- Staff -->
+            <h:link outcome="/branch/staff.xhtml"
+        styleClass="#{currentPage eq '/branch/staff.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-users"></i>
+
+                <span>Staff</span>
+
+            </h:link>
+
+            <!-- Low Stock -->
+            <h:link outcome="/branch/low_stock.xhtml"
+        styleClass="#{currentPage eq '/branch/low_stock.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-exclamation-triangle"></i>
+
+                <span>Low Stock</span>
+
+            </h:link>
+
+            <!-- Reports -->
+            <h:link outcome="/branch/reports.xhtml"
+        styleClass="#{currentPage eq '/branch/reports.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-chart-line"></i>
+
+                <span>Reports</span>
+
+            </h:link>
+            
+            <!-- Notifications -->
+            <h:link outcome="/branch/notifications.xhtml"
+        styleClass="#{currentPage eq '/branch/notifications.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-bell"></i>
+
+                <span>Notifications</span>
+
+            </h:link>
+
+            <!-- Feedback -->
+            <h:link outcome="/branch/feedback.xhtml"
+        styleClass="#{currentPage eq '/branch/feedback.xhtml'
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+                <i class="pi pi-comments"></i>
+
+                <span>Feedback</span>
+
+            </h:link>
+
+
+        </div>
+
+    </div>
+
+</h:body>
+</html>

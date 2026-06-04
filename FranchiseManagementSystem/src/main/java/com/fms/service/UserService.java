@@ -30,8 +30,6 @@ public class UserService implements UserServiceLocal {
     @Override
     public void createUser(Users user, int roleId, int companyId, Integer branchId) {
 
-        String plainPassword = user.getPassword();   // ✅ store original
-
         Roles role = em.find(Roles.class, roleId);
         Companies company = em.find(Companies.class, companyId);
 
@@ -49,9 +47,6 @@ public class UserService implements UserServiceLocal {
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
 
         em.persist(user);
-
-        // 📧 Send plain password to user
-        notificationService.sendCredentials(user.getEmail(), plainPassword);
     }
     
     
@@ -114,73 +109,320 @@ public class UserService implements UserServiceLocal {
 
         return list.isEmpty() ? null : list.get(0);
     }
-    
-//    @Override
-//    public Users login(String email, String password) {
-//
-//
-//    Query q = em.createNamedQuery("Users.findByEmail");
-//    q.setParameter("email", email);
-//
-//    List<Users> list = q.getResultList();
-//
-//    if (list.isEmpty()) {
-//        return null;
-//    }
-//
-//    Users user = list.get(0);
-//
-//    // Check password using BCrypt
-//    if (PasswordUtil.checkPassword(password, user.getPassword())) {
-//
-//        // Check status
-//        if (!user.getStatus().equals("ACTIVE")) {
-//            return null;
-//        }
-//
-//        return user;
-//    }
-//
-//    return null;
-//    }  
+
     
     @Override
-public Users login(String email, String password) {
+    public Users login(String email, String password) {
 
-    Query q = em.createNamedQuery("Users.findByEmail");
-    q.setParameter("email", email);
+        Query q = em.createNamedQuery("Users.findByEmail");
+        q.setParameter("email", email);
 
-    List<Users> list = q.getResultList();
+        List<Users> list = q.getResultList();
 
-    if (list.isEmpty()) {
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        Users user = list.get(0);
+
+        try {
+            // ✅ Try BCrypt check
+            if (PasswordUtil.checkPassword(password, user.getPassword())) {
+
+                if (!user.getStatus().equals("ACTIVE")) {
+                    return null;
+                }
+
+                return user;
+            }
+        } catch (Exception e) {
+
+            // 🔥 FALLBACK (for old plain passwords)
+            if (user.getPassword().equals(password)) {
+
+                // Optional: upgrade to hashed password
+                user.setPassword(PasswordUtil.hashPassword(password));
+                em.merge(user);
+
+                return user;
+            }
+        }
+
         return null;
     }
 
-    Users user = list.get(0);
+    @Override
+    public List<Users> getAllUsers() {
 
-    try {
-        // ✅ Try BCrypt check
-        if (PasswordUtil.checkPassword(password, user.getPassword())) {
-
-            if (!user.getStatus().equals("ACTIVE")) {
-                return null;
-            }
-
-            return user;
-        }
-    } catch (Exception e) {
-
-        // 🔥 FALLBACK (for old plain passwords)
-        if (user.getPassword().equals(password)) {
-
-            // Optional: upgrade to hashed password
-            user.setPassword(PasswordUtil.hashPassword(password));
-            em.merge(user);
-
-            return user;
-        }
+        return em.createNamedQuery(
+                "Users.findAll",
+                Users.class
+        ).getResultList();
     }
 
-    return null;
+    @Override
+    public List<Users> getUsersByStatus(String status) {
+
+        return em.createQuery(
+                "SELECT u FROM Users u WHERE u.status = :status",
+                Users.class
+        )
+        .setParameter("status", status)
+        .getResultList();
+    }
+
+    @Override
+    public void updateUser(Users user) {
+            em.merge(user);
+    }
+    
+    @Override
+    public long getTotalUsers() {
+
+        return em.createQuery(
+                "SELECT COUNT(u) FROM Users u",
+                Long.class
+        ).getSingleResult();
+    }
+    
+   @Override
+    public List<Users> getManagersByCompany(int companyId) {
+
+        return em.createQuery(
+            "SELECT u FROM Users u " +
+            "WHERE u.cid.cid = :cid " +
+            "AND u.rid.roleName = 'BRANCH_MANAGER'",
+            Users.class
+        )
+        .setParameter("cid", companyId)
+        .getResultList();
+    }
+
+    @Override
+    public boolean branchHasManager(int branchId) {
+
+        Long count = em.createQuery(
+            "SELECT COUNT(u) FROM Users u " +
+            "WHERE u.bid.bid = :bid " +
+            "AND u.rid.roleName = 'BRANCH_MANAGER'",
+            Long.class
+        )
+        .setParameter("bid", branchId)
+        .getSingleResult();
+
+        return count > 0;
+    }
+    
+    @Override
+    public List<Users> getStaffByBranch(int branchId) {
+
+        return em.createQuery(
+
+            "SELECT u FROM Users u " +
+            "WHERE u.bid.bid = :bid " +
+            "AND u.rid.roleName = 'STAFF'",
+
+            Users.class
+
+        )
+        .setParameter("bid", branchId)
+        .getResultList();
+    }
+    
+    @Override
+    public void createStaffUser(
+            Users staff,
+            int companyId,
+            int branchId) {
+
+        // DEFAULT PASSWORD
+        String plainPassword = "staff123";
+
+        // SET PLAIN PASSWORD TEMP
+        staff.setPassword(plainPassword);
+
+        // ROLE
+        Roles role =
+                em.find(Roles.class, 5);
+
+        // COMPANY
+        Companies company =
+                em.find(Companies.class, companyId);
+
+        // BRANCH
+        Branches branch =
+                em.find(Branches.class, branchId);
+
+        // SET DATA
+        staff.setRid(role);
+        staff.setCid(company);
+        staff.setBid(branch);
+
+        staff.setStatus("ACTIVE");
+
+        staff.setCreatedDate(new Date());
+
+        // HASH PASSWORD
+        staff.setPassword(
+            PasswordUtil.hashPassword(plainPassword)
+        );
+
+        // SAVE
+        em.persist(staff);
+
+        // SEND EMAIL
+        notificationService.sendStaffCredentials(
+            staff.getEmail(),
+            plainPassword
+        );
+    }
+    
+    @Override
+    public void updatePassword(
+            int userId,
+            String password
+    ) {
+
+        Users user =
+                em.find(
+                        Users.class,
+                        userId
+                );
+
+        if(user != null) {
+
+            user.setPassword(password);
+
+            em.merge(user);
+        }
+    }
+    
+    @Override
+    public String getUserName(int userId) {
+
+        Users user =
+            em.find(Users.class, userId);
+
+        return user != null
+                ? user.getName()
+                : "Unknown User";
+    }
+    
+    
+    @Override
+    public long getStaffCountByBranch(int branchId) {
+
+        return em.createQuery(
+
+            "SELECT COUNT(u) FROM Users u " +
+            "WHERE u.bid.bid = :bid " +
+            "AND u.rid.roleName = 'STAFF'",
+
+            Long.class
+
+        )
+        .setParameter("bid", branchId)
+        .getSingleResult();
+    }
+    
+    @Override
+    public List<Object[]> getMonthlyUserRegistrations() {
+
+        return em.createNativeQuery(
+
+            "SELECT MONTH(created_date), COUNT(*) " +
+            "FROM users " +
+            "GROUP BY MONTH(created_date) " +
+            "ORDER BY MONTH(created_date)"
+
+        ).getResultList();
+    }
+    
+    @Override
+    public List<Object[]> getWeeklyUserRegistrations() {
+
+        return em.createNativeQuery(
+
+            "SELECT WEEK(created_date), COUNT(*) " +
+            "FROM users " +
+            "GROUP BY WEEK(created_date) " +
+            "ORDER BY WEEK(created_date)"
+
+        ).getResultList();
+    }
+    
+    @Override
+    public List<Object[]> getStaffPerformance(int branchId) {
+
+        return em.createQuery(
+
+            "SELECT u.name, COUNT(f) " +
+            "FROM Users u, Feedbacks f " +
+            "WHERE u.uid = f.staffId " +
+            "AND f.branchId = :branchId " +
+            "GROUP BY u.name " +
+            "ORDER BY COUNT(f) DESC",
+
+            Object[].class
+
+        )
+        .setParameter("branchId", branchId)
+        .getResultList();
+    }
+    
+    @Override
+    public List<Object[]> getStaffRatingAnalysis(int branchId) {
+
+        return em.createQuery(
+
+            "SELECT u.name, AVG(f.rating) " +
+            "FROM Users u, Feedbacks f " +
+            "WHERE u.uid = f.staffId " +
+            "AND f.branchId = :branchId " +
+            "GROUP BY u.name",
+
+            Object[].class
+
+        )
+        .setParameter("branchId", branchId)
+        .getResultList();
+    }
+    
+   
+@Override
+public List<Object[]> getMonthlyStaffJoiningTrend(
+        int branchId) {
+
+    return em.createNativeQuery(
+
+        "SELECT MONTH(created_date), COUNT(*) " +
+        "FROM users " +
+        "WHERE bid = ? " +
+        "AND rid = 5 " +
+        "GROUP BY MONTH(created_date) " +
+        "ORDER BY MONTH(created_date)"
+
+    )
+    .setParameter(1, branchId)
+    .getResultList();
 }
+
+@Override
+public List<Object[]> getStaffStatusDistribution(
+        int branchId) {
+
+    return em.createQuery(
+
+        "SELECT u.status, COUNT(u) " +
+        "FROM Users u " +
+        "WHERE u.bid.bid = :bid " +
+        "GROUP BY u.status",
+
+        Object[].class
+
+    )
+    .setParameter("bid", branchId)
+    .getResultList();
 }
+} 
+

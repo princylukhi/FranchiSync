@@ -19,6 +19,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.util.Date;
 
 /**
  *
@@ -39,11 +42,32 @@ public class CommissionRules implements Serializable {
     @Basic(optional = false)
     @Column(name = "coid")
     private Integer coid;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "co_percentage")
     private BigDecimal coPercentage;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "min_sales")
+    private BigDecimal minSales;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "max_sales")
+    private BigDecimal maxSales;
+
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "status")
+    private String status;
+
     @JoinColumn(name = "cid", referencedColumnName = "cid")
     @ManyToOne(optional = false)
     private Companies cid;
@@ -74,6 +98,38 @@ public class CommissionRules implements Serializable {
 
     public void setCoPercentage(BigDecimal coPercentage) {
         this.coPercentage = coPercentage;
+    }
+    
+    public BigDecimal getMinSales() {
+        return minSales;
+    }
+
+    public void setMinSales(BigDecimal minSales) {
+        this.minSales = minSales;
+    }
+
+    public BigDecimal getMaxSales() {
+        return maxSales;
+    }
+
+    public void setMaxSales(BigDecimal maxSales) {
+        this.maxSales = maxSales;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Companies getCid() {

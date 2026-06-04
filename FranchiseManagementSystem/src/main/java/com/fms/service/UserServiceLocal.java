@@ -32,4 +32,44 @@ public interface UserServiceLocal {
     
     public Users login(String email, String password);
     
+    public List<Users> getAllUsers();
+
+    public List<Users> getUsersByStatus(String status);
+  
+    public void updateUser(Users user);
+    
+    public long getTotalUsers();
+    
+    public List<Users> getManagersByCompany(int companyId);
+
+    public boolean branchHasManager(int branchId);
+    
+    public List<Users> getStaffByBranch(int branchId);
+    
+    public void createStaffUser(
+        Users staff,
+        int companyId,
+        int branchId
+    );
+    
+    public void updatePassword(
+        int userId,
+        String password
+    );
+    
+    public String getUserName(int userId);
+    
+    long getStaffCountByBranch(int branchId);
+    
+    List<Object[]> getMonthlyUserRegistrations();
+
+    List<Object[]> getWeeklyUserRegistrations();
+    
+    List<Object[]> getStaffPerformance(int branchId);
+
+    List<Object[]> getStaffRatingAnalysis(int branchId);
+    
+    List<Object[]> getMonthlyStaffJoiningTrend(int branchId);
+
+    List<Object[]> getStaffStatusDistribution(int branchId);
 }

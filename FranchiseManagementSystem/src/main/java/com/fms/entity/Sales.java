@@ -54,6 +54,10 @@ public class Sales implements Serializable {
     private BigDecimal totalAmount;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "payment_mode")
+    private String paymentMode;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "sale_date")
     @Temporal(TemporalType.DATE)
     private Date saleDate;
@@ -77,9 +81,14 @@ public class Sales implements Serializable {
         this.sid = sid;
     }
 
-    public Sales(Integer sid, BigDecimal totalAmount, Date saleDate) {
+    public Sales(Integer sid,
+             BigDecimal totalAmount,
+             String paymentMode,
+             Date saleDate) {
+
         this.sid = sid;
         this.totalAmount = totalAmount;
+        this.paymentMode = paymentMode;
         this.saleDate = saleDate;
     }
 
@@ -97,6 +106,14 @@ public class Sales implements Serializable {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
     }
 
     public Date getSaleDate() {

@@ -15,4 +15,10 @@ public interface EmailServiceLocal {
     
     public void sendEmail(String to, String subject, String message);
     
+    public void sendEmailWithAttachment(
+            String to,
+            String subject,
+            String message,
+            String attachmentPath
+    );
 }

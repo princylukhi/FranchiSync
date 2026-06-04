@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+
+<h:body>
+
+    <div class="h-full flex flex-col bg-zinc-950">
+
+        <!-- TITLE -->
+        <div class="p-6 border-b border-zinc-800">
+
+            <h2 class="text-xl font-bold text-white">
+                Admin Panel
+            </h2>
+
+            <p class="text-slate-400 text-sm mt-1">
+                Admin Operations
+            </p>
+
+        </div>
+
+        <!-- MENU -->
+        <div class="flex-1 p-4 space-y-2">
+
+            <!-- Dashboard -->
+            
+        <h:link outcome="/admin/dashboard.xhtml"
+                styleClass="#{request.requestURI.contains('dashboard.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+            <i class="pi pi-home"></i>
+            <span>Dashboard</span>
+
+        </h:link>
+
+        <!-- Companies -->
+        <h:link outcome="/admin/companies.xhtml"
+                styleClass="#{request.requestURI.contains('companies.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+            <i class="pi pi-building"></i>
+            <span>Companies</span>
+
+        </h:link>
+
+        <!-- Requests -->
+        <h:link outcome="/admin/requests.xhtml"
+                styleClass="#{request.requestURI.contains('requests.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+            <i class="pi pi-send"></i>
+            <span>Requests</span>
+
+        </h:link>
+
+        <!-- Users -->
+        <h:link outcome="/admin/users.xhtml"
+                styleClass="#{request.requestURI.contains('users.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+            <i class="pi pi-users"></i>
+            <span>Users</span>
+
+        </h:link>
+
+        <!-- Reports -->
+        <h:link outcome="/admin/reports.xhtml"
+                styleClass="#{request.requestURI.contains('reports.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+            <i class="pi pi-chart-bar"></i>
+            <span>Reports</span>
+
+        </h:link>
+
+        <!-- Notifications -->
+        <h:link outcome="/admin/notifications.xhtml"
+                styleClass="#{request.requestURI.contains('notifications.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+            <i class="pi pi-bell"></i>
+            <span>Notifications</span>
+
+        </h:link>
+
+        <!-- Feedback -->
+        <h:link outcome="/admin/feedback.xhtml"
+                styleClass="#{request.requestURI.contains('feedback.xhtml')
+                ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 text-white font-medium shadow-lg'
+                : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-zinc-800 hover:text-white transition-all duration-200'}">
+
+            <i class="pi pi-comments"></i>
+            <span>Feedback</span>
+
+        </h:link>
+
+        </div>
+
+    </div>
+
+</h:body>
+</html>

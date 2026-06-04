@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:body>
+
+<ui:composition template="/templates/layout.xhtml">
+
+<ui:define name="content">
+
+<div class="mb-8">
+
+    <h1 class="text-4xl font-bold text-slate-900">
+        Company Reports
+    </h1>
+
+    <p class="text-slate-500 mt-1 text-lg">
+        Franchise analytics and business insights.
+    </p>
+
+</div>
+
+<!-- CHART GRID -->
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <!-- FRANCHISE GROWTH -->
+
+    <div class="bg-white rounded-3xl shadow-lg p-8">
+
+        <h2 class="text-2xl font-bold mb-6">
+            Franchise Growth
+        </h2>
+
+        <canvas id="growthChart"></canvas>
+
+    </div>
+
+    <!-- BRANCH DISTRIBUTION -->
+
+    <div class="bg-white rounded-3xl shadow-lg p-8">
+
+        <h2 class="text-2xl font-bold mb-6">
+            Branch Distribution
+        </h2>
+
+        <canvas id="branchChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- TOP PERFORMING -->
+
+<div class="bg-white rounded-3xl shadow-lg p-8 mt-8">
+
+    <h2 class="text-2xl font-bold mb-6">
+        Top Performing Franchise
+    </h2>
+
+    <canvas id="topChart"></canvas>
+
+</div>
+
+<!-- CHART JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        // =====================
+        // Franchise Growth
+        // =====================
+
+        new Chart(
+
+            document.getElementById("growthChart"),
+
+            {
+
+                type: "line",
+
+                data: {
+
+                    labels: [
+
+                        #{companyReportBean.growthLabels}
+
+                    ],
+
+                    datasets: [
+
+                        {
+
+                            label: "Franchises",
+
+                            data: [
+
+                                #{companyReportBean.growthData}
+
+                            ],
+
+                            borderColor: "#10B981",
+
+                            backgroundColor:
+                                "#10B981",
+
+                            fill: false,
+
+                            tension: 0.4
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+        // =====================
+        // Branch Distribution
+        // =====================
+
+        new Chart(
+
+            document.getElementById("branchChart"),
+
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels: [
+
+                        #{companyReportBean.branchLabels}
+
+                    ],
+
+                    datasets: [
+
+                        {
+
+                            data: [
+
+                                #{companyReportBean.branchData}
+
+                            ],
+
+                            backgroundColor:
+                                "#3B82F6"
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    indexAxis: 'y',
+
+                    responsive: true,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+        // =====================
+        // Top Performers
+        // =====================
+
+        new Chart(
+
+            document.getElementById("topChart"),
+
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels: [
+
+                        #{companyReportBean.topLabels}
+
+                    ],
+
+                    datasets: [
+
+                        {
+
+                            data: [
+
+                                #{companyReportBean.topData}
+
+                            ],
+
+                            backgroundColor:
+                                "#14B8A6"
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    indexAxis: 'y',
+
+                    responsive: true,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+    }
+
+);
+
+</script>
+
+</ui:define>
+
+</ui:composition>
+
+</h:body>
+
+</html>

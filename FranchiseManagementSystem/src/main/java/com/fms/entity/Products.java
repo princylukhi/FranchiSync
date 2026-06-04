@@ -24,6 +24,7 @@ import jakarta.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
+import jakarta.persistence.Lob;
 
 /**
  *
@@ -60,6 +61,10 @@ public class Products implements Serializable {
     @NotNull
     @Column(name = "is_active")
     private boolean isActive;
+    @Column(name = "category")
+    private String category;
+    @Column(name = "image")
+    private String image;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pid")
     private Collection<Inventory> inventoryCollection;
     @JoinColumn(name = "cid", referencedColumnName = "cid")
@@ -75,11 +80,13 @@ public class Products implements Serializable {
         this.pid = pid;
     }
 
-    public Products(Integer pid, String productName, BigDecimal price, boolean isActive) {
+    public Products(Integer pid, String productName, BigDecimal price, boolean isActive, String category, String image) {
         this.pid = pid;
         this.productName = productName;
         this.price = price;
         this.isActive = isActive;
+        this.category = category;
+        this.image = image;
     }
 
     public Integer getPid() {
@@ -112,6 +119,22 @@ public class Products implements Serializable {
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+    
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @XmlTransient

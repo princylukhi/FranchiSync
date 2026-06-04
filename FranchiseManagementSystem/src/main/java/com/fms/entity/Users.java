@@ -41,7 +41,10 @@ import java.util.Date;
     @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
     @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
     @NamedQuery(name = "Users.findByStatus", query = "SELECT u FROM Users u WHERE u.status = :status"),
-    @NamedQuery(name = "Users.findByCreatedDate", query = "SELECT u FROM Users u WHERE u.createdDate = :createdDate")})
+    @NamedQuery(name = "Users.findByCreatedDate", query = "SELECT u FROM Users u WHERE u.createdDate = :createdDate"),
+    @NamedQuery(name = "Users.findByPhone", query = "SELECT u FROM Users u WHERE u.phone = :phone"),
+    @NamedQuery(name = "Users.findByGender", query = "SELECT u FROM Users u WHERE u.gender = :gender"),
+    @NamedQuery(name = "Users.findByDob", query = "SELECT u FROM Users u WHERE u.dob = :dob")})
 public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,6 +69,17 @@ public class Users implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
+    @Column(name = "profile_photo")
+    private String profilePhoto;
+    @Size(max = 20)
+    @Column(name = "phone")
+    private String phone;
+    @Size(max = 10)
+    @Column(name = "gender")
+    private String gender;
+    @Column(name = "dob")
+    @Temporal(TemporalType.DATE)
+    private Date dob;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -76,6 +90,11 @@ public class Users implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+    @Column(name = "designation")
+    private String designation;
+    @Column(name = "joining_date")
+    @Temporal(TemporalType.DATE)
+    private Date joiningDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerUserId")
     private Collection<Franchises> franchisesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "uid")
@@ -86,7 +105,7 @@ public class Users implements Serializable {
     @ManyToOne
     private Branches bid;
     @JoinColumn(name = "cid", referencedColumnName = "cid")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Companies cid;
     @JoinColumn(name = "rid", referencedColumnName = "rid")
     @ManyToOne(optional = false)
@@ -140,6 +159,38 @@ public class Users implements Serializable {
         this.password = password;
     }
 
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+    
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -154,6 +205,22 @@ public class Users implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+    
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public Date getJoiningDate() {
+        return joiningDate;
+    }
+
+    public void setJoiningDate(Date joiningDate) {
+        this.joiningDate = joiningDate;
     }
 
     @XmlTransient

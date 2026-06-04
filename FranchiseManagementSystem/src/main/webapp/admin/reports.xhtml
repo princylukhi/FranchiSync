@@ -1,0 +1,382 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets">
+
+    <ui:define name="content">
+
+        <!-- PAGE HEADER -->
+
+        <div class="mb-8">
+
+            <h1 class="text-4xl font-bold text-slate-900">
+                Reports
+            </h1>
+
+            <p class="text-slate-500 mt-1 text-lg">
+                Platform Analytics and Insights.
+            </p>
+
+        </div>
+
+        <!-- CHART GRID -->
+
+       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+
+            <!-- ROLE DISTRIBUTION -->
+
+            <div class="bg-white rounded-3xl shadow-lg p-6">
+
+                <h2 class="text-xl font-bold mb-6">
+                    User Role Distribution
+                </h2>
+
+                <canvas id="roleChart"></canvas>
+
+            </div>
+
+            <!-- FEEDBACK ANALYSIS -->
+
+            <div class="bg-white rounded-3xl shadow-lg p-6">
+
+                <h2 class="text-xl font-bold mb-6">
+                    Feedback Rating Analysis
+                </h2>
+
+              <div style="height:350px;">
+                <canvas id="feedbackChart"></canvas>
+            </div>
+            </div>
+
+        </div>
+        
+        <div class="bg-white rounded-3xl shadow-lg p-6 mt-8">
+
+            <h2 class="text-xl font-bold mb-6">
+                Registration Growth
+            </h2>
+
+            <canvas id="registrationChart"></canvas>
+
+        </div>
+        
+        <div class="bg-white rounded-3xl shadow-lg p-6 mt-8">
+
+            <h2 class="text-xl font-bold mb-6">
+                Top Companies By Franchise Count
+            </h2>
+
+            <canvas id="companyChart"></canvas>
+            
+
+
+        </div>
+
+        <!-- CHART JS -->
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                function () {
+
+                    // ROLE CHART
+
+                    new Chart(
+
+                        document.getElementById("roleChart"),
+
+                        {
+
+                            type: "doughnut",
+
+                            data: {
+
+                                labels: [
+
+                                    #{adminReportBean.roleLabels}
+
+                                ],
+
+                                datasets: [
+
+                                    {
+
+                                        data: [
+
+                                            #{adminReportBean.roleData}
+
+                                        ],
+
+                                        backgroundColor: [
+
+                                            "#10B981",
+                                            "#3B82F6",
+                                            "#F59E0B",
+                                            "#EF4444",
+                                            "#8B5CF6"
+
+                                        ]
+
+                                    }
+
+                                ]
+
+                            },
+
+                            options: {
+
+                                responsive: true,
+
+                                plugins: {
+
+                                    legend: {
+                                                position: 'right'
+                                            }
+
+                                }
+
+                            }
+
+                        }
+
+                    );
+
+                    // FEEDBACK CHART
+
+                    new Chart(
+
+                        document.getElementById("feedbackChart"),
+
+                        {
+
+                            type: "bar",
+
+                            data: {
+
+                                labels: [
+
+                                    #{adminReportBean.feedbackLabels}
+
+                                ],
+
+                                datasets: [
+
+                                    {
+
+                                        label: "Feedback Count",
+
+                                        data: [
+
+                                            #{adminReportBean.feedbackData}
+
+                                        ],
+
+                                        backgroundColor:
+                                            "#10B981"
+
+                                    }
+
+                                ]
+
+                            },
+
+                          options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        }
+                                    },
+
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+
+                        }
+
+                    );
+                    
+                    new Chart(
+
+                            document.getElementById("registrationChart"),
+
+                            {
+
+                                type: "line",
+
+                                data: {
+
+                                    labels: [
+
+                                        #{adminReportBean.registrationLabels}
+
+                                    ],
+
+                                    datasets: [
+
+                                        {
+
+                                            label: "Companies",
+
+                                            data: [
+
+                                                #{adminReportBean.companyRegistrationData}
+
+                                            ],
+
+                                            borderColor: "#10B981",
+
+                                            fill: false
+
+                                        },
+
+                                        {
+
+                                            label: "Franchises",
+
+                                            data: [
+
+                                                #{adminReportBean.franchiseRegistrationData}
+
+                                            ],
+
+                                            borderColor: "#3B82F6",
+
+                                            fill: false
+
+                                        },
+
+                                        {
+
+                                            label: "Users",
+
+                                            data: [
+
+                                                #{adminReportBean.userRegistrationData}
+
+                                            ],
+
+                                            borderColor: "#F59E0B",
+
+                                            fill: false
+
+                                        }
+
+                                    ]
+
+                                },
+
+                                options: {
+
+                                    responsive: true,
+
+                                    plugins: {
+
+                                        legend: {
+
+                                            position: "bottom"
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        );
+                        
+                        
+                        new Chart(
+
+                            document.getElementById("companyChart"),
+
+                            {
+
+                                type: "bar",
+
+                                data: {
+
+                                    labels: [
+
+                                        #{adminReportBean.companyLabels}
+
+                                    ],
+
+                                    datasets: [
+
+                                        {
+
+                                            label: "Franchise Count",
+
+                                            data: [
+
+                                                #{adminReportBean.companyData}
+
+                                            ],
+
+                                            backgroundColor: [
+                                                                '#10B981',
+                                                                '#34D399',
+                                                                '#6EE7B7',
+                                                                '#A7F3D0',
+                                                                '#D1FAE5'
+                                                            ],
+                                                            borderRadius: 10,
+                                                            plugins: {
+                                                                legend: {
+                                                                    display: false
+                                                                }
+                                                            }
+
+                                        }
+
+                                    ]
+
+                                },
+
+                                options: {
+
+                                    indexAxis: 'y',
+
+                                    responsive: true,
+
+                                    plugins: {
+
+                                        legend: {
+
+                                            display: false
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        );
+
+                }
+
+            );
+
+        </script>
+
+    </ui:define>
+
+</ui:composition>

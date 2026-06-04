@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="jakarta.faces.core">
+
+<ui:define name="content">
+
+<h:form enctype="multipart/form-data">
+
+     <p:growl id="growl"
+             showDetail="true"
+             life="3000"/>
+     
+<div class="max-w-7xl mx-auto">
+
+    <!-- PAGE TITLE -->
+    <div class="mb-8">
+
+        <h1 class="text-5xl font-bold text-slate-900">
+            My Profile
+        </h1>
+
+        <p class="text-slate-500 mt-2 text-lg">
+            Manage your account information.
+        </p>
+
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- LEFT PROFILE CARD -->
+        <div class="bg-white rounded-3xl shadow-lg p-8">
+
+            <div class="flex flex-col items-center">
+
+    <!-- PROFILE IMAGE -->
+    <div class="relative flex flex-col items-center">
+
+    <!-- DEFAULT ICON -->
+    <ui:fragment rendered="#{empty profileBean.user.profilePhoto}">
+
+        <div class="w-40 h-40 rounded-full
+                    bg-emerald-500
+                    flex items-center justify-center
+                    border-4 border-emerald-500">
+
+            <i class="pi pi-user text-white text-6xl"></i>
+
+        </div>
+
+    </ui:fragment>
+
+    <!-- REAL IMAGE -->
+    <ui:fragment rendered="#{not empty profileBean.user.profilePhoto}">
+
+        <img src="#{profileBean.profileImage}"
+     class="w-40 h-40 rounded-full object-cover
+            border-4 border-emerald-500
+            hover:scale-105 transition-all duration-300"/>
+
+    </ui:fragment>
+
+    <!-- HIDDEN NATIVE FILE INPUT -->
+    <input type="file" id="nativeFileInput"
+           accept="image/*"
+           style="display:none"
+           onchange="submitFileUpload()"/>
+
+    <!-- VISIBLE STYLED BUTTON -->
+    <p:commandButton
+        type="button"
+        value="Upload Photo"
+        icon="pi pi-camera"
+        onclick="document.getElementById('nativeFileInput').click()"
+        styleClass="mt-5 !bg-emerald-500
+                    !border-0
+                    !rounded-xl
+                    !px-6 !py-2"/>
+
+    <!-- ACTUAL PRIMEFACES UPLOAD (hidden, triggered by script) -->
+    <p:fileUpload
+        id="photoUpload"
+        mode="advanced"
+        auto="true"
+        listener="#{profileBean.uploadPhoto}"
+        update="@form :mainNavbar growl"
+        allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+        widgetVar="photoUploadWidget"
+        style="display:none"/>
+
+    </div>
+
+
+                <!-- NAME -->
+                <h2 class="text-2xl font-bold text-slate-800 mt-5">
+
+                    #{profileBean.user.name}
+
+                </h2>
+
+                <!-- ROLE -->
+                <span class="mt-3 px-4 py-2 rounded-full
+                             bg-blue-100 text-blue-700
+                             text-sm font-semibold">
+
+                    #{profileBean.user.rid.roleName}
+
+                </span>
+
+                
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="lg:col-span-2 bg-white rounded-3xl shadow-lg p-8">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- NAME -->
+                <div>
+
+                    <label class="block mb-2 font-semibold text-slate-700">
+
+                        Full Name
+
+                    </label>
+
+                    <p:inputText
+                        value="#{profileBean.user.name}"
+                        styleClass="w-full rounded-xl"/>
+
+                </div>
+
+                <!-- EMAIL -->
+                <div>
+
+                    <label class="block mb-2 font-semibold text-slate-700">
+
+                        Email
+
+                    </label>
+
+                    <p:inputText
+                        value="#{profileBean.user.email}"
+                        readonly="true"
+                        styleClass="w-full rounded-xl bg-slate-100"/>
+
+                </div>
+
+                <!-- PHONE -->
+                <div>
+
+                    <label class="block mb-2 font-semibold text-slate-700">
+
+                        Phone Number
+
+                    </label>
+
+                    <p:inputText
+                        value="#{profileBean.user.phone}"
+                        styleClass="w-full rounded-xl"/>
+
+                </div>
+
+                <!-- GENDER -->
+                <div>
+
+                    <label class="block mb-2 font-semibold text-slate-700">
+
+                        Gender
+
+                    </label>
+
+                    <p:selectOneMenu
+                        value="#{profileBean.user.gender}"
+                        styleClass="w-full">
+
+                        <f:selectItem itemLabel="Male" itemValue="Male"/>
+                        <f:selectItem itemLabel="Female" itemValue="Female"/>
+                        <f:selectItem itemLabel="Other" itemValue="Other"/>
+
+                    </p:selectOneMenu>
+
+                </div>
+
+                <!-- DOB -->
+                <div>
+
+                    <label class="block mb-2 font-semibold text-slate-700">
+
+                        Date of Birth
+
+                    </label>
+
+                    <p:datePicker
+                        value="#{profileBean.user.dob}"
+                        pattern="dd-MM-yyyy"
+                        showIcon="true"
+                        styleClass="w-full"/>
+
+                </div>
+
+                <!-- ROLE -->
+                <div>
+
+                    <label class="block mb-2 font-semibold text-slate-700">
+
+                        Role
+
+                    </label>
+
+                    <p:inputText
+                        value="#{profileBean.user.rid.roleName}"
+                        readonly="true"
+                        styleClass="w-full rounded-xl bg-slate-100"/>
+
+                </div>
+
+                <!-- COMPANY -->
+                <div>
+
+                    <label class="block mb-2 font-semibold text-slate-700">
+
+                        Company
+
+                    </label>
+
+                    <p:inputText
+                        value="#{profileBean.companyName}"
+                        readonly="true"
+                        styleClass="w-full rounded-xl bg-slate-100"/>
+
+                </div>
+
+                <!-- STATUS -->
+                <div>
+
+                    <label class="block mb-2 font-semibold text-slate-700">
+
+                        Status
+
+                    </label>
+
+                    <p:inputText
+                        value="#{profileBean.user.status}"
+                        readonly="true"
+                        styleClass="w-full rounded-xl bg-slate-100"/>
+
+                </div>
+
+            </div>
+
+          <!-- UPDATE BUTTON -->
+    <div class="mt-8 flex justify-center">
+
+    <p:commandButton
+        value="Update Profile"
+        action="#{profileBean.updateProfile}"
+        update="@form :mainNavbar growl"
+        icon="pi pi-check"
+        styleClass="!bg-emerald-500
+                    hover:!bg-emerald-600
+                    !border-0
+                    !rounded-xl
+                    !px-8
+                    !py-3"/>
+
+    </div>
+
+    </div>
+
+    </div>
+
+</div>
+    
+    <h:outputScript>
+    function submitFileUpload() {
+        var nativeInput = document.getElementById('nativeFileInput');
+        var pfInput = document.querySelector(
+            '[id$="photoUpload"] input[type="file"]'
+        );
+        if (pfInput &amp;&amp; nativeInput.files.length > 0) {
+            var dt = new DataTransfer();
+            dt.items.add(nativeInput.files[0]);
+            pfInput.files = dt.files;
+            pfInput.dispatchEvent(new Event('change'));
+            PF('photoUploadWidget').upload();
+        }
+    }
+</h:outputScript>
+
+</h:form>
+
+</ui:define>
+
+</ui:composition>

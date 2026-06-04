@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+
+    <title>Register Company | FranchiSync</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- PrimeIcons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/primeicons/7.0.0/primeicons.min.css"/>
+
+</h:head>
+
+<h:body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-slate-100">
+
+    <!-- MAIN -->
+    <div class="min-h-screen flex items-center justify-center px-6 py-10">
+
+        <!-- CARD -->
+        <div class="w-full max-w-6xl grid lg:grid-cols-2
+                    bg-white/80 backdrop-blur-xl
+                    rounded-[35px] shadow-2xl overflow-hidden">
+
+            <!-- LEFT SIDE -->
+            <div class="hidden lg:flex flex-col justify-center
+                        bg-gradient-to-br from-emerald-500 to-emerald-600
+                        text-white p-14 relative overflow-hidden">
+
+                <!-- CIRCLES -->
+                <div class="absolute -top-20 -right-20 w-60 h-60
+                            bg-white/10 rounded-full"></div>
+
+                <div class="absolute bottom-0 -left-10 w-44 h-44
+                            bg-white/10 rounded-full"></div>
+
+                <!-- LOGO -->
+                <div class="relative z-10">
+
+                    <div class="flex items-center gap-4 mb-10">
+
+                        <div class="w-16 h-16 rounded-2xl
+                                    bg-white/20 backdrop-blur-md
+                                    flex items-center justify-center">
+
+                            <i class="pi pi-building text-3xl"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h1 class="text-4xl font-black">
+                                FranchiSync
+                            </h1>
+
+                            <p class="text-emerald-100">
+                                Franchise Management System
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- TEXT -->
+                    <h2 class="text-5xl font-black leading-tight mb-6">
+
+                        Start Your
+                        Franchise Journey
+
+                    </h2>
+
+                    <p class="text-emerald-50 text-lg leading-8">
+
+                        Submit your company registration request
+                        and manage franchises, branches, staff,
+                        billing and reports through one platform.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="p-8 lg:p-12 flex flex-col justify-center">
+
+                <!-- TITLE -->
+                <div class="mb-8">
+
+                    <h2 class="text-4xl font-black text-slate-900 mb-3">
+                        Company Registration
+                    </h2>
+
+                    <p class="text-slate-500 text-lg">
+                        Submit your registration request.
+                    </p>
+
+                </div>
+
+                <!-- FORM -->
+                <h:form enctype="multipart/form-data"
+                        styleClass="space-y-5">
+
+                  <p:growl id="toast"
+                    showDetail="true"
+                    life="3000"/>
+                    
+                    <!-- COMPANY NAME -->
+                    <div>
+
+                        <label class="block text-slate-700
+                                      font-semibold mb-2">
+
+                            Company Name
+
+                        </label>
+
+                        <p:inputText
+                            value="#{companyBean.request.companyName}"
+                            required="true"
+                            placeholder="Enter company name"
+                            requiredMessage="Company name is required"
+                            styleClass="w-full !rounded-2xl
+                            !py-4 !px-4 !border-slate-200
+                            focus:!border-emerald-500
+                            focus:!shadow-none"/>
+
+                    </div>
+
+                    <!-- CONTACT PERSON -->
+                    <div>
+
+                        <label class="block text-slate-700
+                                      font-semibold mb-2">
+
+                            Contact Person
+
+                        </label>
+
+                        <p:inputText
+                            value="#{companyBean.request.contactPerson}"
+                            required="true"
+                            placeholder="Enter contact person name"
+                            requiredMessage="Contact person is required"
+                            styleClass="w-full !rounded-2xl
+                            !py-4 !px-4 !border-slate-200
+                            focus:!border-emerald-500
+                            focus:!shadow-none"/>
+
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div>
+
+                        <label class="block text-slate-700
+                                      font-semibold mb-2">
+
+                            Email Address
+
+                        </label>
+
+                        <p:inputText
+                            value="#{companyBean.request.email}"
+                            required="true"
+                            placeholder="Enter company email"
+                            requiredMessage="Email is required"
+                            styleClass="w-full !rounded-2xl
+                            !py-4 !px-4 !border-slate-200
+                            focus:!border-emerald-500
+                            focus:!shadow-none"/>
+
+                    </div>
+
+                    <!-- PHONE -->
+                    <div>
+
+                        <label class="block text-slate-700
+                                      font-semibold mb-2">
+
+                            Phone Number
+
+                        </label>
+
+                        <p:inputText
+                            value="#{companyBean.request.phone}"
+                            required="true"
+                            placeholder="Enter phone number"
+                            requiredMessage="Phone number is required"
+                            styleClass="w-full !rounded-2xl
+                            !py-4 !px-4 !border-slate-200
+                            focus:!border-emerald-500
+                            focus:!shadow-none"/>
+
+                    </div>
+
+                    <!-- BUSINESS TYPE -->
+<div>
+
+    <label class="block text-slate-700
+                  font-semibold mb-2">
+
+        Business Type
+
+    </label>
+
+    <p:selectOneMenu
+        value="#{companyBean.request.businessType}"
+        required="true"
+        requiredMessage="Please select business type"
+        styleClass="w-full !rounded-2xl">
+
+        <p:ajax process="@this"
+                update="otherBusinessWrapper"/>
+
+        <f:selectItem itemLabel="Select Business Type"
+                      itemValue=""/>
+
+        <f:selectItem itemLabel="Food"
+                      itemValue="Food"/>
+
+        <f:selectItem itemLabel="Retail"
+                      itemValue="Retail"/>
+
+        <f:selectItem itemLabel="Education"
+                      itemValue="Education"/>
+
+        <f:selectItem itemLabel="Healthcare"
+                      itemValue="Healthcare"/>
+
+        <f:selectItem itemLabel="Gym &amp; Fitness"
+                      itemValue="Gym &amp; Fitness"/>
+
+        <f:selectItem itemLabel="Salon &amp; Beauty"
+                      itemValue="Salon &amp; Beauty"/>
+
+        <f:selectItem itemLabel="Other"
+                      itemValue="Other"/>
+
+    </p:selectOneMenu>
+
+    <!-- WRAPPER -->
+    <h:panelGroup id="otherBusinessWrapper">
+
+        <!-- OTHER BUSINESS TYPE -->
+        <h:panelGroup
+            rendered="#{companyBean.request.businessType eq 'Other'}">
+
+            <div class="mt-4">
+
+                <p:inputText
+                    value="#{companyBean.customBusinessType}"
+                    placeholder="Enter Business Type"
+                    styleClass="w-full !rounded-2xl
+                    !py-4 !px-4 !border-slate-200
+                    focus:!border-emerald-500
+                    focus:!shadow-none"/>
+
+            </div>
+
+        </h:panelGroup>
+
+    </h:panelGroup>
+
+</div>
+
+                    <!-- CITY -->
+                    <div>
+
+                        <label class="block text-slate-700
+                                      font-semibold mb-2">
+
+                            City
+
+                        </label>
+
+                        <p:inputText
+                            value="#{companyBean.request.city}"
+                            required="true"
+                            placeholder="Enter city"
+                            requiredMessage="City is required"
+                            styleClass="w-full !rounded-2xl
+                            !py-4 !px-4 !border-slate-200
+                            focus:!border-emerald-500
+                            focus:!shadow-none"/>
+
+                    </div>
+                    
+                    <!-- COMPANY LOGO -->
+                    <div>
+
+                        <label class="block text-slate-700
+                                      font-semibold mb-2">
+
+                            Company Logo
+
+                        </label>
+
+                        <p:fileUpload
+                            value="#{companyBean.logoFile}"
+                            mode="simple"
+                            skinSimple="true"
+                            accept="image/*"
+                            styleClass="w-full"/>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <p:commandButton
+                        value="Submit Request"
+                        action="#{companyBean.submitRequest()}"
+                        process="@form"
+                        update="@form toast"
+                        styleClass="!w-full !bg-emerald-500
+                        hover:!bg-emerald-600
+                        !border-0 !rounded-2xl
+                        !py-4 !text-lg !font-semibold
+                        !shadow-lg"/>
+
+                </h:form>
+
+                <!-- FOOTER -->
+                <div class="mt-5 text-center space-y-2">
+
+                    <p class="text-slate-500 text-sm">
+
+                        Already have an account?
+
+                        <h:link outcome="/login.xhtml"
+                                value="Login here"
+                                styleClass="text-emerald-600
+                                font-semibold hover:underline"/>
+
+                    </p>
+
+                    <h:link outcome="/index.xhtml"
+                            styleClass="inline-flex items-center gap-2
+                            text-slate-500 hover:text-emerald-600
+                            text-xs font-medium transition">
+
+                        <i class="pi pi-arrow-left scale-75"></i>
+
+                        <span>Back to Home</span>
+
+                    </h:link>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</h:body>
+</html>

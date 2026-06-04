@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        
+        <h:form id="requestForm">
+
+        <!-- TOP BAR -->
+        <div class="flex items-center gap-4 mb-6">
+
+          
+
+            <div>
+
+                <h1 class="text-4xl font-bold text-slate-900">
+                    Company Requests
+                </h1>
+
+                <p class="text-slate-500 mt-1 text-lg">
+                    Manage pending registration requests.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- TABLE CARD -->
+        <div class="bg-white rounded-3xl shadow-lg p-6 overflow-x-auto">
+
+            <p:dataTable
+                id="requestTable"
+                value="#{adminRequestBean.requests}"
+                var="r"
+                reflow="true"
+                tableStyle="min-width:1400px"
+                styleClass="rounded-2xl overflow-hidden">
+
+                <!-- LOGO -->
+                <p:column headerText="Logo" style="width:120px;">
+
+                    <div class="w-16 h-16 rounded-2xl
+                                overflow-hidden bg-slate-100
+                                flex items-center justify-center">
+
+                        <!-- COMPANY LOGO -->
+                        <ui:fragment rendered="#{not empty r.logo}">
+
+                            <h:graphicImage
+                                value="/company-logo/#{r.logo}"
+                                styleClass="w-full h-full object-cover"/>
+
+                        </ui:fragment>
+
+                        <!-- DEFAULT -->
+                        <ui:fragment rendered="#{empty r.logo}">
+
+                            <span class="text-2xl">🏢</span>
+
+                        </ui:fragment>
+
+                    </div>
+
+                </p:column>
+                    <!-- COMPANY -->
+                    <p:column headerText="Company">
+
+                        #{r.companyName}
+
+                    </p:column>
+
+                    <!-- EMAIL -->
+                   <!-- EMAIL -->
+                <p:column headerText="Email"
+                          style="min-width:260px;">
+
+                    <div style="white-space: nowrap;
+                                overflow: visible;">
+
+                        #{r.email}
+
+                    </div>
+
+                </p:column>
+
+
+    <!-- BUSINESS -->
+    <p:column headerText="Business Type">
+
+        #{r.businessType}
+
+    </p:column>
+
+    <!-- STATUS -->
+    <p:column headerText="Status">
+
+        <span class="bg-yellow-100 text-yellow-700
+                      px-3 py-1 rounded-full
+                      text-xs font-semibold">
+
+            #{r.status}
+
+        </span>
+
+    </p:column>
+
+    <!-- DATE -->
+    <p:column headerText="Request Date">
+
+        <h:outputText value="#{r.requestDate}">
+            <f:convertDateTime pattern="dd MMM yyyy" timeZone="Asia/Kolkata"/>
+        </h:outputText>
+
+    </p:column>
+
+    <!-- ACTIONS -->
+    <p:column headerText="Actions" style="width:140px">
+
+        <div class="flex gap-2">
+
+            <!-- APPROVE -->
+            <p:commandButton
+                icon="pi pi-check"
+                action="#{adminRequestBean.approve(r.crid)}"
+                update="requestForm:requestTable"
+                process="@this"
+                styleClass="!bg-emerald-500
+                            hover:!bg-emerald-600
+                            !border-0
+                            !rounded-lg
+                            !w-10
+                            !h-10"/>
+
+            <!-- REJECT -->
+            <p:commandButton
+                icon="pi pi-times"
+                action="#{adminRequestBean.reject(r.crid)}"
+                update="requestForm:requestTable"
+                process="@this"
+                styleClass="!bg-red-500
+                            hover:!bg-red-600
+                            !border-0
+                            !rounded-lg
+                            !w-10
+                            !h-10"/>
+
+        </div>
+
+    </p:column>
+
+</p:dataTable>
+
+        </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

@@ -87,6 +87,11 @@ public class ProductRest {
                 public Integer pid = p.getPid();
                 public String productName = p.getProductName();
                 public BigDecimal price = p.getPrice();
+                public boolean isActive = p.getIsActive();
+                public String category = p.getCategory();
+                public String image = p.getImage();
+                public Integer companyId = p.getCid().getCid();
+                public String companyName = p.getCid().getCompanyName();
             };
         }).collect(java.util.stream.Collectors.toList());
 

@@ -33,6 +33,8 @@ public class ProductService implements ProductServiceLocal {
         if (existing != null) {
             existing.setProductName(product.getProductName());
             existing.setPrice(product.getPrice());
+            existing.setCategory(product.getCategory());
+            existing.setImage(product.getImage());
 
             em.merge(existing);
         }
@@ -74,6 +76,19 @@ public class ProductService implements ProductServiceLocal {
 
         return q.getResultList();
     }
+    
+    @Override
+public List<Products> getActiveProductsByCompany(int cid) {
+
+    return em.createQuery(
+        "SELECT p FROM Products p " +
+        "WHERE p.cid.cid = :cid " +
+        "AND p.isActive = true",
+        Products.class
+    )
+    .setParameter("cid", cid)
+    .getResultList();
+}
 
     // 6️⃣ Activate Product
     @Override

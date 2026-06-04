@@ -1,0 +1,320 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:body>
+
+<ui:composition template="/templates/layout.xhtml">
+
+<ui:define name="content">
+
+<!-- PAGE TITLE -->
+
+<div class="mb-8">
+
+    <h1 class="text-4xl font-bold text-slate-900">
+        Franchise Reports
+    </h1>
+
+    <p class="text-slate-500 mt-1 text-lg">
+        Branch analytics and performance insights.
+    </p>
+
+</div>
+
+
+<!-- CHARTS -->
+<!-- REPORT CHARTS -->
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <!-- STAFF DISTRIBUTION -->
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 border border-slate-100">
+
+        <h2 class="text-2xl font-bold mb-6">
+            Staff Distribution
+        </h2>
+
+        <div style="height:350px">
+
+            <canvas id="staffChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- FEEDBACK DISTRIBUTION -->
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 border border-slate-100">
+
+        <h2 class="text-2xl font-bold mb-6">
+            Feedback Distribution
+        </h2>
+
+        <div style="height:350px">
+
+            <canvas id="feedbackChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TOP PERFORMERS -->
+
+<div class="bg-white rounded-3xl shadow-lg p-8 mt-8">
+
+    <h2 class="text-2xl font-bold mb-6">
+        Top Performing Branches
+    </h2>
+
+    <div style="height:450px">
+
+        <canvas id="topChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- CHART JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        // STAFF DISTRIBUTION
+
+      new Chart(
+
+    document.getElementById("staffChart"),
+
+    {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: [
+
+                #{franchiseReportBean.staffLabels}
+
+            ],
+
+            datasets: [
+
+                {
+
+                    data: [
+
+                        #{franchiseReportBean.staffData}
+
+                    ],
+
+                           backgroundColor: [
+                                            "#3B82F6",
+                                            "#10B981",
+                                            "#F59E0B",
+                                            "#EF4444",
+                                            "#8B5CF6"
+
+                                        ]
+
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    position: "bottom"
+
+                }
+
+            }
+
+        }
+
+    }
+
+);
+
+        // FEEDBACK DISTRIBUTION
+
+       new Chart(
+
+    document.getElementById("feedbackChart"),
+
+    {
+
+        type: "bar",
+
+        data: {
+
+            labels: [
+
+                #{franchiseReportBean.feedbackLabels}
+
+            ],
+
+        datasets: [
+
+    {
+
+        data: [
+
+            #{franchiseReportBean.feedbackData}
+
+        ],
+
+        backgroundColor: [
+
+            "#10B981",
+            "#34D399",
+            "#6EE7B7",
+            "#A7F3D0",
+            "#D1FAE5"
+
+        ],
+
+        borderRadius: 12
+
+    }
+
+]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true
+
+                }
+
+            }
+
+        }
+
+    }
+
+);
+
+        // TOP PERFORMERS
+
+        new Chart(
+
+    document.getElementById("topChart"),
+
+    {
+
+        type: "bar",
+
+        data: {
+
+            labels: [
+
+                #{franchiseReportBean.topLabels}
+
+            ],
+
+           datasets: [
+
+    {
+
+        data: [
+
+            #{franchiseReportBean.topData}
+
+        ],
+
+        backgroundColor: [
+
+            "#10B981",
+            "#34D399",
+            "#6EE7B7",
+            "#A7F3D0",
+            "#D1FAE5"
+
+        ],
+
+        borderRadius: 12
+
+    }
+
+]
+
+        },
+
+        options: {
+
+            indexAxis: "y",
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            }
+
+        }
+
+    }
+
+);
+
+    }
+
+);
+
+</script>
+
+</ui:define>
+
+</ui:composition>
+
+</h:body>
+
+</html>

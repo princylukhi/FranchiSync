@@ -24,4 +24,57 @@ public interface FeedbackServiceLocal {
     // Get all feedbacks (admin)
     public List<Feedbacks> getAllFeedbacks();
     
+    public List<Feedbacks> getCompanyFeedbacks();
+
+    public List<Feedbacks> getFranchiseFeedbacks();
+
+    public List<Feedbacks> getBranchFeedbacks();
+
+    public List<Feedbacks> getStaffFeedbacks();
+
+    public long getTotalFeedbacks();
+
+    public long getNegativeFeedbacks();
+
+    public double getAverageRating();
+    
+    List<Feedbacks> getBranchFeedbacksByFranchise(int franchiseId);
+
+    long getTotalBranchFeedbacks(int franchiseId);
+
+    long getNegativeBranchFeedbacks(int franchiseId);
+
+    double getAverageBranchRating(int franchiseId);
+    
+    public void submitFranchiseFeedback(
+        Feedbacks feedback,
+        int userId,
+        int companyId,
+        int franchiseId);
+    
+    List<Feedbacks> getStaffFeedbacksByBranch(int branchId);
+
+    long getTotalStaffFeedbacks(int branchId);
+
+    long getNegativeStaffFeedbacks(int branchId);
+
+    double getAverageStaffRating(int branchId);
+
+    void submitBranchFeedback(
+            Feedbacks feedback,
+            int userId,
+            int companyId,
+            int branchId,
+            int franchiseId);
+    
+    List<Object[]> getBranchFeedbackDistribution(int franchiseId);
+    
+    List<Object[]> getMonthlyFeedbackTrend(int branchId);
+    
+    List<Object[]> getFeedbackCountByType(int branchId);
+
+    List<Object[]> getRatingDistribution(int branchId);
+    
+    
+    
 }

@@ -1,0 +1,101 @@
+<!--<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Franchise Management System</title>
+
+     PrimeFaces Theme 
+    <h:outputStylesheet library="css" name="style.css"/>
+
+     Bootstrap 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"/>
+
+     PrimeIcons 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/primeicons/7.0.0/primeicons.min.css"/>
+</h:head>
+
+<h:body>
+
+     MAIN CONTAINER 
+    <div class="layout-wrapper">
+
+         NAVBAR 
+        <ui:include src="/templates/navbar.xhtml"/>
+
+        <div class="layout-main">
+
+             SIDEBAR 
+            <div class="sidebar">
+                <ui:include src="#{loginBean.sidebarPage}"/>
+            </div>
+
+             PAGE CONTENT 
+            <div class="content-area">
+
+                <ui:insert name="content">
+                     Dynamic content comes here 
+                </ui:insert>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</h:body>
+</html>-->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+    <title>FranchiSync</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- PrimeIcons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/primeicons/7.0.0/primeicons.min.css"/>
+
+</h:head>
+
+<h:body class="bg-stone-100">
+
+    <!-- MAIN APP -->
+    <div class="h-screen flex flex-col overflow-hidden">
+
+        <!-- NAVBAR -->
+        <ui:include src="/templates/navbar.xhtml"/>
+
+        <!-- BODY -->
+        <div class="flex flex-1 overflow-hidden">
+            
+            <!-- SIDEBAR -->
+            <aside class="w-72 bg-zinc-950 text-white shadow-2xl h-screen sticky top-0 overflow-y-auto">
+                
+                <ui:include src="#{loginBean.sidebarPage}" />
+
+            </aside>
+
+            <!-- PAGE CONTENT -->
+            <main class="flex-1 p-8 overflow-y-auto">
+                <ui:insert name="content"/>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</h:body>
+</html>

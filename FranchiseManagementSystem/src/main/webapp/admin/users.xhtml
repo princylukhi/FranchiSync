@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <!-- HEADER -->
+        <div class="mb-8">
+
+            <h1 class="text-4xl font-bold text-slate-900">
+                Users
+            </h1>
+
+            <p class="text-slate-500 mt-2 text-lg">
+                Manage system users and roles.
+            </p>
+
+        </div>
+
+        <!-- FILTER BUTTONS -->
+        <h:form id="userForm">
+
+            <div class="flex flex-wrap gap-4 mb-8">
+
+                <!-- ALL -->
+                <p:commandButton
+                    value="All Users"
+                    action="#{adminUserBean.filterUsers('ALL')}"
+                    update="userTable userForm"
+                    process="@this"
+                    icon="pi pi-users"
+                    styleClass="#{adminUserBean.selectedStatus eq 'ALL'
+                                  ? '!bg-emerald-500'
+                                  : '!bg-slate-800'}
+                                hover:!bg-emerald-600
+                                !border-0
+                                !rounded-2xl
+                                !px-6
+                                !py-3
+                                !shadow-lg"/>
+
+                <!-- ACTIVE -->
+                <p:commandButton
+                    value="Active"
+                    action="#{adminUserBean.filterUsers('ACTIVE')}"
+                    update="userTable userForm"
+                    process="@this"
+                    icon="pi pi-check-circle"
+                    styleClass="#{adminUserBean.selectedStatus eq 'ACTIVE'
+                                  ? '!bg-emerald-500'
+                                  : '!bg-slate-800'}
+                                hover:!bg-emerald-600
+                                !border-0
+                                !rounded-2xl
+                                !px-6
+                                !py-3
+                                !shadow-lg"/>
+
+                <!-- INACTIVE -->
+                <p:commandButton
+                    value="Inactive"
+                    action="#{adminUserBean.filterUsers('INACTIVE')}"
+                    update="userTable userForm"
+                    process="@this"
+                    icon="pi pi-times-circle"
+                    styleClass="#{adminUserBean.selectedStatus eq 'INACTIVE'
+                                  ? '!bg-red-500'
+                                  : '!bg-slate-800'}
+                                hover:!bg-red-600
+                                !border-0
+                                !rounded-2xl
+                                !px-6
+                                !py-3
+                                !shadow-lg"/>
+
+            </div>
+
+            <!-- TABLE CARD -->
+            <div class="bg-white rounded-3xl shadow-lg p-6 overflow-x-auto">
+
+                <p:dataTable
+                    id="userTable"
+                    value="#{adminUserBean.users}"
+                    var="u"
+                    reflow="true"
+                    tableStyle="min-width:1600px"
+                    styleClass="rounded-2xl overflow-hidden">
+
+                    <!-- PROFILE -->
+                  <p:column headerText="Profile">
+
+                    <div class="flex items-center justify-center">
+
+                        <!-- USER PHOTO -->
+                        <h:graphicImage
+                            value="/uploads/#{u.profilePhoto}"
+                            rendered="#{not empty u.profilePhoto}"
+                            styleClass="w-12 h-12 rounded-full object-cover border"/>
+
+                        <!-- DEFAULT IMAGE -->
+                        <h:graphicImage
+                            value="/resources/images/default-user.png"
+                            rendered="#{empty u.profilePhoto}"
+                            styleClass="w-12 h-12 rounded-full object-cover border"/>
+
+                    </div>
+
+                  </p:column>
+
+                    <!-- NAME -->
+                    <p:column headerText="Name">
+
+                        <span class="font-semibold text-slate-800">
+
+                            #{u.name}
+
+                        </span>
+
+                    </p:column>
+
+                    <!-- EMAIL -->
+                    <p:column headerText="Email"
+                              style="min-width:260px;">
+
+                        <div style="white-space: nowrap;">
+
+                            #{u.email}
+
+                        </div>
+
+                    </p:column>
+
+                    <!-- ROLE -->
+                    <p:column headerText="Role">
+
+                        <span class="bg-blue-100 text-blue-700
+                                      px-4 py-2 rounded-full
+                                      text-xs font-semibold">
+
+                            #{u.rid.roleName}
+
+                        </span>
+
+                    </p:column>
+
+                    <!-- COMPANY -->
+                    <p:column headerText="Company"
+                              style="min-width:220px;">
+
+                        <span>
+
+                            #{empty u.cid
+                              ? '-'
+                              : u.cid.companyName}
+
+                        </span>
+
+                    </p:column>
+
+                    <!-- STATUS -->
+                    <p:column headerText="Status">
+
+                        <span class="#{u.status eq 'ACTIVE'
+                                        ? 'bg-emerald-100 text-emerald-700'
+                                        : 'bg-red-100 text-red-700'}
+                                      px-4 py-2 rounded-full
+                                      text-xs font-semibold">
+
+                            #{u.status}
+
+                        </span>
+
+                    </p:column>
+
+                    <!-- CREATED DATE -->
+                    <p:column headerText="Created Date">
+
+                        <h:outputText value="#{u.createdDate}">
+                            <f:convertDateTime pattern="dd MMM yyyy" timeZone="Asia/Kolkata"/>
+                        </h:outputText>
+
+                    </p:column>
+
+                    <!-- ACTIONS -->
+                    <p:column headerText="Actions"
+                              style="width:160px">
+
+                        <div class="flex gap-2">
+
+                            <!-- ACTIVATE -->
+                            <p:commandButton
+                                rendered="#{u.status eq 'INACTIVE'}"
+                                icon="pi pi-check"
+                                action="#{adminUserBean.activate(u.uid)}"
+                                update="userForm:userTable"
+                                process="@this"
+                                styleClass="!bg-emerald-500
+                                            hover:!bg-emerald-600
+                                            !border-0
+                                            !rounded-lg
+                                            !w-10
+                                            !h-10"/>
+
+                            <!-- DEACTIVATE -->
+                            <p:commandButton
+                                rendered="#{u.status eq 'ACTIVE'}"
+                                icon="pi pi-times"
+                                action="#{adminUserBean.deactivate(u.uid)}"
+                                update="userForm:userTable"
+                                process="@this"
+                                styleClass="!bg-red-500
+                                            hover:!bg-red-600
+                                            !border-0
+                                            !rounded-lg
+                                            !w-10
+                                            !h-10"/>
+
+                        </div>
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

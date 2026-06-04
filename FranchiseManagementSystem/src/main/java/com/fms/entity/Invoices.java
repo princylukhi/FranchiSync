@@ -22,6 +22,7 @@ import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  *
@@ -53,6 +54,15 @@ public class Invoices implements Serializable {
     @Column(name = "invoice_date")
     @Temporal(TemporalType.DATE)
     private Date invoiceDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "invoice_amount")
+    private BigDecimal invoiceAmount;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "status")
+    private String status;
     @JoinColumn(name = "sid", referencedColumnName = "sid")
     @ManyToOne(optional = false)
     private Sales sid;
@@ -64,10 +74,17 @@ public class Invoices implements Serializable {
         this.invid = invid;
     }
 
-    public Invoices(Integer invid, String invoiceNumber, Date invoiceDate) {
+    public Invoices(Integer invid,
+                String invoiceNumber,
+                Date invoiceDate,
+                BigDecimal invoiceAmount,
+                String status) {
+
         this.invid = invid;
         this.invoiceNumber = invoiceNumber;
         this.invoiceDate = invoiceDate;
+        this.invoiceAmount = invoiceAmount;
+        this.status = status;
     }
 
     public Integer getInvid() {
@@ -92,6 +109,22 @@ public class Invoices implements Serializable {
 
     public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
+    }
+    
+    public BigDecimal getInvoiceAmount() {
+        return invoiceAmount;
+    }
+
+    public void setInvoiceAmount(BigDecimal invoiceAmount) {
+        this.invoiceAmount = invoiceAmount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Sales getSid() {

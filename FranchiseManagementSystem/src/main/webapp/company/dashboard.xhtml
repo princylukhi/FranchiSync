@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+
+            <h1 class="text-4xl font-black text-slate-900">
+                Company Dashboard
+            </h1>
+
+            <p class="text-slate-500 mt-2 text-lg">
+                Manage franchises, products and business operations.
+            </p>
+
+        </div>
+
+        <!-- STATS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+
+            <!-- CARD 1 -->
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Total Franchises
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            #{publicCompanyBean.totalFranchises}
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl
+                                bg-emerald-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-sitemap text-emerald-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Pending Requests
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            #{publicCompanyBean.pendingRequests}
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl
+                                bg-amber-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-send text-amber-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Total Products
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            #{publicCompanyBean.totalProducts}
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl
+                                bg-cyan-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-box text-cyan-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Monthly Revenue
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            Coming
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl
+                                bg-violet-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-wallet text-violet-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- GRID -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+
+    <!-- LEFT SIDE -->
+    <div class="xl:col-span-2">
+
+        <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+
+            <!-- HEADER -->
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+
+                    <h2 class="text-2xl font-black text-slate-900">
+                        Recent Franchise Requests
+                    </h2>
+
+                    <p class="text-slate-500 mt-1">
+                        Latest franchise applications submitted to your company.
+                    </p>
+
+                </div>
+
+                <h:link outcome="/company/franchise_requests.xhtml"
+                        styleClass="px-5 py-3 rounded-2xl
+                        bg-emerald-500 text-white
+                        font-semibold hover:bg-emerald-600 transition">
+
+                    View All
+
+                </h:link>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead>
+
+                        <tr class="border-b border-slate-100">
+
+                            <th class="text-left py-4 text-slate-500 font-semibold">
+                                Owner Name
+                            </th>
+
+                            <th class="text-left py-4 text-slate-500 font-semibold">
+                                Email
+                            </th>
+
+                            <th class="text-left py-4 text-slate-500 font-semibold">
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <ui:repeat value="#{publicCompanyBean.recentRequests}" var="r">
+
+                            <tr class="border-b border-slate-100">
+
+                                <!-- Owner Name -->
+                                <td class="py-4 font-semibold text-slate-800">
+                                    #{r.ownerName}
+                                </td>
+
+                               
+
+                                <!-- Phone -->
+                                <td class="py-4 text-slate-500">
+                                    #{r.email}
+                                </td>
+
+                                <!-- Status -->
+                                <td class="py-4">
+                                    <span class="bg-yellow-100 text-yellow-700
+                                                 px-3 py-1 rounded-full text-xs font-semibold">
+                                        #{r.status}
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        </ui:repeat>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="space-y-8">
+
+        <!-- QUICK ACTIONS -->
+        <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+
+            <h2 class="text-2xl font-black text-slate-900 mb-6">
+                Quick Actions
+            </h2>
+
+            <div class="space-y-4">
+
+                <!-- ACTION 1 -->
+                <h:link outcome="/company/franchise_requests.xhtml"
+                        styleClass="flex items-center gap-4 p-4
+                        rounded-2xl bg-slate-50 hover:bg-emerald-50
+                        transition">
+
+                    <div class="w-12 h-12 rounded-2xl
+                                bg-emerald-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-send text-emerald-600"></i>
+
+                    </div>
+
+                    <span class="font-semibold text-slate-700">
+                        Franchise Requests
+                    </span>
+
+                </h:link>
+
+                <!-- ACTION 2 -->
+                <h:link outcome="/company/products.xhtml"
+                        styleClass="flex items-center gap-4 p-4
+                        rounded-2xl bg-slate-50 hover:bg-cyan-50
+                        transition">
+
+                    <div class="w-12 h-12 rounded-2xl
+                                bg-cyan-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-box text-cyan-600"></i>
+
+                    </div>
+
+                    <span class="font-semibold text-slate-700">
+                        Manage Products
+                    </span>
+
+                </h:link>
+
+                <!-- ACTION 4 -->
+                <h:link outcome="/company/reports.xhtml"
+                        styleClass="flex items-center gap-4 p-4
+                        rounded-2xl bg-slate-50 hover:bg-violet-50
+                        transition">
+
+                    <div class="w-12 h-12 rounded-2xl
+                                bg-violet-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-chart-bar text-violet-600"></i>
+
+                    </div>
+
+                    <span class="font-semibold text-slate-700">
+                        View Reports
+                    </span>
+
+                </h:link>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <!-- HEADER -->
+        <div class="mb-8">
+
+            <h1 class="text-4xl font-bold text-slate-900">
+                Companies
+            </h1>
+
+            <p class="text-slate-500 mt-2 text-lg">
+                Manage registered companies.
+            </p>
+
+        </div>
+
+        <!-- FILTER BUTTONS -->
+        <!-- FILTER BUTTONS -->
+<h:form id="filterForm">
+
+    <div class="flex flex-wrap gap-4 mb-8">
+
+        <!-- ALL -->
+        <p:commandButton
+            value="All"
+            action="#{adminCompanyBean.filterCompanies('ALL')}"
+            update="companyTable filterForm"
+            process="@this"
+            icon="pi pi-list"
+            styleClass="#{adminCompanyBean.selectedStatus eq 'ALL'
+                          ? '!bg-emerald-500'
+                          : '!bg-slate-800'}
+                        hover:!bg-emerald-600
+                        !border-0
+                        !rounded-2xl
+                        !px-6
+                        !py-3
+                        !shadow-lg"/>
+
+        <!-- APPROVED -->
+        <p:commandButton
+            value="Approved"
+            action="#{adminCompanyBean.filterCompanies('APPROVED')}"
+            update="companyTable filterForm"
+            process="@this"
+            icon="pi pi-check-circle"
+            styleClass="#{adminCompanyBean.selectedStatus eq 'APPROVED'
+                          ? '!bg-emerald-500'
+                          : '!bg-slate-800'}
+                        hover:!bg-emerald-600
+                        !border-0
+                        !rounded-2xl
+                        !px-6
+                        !py-3
+                        !shadow-lg"/>
+
+        <!-- REJECTED -->
+        <p:commandButton
+            value="Rejected"
+            action="#{adminCompanyBean.filterCompanies('REJECTED')}"
+            update="companyTable filterForm"
+            process="@this"
+            icon="pi pi-times-circle"
+            styleClass="#{adminCompanyBean.selectedStatus eq 'REJECTED'
+                          ? '!bg-red-500'
+                          : '!bg-slate-800'}
+                        hover:!bg-red-600
+                        !border-0
+                        !rounded-2xl
+                        !px-6
+                        !py-3
+                        !shadow-lg"/>
+
+        <!-- PENDING -->
+        <p:commandButton
+            value="Pending"
+            action="#{adminCompanyBean.filterCompanies('PENDING')}"
+            update="companyTable filterForm"
+            process="@this"
+            icon="pi pi-clock"
+            styleClass="#{adminCompanyBean.selectedStatus eq 'PENDING'
+                          ? '!bg-yellow-500'
+                          : '!bg-slate-800'}
+                        hover:!bg-yellow-600
+                        !border-0
+                        !rounded-2xl
+                        !px-6
+                        !py-3
+                        !shadow-lg"/>
+
+    </div>
+
+
+    <!-- TABLE -->
+    <div class="bg-white rounded-3xl shadow-lg p-6 overflow-x-auto">
+
+       <p:dataTable
+            id="companyTable"
+            value="#{adminCompanyBean.companies}"
+            var="c"
+            reflow="true"
+            tableStyle="min-width:1400px"
+            styleClass="rounded-2xl overflow-hidden">
+           
+           <!-- LOGO -->
+            <p:column headerText="Logo">
+
+                <div class="w-16 h-16 rounded-2xl
+                            overflow-hidden bg-slate-100
+                            flex items-center justify-center">
+
+                    <!-- SHOW LOGO -->
+                    <ui:fragment rendered="#{not empty c.logo}">
+
+                        <h:graphicImage
+                            value="/company-logo/#{c.logo}"
+                            styleClass="w-full h-full object-cover"/>
+
+                    </ui:fragment>
+
+                    <!-- DEFAULT ICON -->
+                    <ui:fragment rendered="#{empty c.logo}">
+
+                        <span class="text-2xl">🏢</span>
+
+                    </ui:fragment>
+
+                </div>
+
+            </p:column>
+
+            <!-- COMPANY -->
+            <p:column headerText="Company">
+
+                <span class="font-medium text-slate-800">
+                    #{c.companyName}
+                </span>
+
+            </p:column>
+
+            <!-- EMAIL -->
+          <!-- EMAIL -->
+            <p:column headerText="Email"
+                      style="min-width:300px;">
+
+                <div style="white-space: nowrap;
+                            overflow: visible;
+                            width: 100%;">
+
+                    #{c.email}
+
+                </div>
+
+            </p:column>
+
+            <!-- BUSINESS -->
+            <p:column headerText="Business Type">
+
+                #{c.businessType}
+
+            </p:column>
+
+            <!-- STATUS -->
+            <p:column headerText="Status">
+
+                <span class="#{c.status eq 'APPROVED'
+                                ? 'bg-emerald-100 text-emerald-700'
+                                : c.status eq 'PENDING'
+                                ? 'bg-yellow-100 text-yellow-700'
+                                : 'bg-red-100 text-red-700'}
+                              px-4 py-2 rounded-full
+                              text-xs font-semibold">
+
+                    #{c.status}
+
+                </span>
+
+            </p:column>
+
+            <!-- REQUEST DATE -->
+            <p:column headerText="Request Date">
+
+                <h:outputText value="#{c.requestDate}">
+                    <f:convertDateTime pattern="dd MMM yyyy" timeZone="Asia/Kolkata" />
+                </h:outputText>
+
+            </p:column>
+
+            <!-- APPROVED DATE -->
+            <p:column headerText="Approved/Rejected Date">
+
+                <h:outputText value="#{c.approvedDate}">
+                    <f:convertDateTime pattern="dd MMM yyyy" timeZone="Asia/Kolkata"/>
+                </h:outputText>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </div>
+
+</h:form>
+
+    </ui:define>
+
+</ui:composition>

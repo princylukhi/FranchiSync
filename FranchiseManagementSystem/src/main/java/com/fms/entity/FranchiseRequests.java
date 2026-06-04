@@ -64,6 +64,8 @@ public class FranchiseRequests implements Serializable {
     @Size(min = 1, max = 15)
     @Column(name = "phone")
     private String phone;
+    @Column(name = "reason")
+    private String reason;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -127,6 +129,14 @@ public class FranchiseRequests implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+    
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public String getStatus() {

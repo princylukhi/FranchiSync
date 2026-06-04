@@ -7,6 +7,9 @@ import com.fms.service.CompanyServiceLocal;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import java.io.File;
+import java.nio.file.Files;
 
 import java.util.*;
 
@@ -17,6 +20,42 @@ public class CompanyRest {
 
     @EJB
     private CompanyServiceLocal companyService;
+    
+    // 5️⃣ Get Company Logo
+
+            @GET
+            @Path("/logo/{fileName}")
+            @Produces({"image/png", "image/jpg", "image/jpeg"})
+            public Response getLogo(
+                    @PathParam("fileName") String fileName) {
+
+                try {
+
+                    String path =
+                            System.getProperty("com.sun.aas.instanceRoot")
+                            + File.separator
+                            + "company-logos"
+                            + File.separator
+                            + fileName;
+
+                    File file = new File(path);
+
+                    if (!file.exists()) {
+
+                        return Response.status(404).build();
+                    }
+
+                    return Response.ok(file)
+                            .type(Files.probeContentType(file.toPath()))
+                            .build();
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+
+                    return Response.status(500).build();
+                }
+            }
 
     // 1️⃣ Submit Request
     @POST

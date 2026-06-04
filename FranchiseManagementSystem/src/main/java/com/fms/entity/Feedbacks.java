@@ -59,6 +59,17 @@ public class Feedbacks implements Serializable {
     @Column(name = "feedback_date")
     @Temporal(TemporalType.DATE)
     private Date feedbackDate;
+    @Column(name = "feedback_type")
+    private String feedbackType;
+
+    @Column(name = "franchise_id")
+    private Integer franchiseId;
+
+    @Column(name = "branch_id")
+    private Integer branchId;
+
+    @Column(name = "staff_id")
+    private Integer staffId;
     @JoinColumn(name = "cid", referencedColumnName = "cid")
     @ManyToOne(optional = false)
     private Companies cid;
@@ -126,6 +137,38 @@ public class Feedbacks implements Serializable {
 
     public void setUid(Users uid) {
         this.uid = uid;
+    }
+    
+    public String getFeedbackType() {
+        return feedbackType;
+    }
+
+    public void setFeedbackType(String feedbackType) {
+        this.feedbackType = feedbackType;
+    }
+
+    public Integer getFranchiseId() {
+        return franchiseId;
+    }
+
+    public void setFranchiseId(Integer franchiseId) {
+        this.franchiseId = franchiseId;
+    }
+
+    public Integer getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Integer branchId) {
+        this.branchId = branchId;
+    }
+
+    public Integer getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(Integer staffId) {
+        this.staffId = staffId;
     }
 
     @Override

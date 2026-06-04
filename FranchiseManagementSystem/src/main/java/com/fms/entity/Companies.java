@@ -58,6 +58,18 @@ public class Companies implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "email")
     private String email;
+    @Size(max = 100)
+    @Column(name = "contact_person")
+    private String contactPerson;
+    @Size(max = 20)
+    @Column(name = "phone")
+    private String phone;
+    @Size(max = 100)
+    @Column(name = "business_type")
+    private String businessType;
+    @Size(max = 100)
+    @Column(name = "city")
+    private String city;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -68,6 +80,8 @@ public class Companies implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+    @Column(name = "logo")
+    private String logo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cid")
     private Collection<Franchises> franchisesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cid")
@@ -120,6 +134,38 @@ public class Companies implements Serializable {
         this.email = email;
     }
 
+       public String getContactPerson() {
+        return contactPerson;
+    }
+
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getBusinessType() {
+        return businessType;
+    }
+
+    public void setBusinessType(String businessType) {
+        this.businessType = businessType;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+    
     public String getStatus() {
         return status;
     }
@@ -134,6 +180,14 @@ public class Companies implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+    
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     @XmlTransient

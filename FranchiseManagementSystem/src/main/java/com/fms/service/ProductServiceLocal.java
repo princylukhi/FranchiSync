@@ -22,6 +22,8 @@ public interface ProductServiceLocal {
 
     // Get only active products (for billing)
     public List<Products> getActiveProducts(int cid);
+    
+    public List<Products> getActiveProductsByCompany(int cid);
 
     // Activate product
     public void activateProduct(int productId);

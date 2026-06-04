@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<ui:composition
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="jakarta.faces.html"
+xmlns:f="jakarta.faces.core"
+xmlns:ui="jakarta.faces.facelets"
+xmlns:p="http://primefaces.org/ui"
+template="/templates/layout.xhtml">
+
+```
+<ui:define name="content">
+
+    <h:form id="staffFeedbackForm">
+
+        <!-- HEADER -->
+
+        <div class="bg-white
+                    rounded-3xl
+                    shadow-md
+                    border border-slate-200
+                    p-6
+                    mb-8">
+
+            <div class="flex
+                        items-center
+                        gap-5">
+
+                <div class="w-16
+                            h-16
+                            rounded-2xl
+                            bg-emerald-500
+                            flex
+                            items-center
+                            justify-center
+                            shadow-lg">
+
+                    <i class="pi pi-comments text-white text-2xl"></i>
+
+                </div>
+
+                <div>
+
+                    <h1 class="text-4xl
+                               font-black
+                               text-slate-800">
+
+                        Staff Feedback
+
+                    </h1>
+
+                    <p class="text-slate-500 mt-1">
+
+                        Help us improve your branch
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- FEEDBACK FORM -->
+
+        <div class="
+            bg-white
+            rounded-[30px]
+            shadow-xl
+            p-6">
+
+            <div class="mb-5">
+
+                <h2 class="
+                    text-2xl
+                    font-bold
+                    text-slate-800">
+
+                    Share Feedback With Branch
+
+                </h2>
+
+                <p class="text-slate-400">
+
+                    Your feedback helps improve branch operations
+
+                </p>
+
+            </div>
+
+            <!-- MESSAGE -->
+
+            <div class="mb-5">
+
+                <label class="
+                    block
+                    text-slate-700
+                    font-semibold
+                    mb-2">
+
+                    Feedback Message
+
+                </label>
+
+                <p:inputTextarea
+                    value="#{staffFeedbackBean.feedback.message}"
+                    rows="6"
+                    autoResize="false"
+                    placeholder="Write your feedback..."
+                    styleClass="
+                        w-full
+                        rounded-2xl"/>
+
+            </div>
+
+            <!-- STAR RATING -->
+
+            <div class="mb-6">
+
+                <label class="
+                    block
+                    text-slate-700
+                    font-semibold
+                    mb-3">
+
+                    Rating
+
+                </label>
+
+                <style>
+
+                    .custom-rating .ui-rating-star,
+                    .custom-rating .ui-rating-star a,
+                    .custom-rating .ui-rating-star-on,
+                    .custom-rating .ui-rating-star-on a,
+                    .custom-rating .ui-rating-star-hover,
+                    .custom-rating .ui-rating-star-hover a {
+
+                        outline: none !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        background: transparent !important;
+
+                    }
+
+                    .custom-rating *:focus {
+
+                        outline: none !important;
+                        box-shadow: none !important;
+
+                    }
+
+                    .custom-rating .ui-rating-star a {
+
+                        font-size: 2rem;
+                        color: #6b7280;
+                        transition: 0.2s;
+
+                    }
+
+                    .custom-rating .ui-rating-star-on a {
+
+                        color: #facc15 !important;
+
+                    }
+
+                    .custom-rating .ui-rating-star a:hover {
+
+                        color: #facc15 !important;
+                        transform: scale(1.1);
+
+                    }
+
+                </style>
+
+                <p:rating
+                    value="#{staffFeedbackBean.feedback.rating}"
+                    stars="5"
+                    cancel="false"
+                    styleClass="custom-rating"/>
+
+            </div>
+
+            <!-- SUBMIT -->
+
+            <div>
+
+                <p:commandButton
+                    value="Submit Feedback"
+                    icon="pi pi-send"
+                    action="#{staffFeedbackBean.submitBranchFeedback}"
+                    update="@form"
+                    styleClass="
+                        !bg-emerald-500
+                        hover:!bg-emerald-600
+                        !border-0
+                        !rounded-2xl
+                        !px-6
+                        !py-3
+                        !font-semibold"/>
+
+            </div>
+
+        </div>
+
+    </h:form>
+
+</ui:define>
+```
+
+</ui:composition>

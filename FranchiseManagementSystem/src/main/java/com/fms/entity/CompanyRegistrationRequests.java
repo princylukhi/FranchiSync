@@ -93,6 +93,8 @@ public class CompanyRegistrationRequests implements Serializable {
     @Column(name = "approved_date")
     @Temporal(TemporalType.DATE)
     private Date approvedDate;
+    @Column(name = "logo")
+    private String logo;
 
     public CompanyRegistrationRequests() {
     }
@@ -193,6 +195,14 @@ public class CompanyRegistrationRequests implements Serializable {
         this.approvedDate = approvedDate;
     }
 
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

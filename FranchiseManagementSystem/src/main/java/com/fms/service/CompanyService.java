@@ -35,6 +35,16 @@ public class CompanyService implements CompanyServiceLocal {
         request.setRequestDate(new Date());
 
         em.persist(request);
+        
+       
+        
+        em.flush();
+
+        // SEND EMAIL AFTER SUBMISSION
+        notificationService
+        .sendCompanyRequestReceivedEmail(
+                request.getEmail()
+        );
     }
 
     @Override
@@ -78,6 +88,11 @@ public class CompanyService implements CompanyServiceLocal {
 
             company.setCompanyName(req.getCompanyName());
             company.setEmail(req.getEmail());
+            company.setContactPerson(req.getContactPerson());
+            company.setPhone(req.getPhone());
+            company.setBusinessType(req.getBusinessType());
+            company.setCity(req.getCity());
+            company.setLogo(req.getLogo());
             company.setStatus("ACTIVE");
             company.setCreatedDate(new Date());
 
@@ -93,14 +108,30 @@ public class CompanyService implements CompanyServiceLocal {
         // Create Super Admin
         Users admin = new Users();
 
-        admin.setName("Super Admin");
+        admin.setName(req.getContactPerson());
         admin.setEmail(req.getEmail());
         admin.setPassword("admin123");
 
-        userService.createUser(admin, 2, company.getCid(), null);
 
-        // Send Notification
-        notificationService.sendCompanyApproval(req.getEmail());
+        
+        // SEND APPROVAL MAIL
+        notificationService.sendCompanyApproval(
+            req.getEmail()
+        );
+
+        // CREATE COMPANY ADMIN
+        userService.createUser(
+            admin,
+            2,
+            company.getCid(),
+            null
+        );
+
+        // SEND LOGIN CREDENTIALS
+        notificationService.sendCredentials(
+            req.getEmail(),
+            "admin123"
+        );
     }
 
     @Override
@@ -110,6 +141,9 @@ public class CompanyService implements CompanyServiceLocal {
                 em.find(CompanyRegistrationRequests.class, requestId);
 
         req.setStatus("REJECTED");
+        
+
+        req.setApprovedDate(new Date());
 
         em.merge(req);
 
@@ -117,4 +151,135 @@ public class CompanyService implements CompanyServiceLocal {
         notificationService.sendCompanyRejection(req.getEmail());
 
     }
+    
+    @Override
+    public List<Companies> getAllCompanies() {
+
+        return em.createNamedQuery(
+                "Companies.findAll",
+                Companies.class
+        ).getResultList();
+    }
+    
+    @Override
+    public List<CompanyRegistrationRequests> getAllRequests() {
+
+        return em.createNamedQuery(
+                "CompanyRegistrationRequests.findAll",
+                CompanyRegistrationRequests.class
+        ).getResultList();
+    }
+    
+    @Override
+    public List<CompanyRegistrationRequests>
+    getCompaniesByStatus(String status) {
+
+        return em.createQuery(
+                "SELECT c FROM CompanyRegistrationRequests c WHERE c.status = :status",
+                CompanyRegistrationRequests.class
+        )
+        .setParameter("status", status)
+        .getResultList();
+    }
+    
+    @Override
+    public String getBusinessTypeByEmail(String email) {
+
+        try {
+
+            return em.createQuery(
+                "SELECT c.businessType FROM CompanyRegistrationRequests c WHERE c.email = :email",
+                String.class
+            )
+            .setParameter("email", email)
+            .getSingleResult();
+
+        } catch (Exception e) {
+
+            return "General";
+        }
+    }
+    
+    @Override
+    public long getTotalCompanies() {
+
+        return em.createQuery(
+                "SELECT COUNT(c) FROM Companies c",
+                Long.class
+        ).getSingleResult();
+    }
+
+    @Override
+    public long getPendingRequestCount() {
+
+        return em.createQuery(
+                "SELECT COUNT(r) FROM CompanyRegistrationRequests r WHERE r.status='PENDING'",
+                Long.class
+        ).getSingleResult();
+    }
+    
+    @Override
+    public List<Companies> getApprovedCompanies() {
+
+        return em.createQuery(
+
+            "SELECT c FROM Companies c "
+          + "WHERE c.status = 'ACTIVE' "
+          + "ORDER BY c.companyName",
+
+            Companies.class
+
+        ).getResultList();
+    }
+    
+    @Override
+    public Companies findCompanyById(int companyId) {
+
+        return em.find(Companies.class, companyId);
+
+    }
+    
+    @Override
+    public List<Object[]> getTopCompaniesByFranchiseCount() {
+
+        return em.createQuery(
+
+            "SELECT c.companyName, COUNT(f) " +
+            "FROM Companies c " +
+            "LEFT JOIN c.franchisesCollection f " +
+            "GROUP BY c.companyName " +
+            "ORDER BY COUNT(f) DESC",
+
+            Object[].class
+
+        )
+        .setMaxResults(5)
+        .getResultList();
+    }
+    
+    @Override
+        public List<Object[]> getMonthlyCompanyRegistrations() {
+
+            return em.createNativeQuery(
+
+                "SELECT MONTH(created_date), COUNT(*) " +
+                "FROM companies " +
+                "GROUP BY MONTH(created_date) " +
+                "ORDER BY MONTH(created_date)"
+
+            ).getResultList();
+        }
+        
+        @Override
+        public List<Object[]> getWeeklyCompanyRegistrations() {
+
+            return em.createNativeQuery(
+
+                "SELECT WEEK(created_date), COUNT(*) " +
+                "FROM companies " +
+                "GROUP BY WEEK(created_date) " +
+                "ORDER BY WEEK(created_date)"
+
+            ).getResultList();
+        }
 }
