@@ -308,6 +308,74 @@
                             styleClass="w-full"/>
 
                     </div>
+                    
+                    <div>
+
+                        <label class="block text-slate-700
+                                      font-semibold mb-2">
+
+                            GST Number
+
+                        </label>
+
+                        <p:inputText
+                            value="#{companyBean.request.gstNumber}"
+                            placeholder="Enter GST Number"
+                            styleClass="w-full !rounded-2xl"/>
+
+                    </div>
+                    
+                    <div>
+
+                        <label class="block text-slate-700
+                                      font-semibold mb-2">
+
+                            PAN Number
+
+                        </label>
+
+                        <p:inputText
+                            value="#{companyBean.request.panNumber}"
+                            placeholder="Enter PAN Number"
+                            styleClass="w-full !rounded-2xl"/>
+
+                    </div>
+                    
+                    
+                    <div>
+
+                    <label class="block text-slate-700
+                                  font-semibold mb-2">
+
+                        GST Certificate
+
+                    </label>
+
+                    <p:fileUpload
+                        value="#{companyBean.gstCertificateFile}"
+                        mode="simple"
+                        skinSimple="true"
+                        accept=".pdf,.jpg,.jpeg,.png"/>
+
+                </div>
+                    
+                    
+                    <div>
+
+                        <label class="block text-slate-700
+                                      font-semibold mb-2">
+
+                            Business License
+
+                        </label>
+
+                        <p:fileUpload
+                            value="#{companyBean.businessLicenseFile}"
+                            mode="simple"
+                            skinSimple="true"
+                            accept=".pdf,.jpg,.jpeg,.png"/>
+
+                    </div>
 
                     <!-- BUTTON -->
                     <p:commandButton

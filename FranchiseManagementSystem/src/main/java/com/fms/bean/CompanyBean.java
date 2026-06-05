@@ -29,6 +29,26 @@ public class CompanyBean implements Serializable{
     private String customBusinessType;
     
     private UploadedFile logoFile;
+    
+    private UploadedFile gstCertificateFile;
+
+    public UploadedFile getGstCertificateFile() {
+        return gstCertificateFile;
+    }
+
+    public void setGstCertificateFile(UploadedFile gstCertificateFile) {
+        this.gstCertificateFile = gstCertificateFile;
+    }
+
+    public UploadedFile getBusinessLicenseFile() {
+        return businessLicenseFile;
+    }
+
+    public void setBusinessLicenseFile(UploadedFile businessLicenseFile) {
+        this.businessLicenseFile = businessLicenseFile;
+    }
+
+    private UploadedFile businessLicenseFile;
 
     // REGISTER COMPANY REQUEST
     public String submitRequest() {
@@ -98,6 +118,58 @@ public class CompanyBean implements Serializable{
 
             e.printStackTrace();
         }
+        
+        String uploadPath =
+        System.getProperty("com.sun.aas.instanceRoot")
+        + File.separator
+        + "company-documents"
+        + File.separator;
+
+        File folder = new File(uploadPath);
+
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        
+        if (gstCertificateFile != null) {
+
+    String gstFileName =
+            "GST_"
+            + System.currentTimeMillis()
+            + "_"
+            + gstCertificateFile.getFileName();
+
+    Path gstPath =
+            Paths.get(uploadPath + gstFileName);
+
+    Files.copy(
+            gstCertificateFile.getInputStream(),
+            gstPath
+    );
+
+    request.setGstCertificate(gstFileName);
+}
+        
+        if (businessLicenseFile != null) {
+
+    String licenseFileName =
+            "LICENSE_"
+            + System.currentTimeMillis()
+            + "_"
+            + businessLicenseFile.getFileName();
+
+    Path licensePath =
+            Paths.get(uploadPath + licenseFileName);
+
+    Files.copy(
+            businessLicenseFile.getInputStream(),
+            licensePath
+    );
+
+    request.setBusinessLicense(
+            licenseFileName
+    );
+}
 
         // =========================
         // SAVE DATABASE AFTER LOGO
