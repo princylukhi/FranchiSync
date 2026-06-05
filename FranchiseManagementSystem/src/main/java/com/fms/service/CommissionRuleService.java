@@ -6,6 +6,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import java.math.BigDecimal;
 
 import java.util.List;
 
@@ -17,17 +18,94 @@ public class CommissionRuleService
     private EntityManager em;
 
     @Override
-    public void addRule(CommissionRules rule) {
+    public String addRule(CommissionRules rule) {
+
+        if(rule.getMinSales()
+                .compareTo(rule.getMaxSales()) >= 0) {
+
+            return "Minimum sales must be less than maximum sales";
+        }
+
+        Long overlapCount =
+            em.createQuery(
+
+                "SELECT COUNT(c) " +
+                "FROM CommissionRules c " +
+                "WHERE c.cid.cid = :cid " +
+                "AND c.status = 'ACTIVE' " +
+                "AND (" +
+                ":min <= c.maxSales " +
+                "AND " +
+                ":max >= c.minSales" +
+                ")",
+
+                Long.class
+
+            )
+            .setParameter("cid",
+                    rule.getCid().getCid())
+            .setParameter("min",
+                    rule.getMinSales())
+            .setParameter("max",
+                    rule.getMaxSales())
+            .getSingleResult();
+
+        if(overlapCount > 0) {
+
+            return "Commission range overlaps with existing rule";
+        }
 
         rule.setStatus("ACTIVE");
 
         em.persist(rule);
+
+        return "SUCCESS";
     }
 
     @Override
-    public void updateRule(CommissionRules rule) {
+    public String updateRule(CommissionRules rule) {
+
+        if(rule.getMinSales()
+                .compareTo(rule.getMaxSales()) >= 0) {
+
+            return "Minimum sales must be less than maximum sales";
+        }
+
+        Long overlapCount =
+            em.createQuery(
+
+                "SELECT COUNT(c) " +
+                "FROM CommissionRules c " +
+                "WHERE c.cid.cid = :cid " +
+                "AND c.coid <> :coid " +
+                "AND c.status = 'ACTIVE' " +
+                "AND (" +
+                ":min <= c.maxSales " +
+                "AND " +
+                ":max >= c.minSales" +
+                ")",
+
+                Long.class
+
+            )
+            .setParameter("cid",
+                    rule.getCid().getCid())
+            .setParameter("coid",
+                    rule.getCoid())
+            .setParameter("min",
+                    rule.getMinSales())
+            .setParameter("max",
+                    rule.getMaxSales())
+            .getSingleResult();
+
+        if(overlapCount > 0) {
+
+            return "Commission range overlaps with existing rule";
+        }
 
         em.merge(rule);
+
+        return "SUCCESS";
     }
 
     @Override
@@ -79,5 +157,30 @@ public class CommissionRuleService
         q.setParameter("cid", companyId);
 
         return q.getResultList();
+    }
+    
+    @Override
+    public CommissionRules getMatchingRule(
+            int companyId,
+            BigDecimal salesAmount) {
+
+        List<CommissionRules> rules =
+            em.createQuery(
+
+                "SELECT c FROM CommissionRules c " +
+                "WHERE c.cid.cid = :cid " +
+                "AND c.status = 'ACTIVE' " +
+                "AND :sales BETWEEN c.minSales AND c.maxSales",
+
+                CommissionRules.class
+
+            )
+            .setParameter("cid", companyId)
+            .setParameter("sales", salesAmount)
+            .getResultList();
+
+        return rules.isEmpty()
+                ? null
+                : rules.get(0);
     }
 }

@@ -1,11 +1,210 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <!-- PAGE HEADER -->
+
+        <div class="mb-8">
+
+            <h1 class="text-4xl font-black text-slate-900">
+                Sales Dashboard
+            </h1>
+
+            <p class="text-slate-500 mt-2 text-lg">
+                Monitor branch sales performance and revenue.
+            </p>
+
+        </div>
+
+        <!-- STAT CARDS -->
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+            <!-- REVENUE -->
+
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Total Revenue
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            ₹ #{franchiseSalesBean.totalRevenue}
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-wallet text-emerald-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ORDERS -->
+
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Total Orders
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            #{franchiseSalesBean.totalOrders}
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-shopping-cart text-cyan-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BRANCHES -->
+
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Active Branches
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            #{franchiseSalesBean.activeBranches}
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl bg-amber-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-building text-amber-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RECENT SALES -->
+
+        <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8 mb-8">
+
+            <h2 class="text-2xl font-black text-slate-900 mb-6">
+                Recent Sales
+            </h2>
+
+            <p:dataTable value="#{franchiseSalesBean.recentSales}"
+                         var="sale"
+                         scrollable="true"
+                         scrollHeight="400"
+                         styleClass="border-none">
+
+                <p:column headerText="Sale ID">
+                    #{sale.sid}
+                </p:column>
+
+                <p:column headerText="Date">
+
+                    <h:outputText value="#{sale.saleDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" timeZone="Asia/Kolkata"/>
+                    </h:outputText>
+
+                </p:column>
+
+                <p:column headerText="Branch">
+                    #{sale.bid.branchName}
+                </p:column>
+
+                <p:column headerText="Customer">
+                    #{sale.customerId.customerName}
+                </p:column>
+
+                <p:column headerText="Payment">
+                    #{sale.paymentMode}
+                </p:column>
+
+                <p:column headerText="Amount">
+                    ₹ #{sale.totalAmount}
+                </p:column>
+                
+                <p:column headerText="Status">
+
+                    <span class="px-3 py-1 rounded-full
+                                 bg-emerald-100
+                                 text-emerald-700
+                                 text-sm
+                                 font-medium">
+
+                        #{sale.status}
+
+                    </span>
+
+                </p:column>
+
+            </p:dataTable>
+
+        </div>
+
+        <!-- BRANCH PERFORMANCE -->
+
+        <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+
+            <h2 class="text-2xl font-black text-slate-900 mb-6">
+                Branch Wise Sales
+            </h2>
+
+            <p:dataTable value="#{franchiseSalesBean.branchSales}"
+                         var="row">
+                         
+
+                <p:column headerText="Branch">
+                    #{row[0]}
+                </p:column>
+
+                <p:column headerText="Orders">
+                    #{row[1]}
+                </p:column>
+
+                <p:column headerText="Revenue">
+                    ₹ #{row[2]}
+                </p:column>
+
+            </p:dataTable>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

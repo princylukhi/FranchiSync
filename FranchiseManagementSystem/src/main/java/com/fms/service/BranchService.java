@@ -194,4 +194,21 @@ public class BranchService implements BranchServiceLocal {
             .setParameter(1, franchiseId)
             .getResultList();
         }
+        
+        @Override
+        public long getActiveBranchesByFranchise(int franchiseId) {
+
+            return em.createQuery(
+
+                "SELECT COUNT(b) " +
+                "FROM Branches b " +
+                "WHERE b.fid.fid = :fid " +
+                "AND b.status = 'ACTIVE'",
+
+                Long.class
+
+            )
+            .setParameter("fid", franchiseId)
+            .getSingleResult();
+        }
 }

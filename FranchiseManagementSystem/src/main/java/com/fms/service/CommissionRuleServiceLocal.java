@@ -7,14 +7,18 @@ import java.util.List;
 @Local
 public interface CommissionRuleServiceLocal {
 
-    void addRule(CommissionRules rule);
+    String addRule(CommissionRules rule);
 
-    void updateRule(CommissionRules rule);
+    String updateRule(CommissionRules rule);
 
     void deactivateRule(int coid);
 
     void activateRule(int coid);
 
     List<CommissionRules> getRulesByCompany(int companyId);
+    
+    CommissionRules getMatchingRule(
+        int companyId,
+        java.math.BigDecimal salesAmount);
 
 }

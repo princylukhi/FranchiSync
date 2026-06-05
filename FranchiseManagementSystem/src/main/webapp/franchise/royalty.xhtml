@@ -1,11 +1,209 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition
+    template="/templates/layout.xhtml"
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <!-- PAGE HEADER -->
+
+        <div class="mb-8">
+
+            <h1 class="text-4xl font-black text-slate-900">
+                Royalty Dashboard
+            </h1>
+
+            <p class="text-slate-500 mt-2 text-lg">
+                View royalty earnings based on branch sales and commission rules.
+            </p>
+
+        </div>
+
+        <!-- SUMMARY CARDS -->
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+            <!-- TOTAL SALES -->
+
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Total Sales
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            ₹ <h:outputText value="#{franchiseRoyaltyBean.totalSales}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-chart-line text-cyan-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TOTAL ROYALTY -->
+
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Total Royalty
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            ₹ <h:outputText value="#{franchiseRoyaltyBean.totalRoyalty}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-wallet text-emerald-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ACTIVE BRANCHES -->
+
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 font-medium">
+                            Total Branches
+                        </p>
+
+                        <h2 class="text-4xl font-black text-slate-900 mt-3">
+                            #{franchiseRoyaltyBean.totalBranches}
+                        </h2>
+
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl bg-amber-100
+                                flex items-center justify-center">
+
+                        <i class="pi pi-building text-amber-600 text-2xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ROYALTY TABLE -->
+
+        <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+
+            <div class="flex justify-between items-center mb-6">
+
+                <h2 class="text-2xl font-black text-slate-900">
+                    Branch Wise Royalty
+                </h2>
+
+                <span class="bg-emerald-100
+                             text-emerald-700
+                             px-4 py-2
+                             rounded-xl
+                             text-sm
+                             font-semibold">
+
+                    #{franchiseRoyaltyBean.royaltyRows.size()} Branches
+
+                </span>
+
+            </div>
+
+            <p:dataTable value="#{franchiseRoyaltyBean.royaltyRows}"
+                         var="r"
+                         reflow="true"
+                         scrollable="true"
+                         scrollHeight="400"
+                         styleClass="border-none">
+                        
+                        
+
+                <p:column headerText="Branch">
+
+                    <span class="font-semibold">
+                        #{r.branchName}
+                    </span>
+
+                </p:column>
+
+                <p:column headerText="Sales Amount">
+
+                    <span class="font-medium">
+                        ₹ <h:outputText value="#{r.salesAmount}">
+                            <f:convertNumber minFractionDigits="2"
+                                             maxFractionDigits="2"/>
+                        </h:outputText>
+                    </span>
+
+                </p:column>
+
+                <p:column headerText="Commission %">
+
+                    <h:panelGroup rendered="#{r.commissionPercent gt 0}">
+                        <span class="px-4 py-2 rounded-full bg-cyan-100 text-cyan-700 font-semibold">
+                            #{r.commissionPercent} %
+                        </span>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{r.commissionPercent eq 0}">
+                        -
+                    </h:panelGroup>
+
+                </p:column>
+                
+                <p:column headerText="Royalty Amount">
+
+                    <span class="font-bold text-emerald-600">
+                        ₹ <h:outputText value="#{r.royaltyAmount}">
+                            <f:convertNumber minFractionDigits="2"
+                                             maxFractionDigits="2"/>
+                        </h:outputText>
+                    </span>
+
+                </p:column>
+
+            </p:dataTable>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>
