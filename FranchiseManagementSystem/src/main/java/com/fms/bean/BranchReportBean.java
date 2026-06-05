@@ -4,6 +4,7 @@ import com.fms.entity.Users;
 
 import com.fms.service.UserServiceLocal;
 import com.fms.service.FeedbackServiceLocal;
+import com.fms.service.SalesServiceLocal;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
@@ -25,6 +26,9 @@ public class BranchReportBean implements Serializable {
 
     @EJB
     private FeedbackServiceLocal feedbackService;
+    
+    @EJB
+    private SalesServiceLocal salesService;
 
     private int branchId;
 
@@ -39,11 +43,14 @@ public class BranchReportBean implements Serializable {
     private String trendLabels;
     private String trendData;
     
-    private String joiningLabels;
-    private String joiningData;
+    private String salesLabels;
+    private String salesData;
 
     private String statusLabels;
     private String statusData;
+    
+    private String paymentLabels;
+    private String paymentData;
     
 
 
@@ -71,13 +78,15 @@ public class BranchReportBean implements Serializable {
         branchId =
             user.getBid().getBid();
 
-        loadJoiningTrend();
+        loadSalesTrend();
 
         loadStatusDistribution();
 
         loadRatingAnalysis();
 
         loadFeedbackTrend();
+        
+        loadPaymentDistribution();
     }
 
   
@@ -177,62 +186,85 @@ public class BranchReportBean implements Serializable {
         System.out.println("Trend Data = " + trendData);
     }
     
-    private void loadJoiningTrend() {
+    private void loadSalesTrend() {
 
-    StringBuilder labels =
-        new StringBuilder();
+        StringBuilder labels =
+            new StringBuilder();
 
-    StringBuilder data =
-        new StringBuilder();
+        StringBuilder data =
+            new StringBuilder();
 
-    List<Object[]> result =
-        userService
-        .getMonthlyStaffJoiningTrend(
-            branchId
-        );
+        List<Object[]> result =
+            salesService.getMonthlySalesTrend(branchId);
 
-    String[] months = {
+        String[] months = {
 
-        "",
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-    };
+            "",
+            "Jan","Feb","Mar","Apr",
+            "May","Jun","Jul","Aug",
+            "Sep","Oct","Nov","Dec"
+        };
 
-    for(Object[] row : result) {
+        for(Object[] row : result) {
 
-        labels.append("'")
-              .append(
-                  months[
-                      Integer.parseInt(
-                          row[0].toString()
-                      )
-                  ]
-              )
-              .append("',");
+            labels.append("'")
+                  .append(
+                      months[
+                          Integer.parseInt(
+                              row[0].toString()
+                          )
+                      ]
+                  )
+                  .append("',");
 
-        data.append(row[1])
-            .append(",");
+            data.append(row[1])
+                .append(",");
+        }
+
+        salesLabels =
+            labels.toString();
+
+        salesData =
+            data.toString();
     }
-
-    joiningLabels =
-        labels.toString();
-
-    joiningData =
-        data.toString();
-}
     
     private void loadStatusDistribution() {
 
+    int active = 0;
+    int inactive = 0;
+
+    List<Object[]> result =
+        userService.getStaffStatusDistribution(branchId);
+
+    for(Object[] row : result) {
+
+        String status =
+            row[0].toString();
+
+        int count =
+            Integer.parseInt(
+                row[1].toString()
+            );
+
+        if(status.equalsIgnoreCase("ACTIVE")) {
+
+            active = count;
+
+        } else if(status.equalsIgnoreCase("INACTIVE")) {
+
+            inactive = count;
+        }
+    }
+
+    statusLabels =
+        "'ACTIVE','INACTIVE'";
+
+    statusData =
+        active + "," + inactive;
+}
+    
+    private void loadPaymentDistribution() {
+
     StringBuilder labels =
         new StringBuilder();
 
@@ -240,8 +272,7 @@ public class BranchReportBean implements Serializable {
         new StringBuilder();
 
     List<Object[]> result =
-        userService
-        .getStaffStatusDistribution(
+        salesService.getPaymentModeDistribution(
             branchId
         );
 
@@ -255,10 +286,10 @@ public class BranchReportBean implements Serializable {
             .append(",");
     }
 
-    statusLabels =
+    paymentLabels =
         labels.toString();
 
-    statusData =
+    paymentData =
         data.toString();
 }
 
@@ -284,12 +315,12 @@ public class BranchReportBean implements Serializable {
         return trendData;
     }
     
-    public String getJoiningLabels() {
-        return joiningLabels;
+    public String getSalesLabels() {
+        return salesLabels;
     }
 
-    public String getJoiningData() {
-        return joiningData;
+    public String getSalesData() {
+        return salesData;
     }
 
     public String getStatusLabels() {
@@ -298,5 +329,13 @@ public class BranchReportBean implements Serializable {
 
     public String getStatusData() {
         return statusData;
+    }
+    
+    public String getPaymentLabels() {
+        return paymentLabels;
+    }
+
+    public String getPaymentData() {
+        return paymentData;
     }
 }

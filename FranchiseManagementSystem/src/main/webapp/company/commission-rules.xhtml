@@ -63,7 +63,7 @@
 
                     <p class="text-slate-500 mt-1">
 
-                        Manage sales-based commission slabs for franchises
+                        Manage sales-based commission slabs for franchises.
 
                     </p>
 
@@ -224,19 +224,23 @@
 
                 <p:inputNumber 
                 value="#{companyCommissionBean.rule.minSales}"
-                required="true"/>
+                required="true"
+                minValue="0"/>
 
                 <h:outputText value="Maximum Sales"/>
 
                 <p:inputNumber
                 value="#{companyCommissionBean.rule.maxSales}"
-                required="true"/>
+                required="true"
+                minValue="1"/>
                 
                 <h:outputText value="Commission (%)"/>
 
                 <p:inputNumber 
                 value="#{companyCommissionBean.rule.coPercentage}"
-                required="true"/>
+                required="true"
+                minValue="0"
+                maxValue="100"/>
 
             </h:panelGrid>
 
@@ -281,17 +285,24 @@
             <h:outputText value="Minimum Sales"/>
 
             <p:inputNumber
-                value="#{companyCommissionBean.rule.minSales}"/>
+                value="#{companyCommissionBean.rule.minSales}"
+                required="true"
+                minValue="0"/>
 
             <h:outputText value="Maximum Sales"/>
 
             <p:inputNumber
-                value="#{companyCommissionBean.rule.maxSales}"/>
+                value="#{companyCommissionBean.rule.maxSales}"
+                required="true"
+                minValue="1"/>
 
             <h:outputText value="Commission (%)"/>
 
             <p:inputNumber
-                value="#{companyCommissionBean.rule.coPercentage}"/>
+                value="#{companyCommissionBean.rule.coPercentage}"
+                required="true"
+                minValue="0"
+                maxValue="100"/>
 
         </h:panelGrid>
 

@@ -8,6 +8,7 @@ import com.fms.service.CommissionRuleServiceLocal;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
@@ -95,8 +96,23 @@ implements Serializable {
 
             rule.setStatus("ACTIVE");
 
-            commissionRuleService
-                    .addRule(rule);
+            String result =
+    commissionRuleService.addRule(rule);
+
+        if(!result.equals("SUCCESS")) {
+
+            FacesContext.getCurrentInstance()
+                .addMessage(
+                    null,
+                    new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        result,
+                        null
+                    )
+                );
+
+            return;
+        }
 
             loadRules();
 
@@ -116,13 +132,28 @@ implements Serializable {
 
     public void updateRule() {
 
-        commissionRuleService
+        String result =
+            commissionRuleService
                 .updateRule(rule);
+
+        if(!result.equals("SUCCESS")) {
+
+            FacesContext.getCurrentInstance()
+                .addMessage(
+                    null,
+                    new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        result,
+                        null
+                    )
+                );
+
+            return;
+        }
 
         loadRules();
 
-        rule =
-            new CommissionRules();
+        rule = new CommissionRules();
     }
 
     public void activate(int coid) {
