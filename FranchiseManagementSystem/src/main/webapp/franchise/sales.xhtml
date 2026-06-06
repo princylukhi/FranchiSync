@@ -40,8 +40,11 @@
                             Total Revenue
                         </p>
 
-                        <h2 class="text-4xl font-black text-slate-900 mt-3">
-                            ₹ #{franchiseSalesBean.totalRevenue}
+                        <h2 class="text-3xl font-black text-slate-900 mt-3">
+                            ₹ <h:outputText value="#{franchiseSalesBean.totalRevenue}">
+                                <f:convertNumber minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
                         </h2>
 
                     </div>

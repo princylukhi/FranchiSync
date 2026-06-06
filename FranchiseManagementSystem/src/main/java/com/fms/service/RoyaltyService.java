@@ -143,4 +143,96 @@ implements RoyaltyServiceLocal {
                 ? BigDecimal.ZERO
                 : sales;
     }
+    
+  @Override
+public BigDecimal getCurrentMonthSales(int franchiseId) {
+
+    BigDecimal sales =
+        em.createQuery(
+
+            "SELECT SUM(s.totalAmount) " +
+            "FROM Sales s " +
+            "WHERE s.bid.fid.fid = :fid " +
+            "AND FUNCTION('MONTH', s.saleDate) = FUNCTION('MONTH', CURRENT_DATE) " +
+            "AND FUNCTION('YEAR', s.saleDate) = FUNCTION('YEAR', CURRENT_DATE)",
+
+            BigDecimal.class
+
+        )
+        .setParameter("fid", franchiseId)
+        .getSingleResult();
+
+    return sales == null
+            ? BigDecimal.ZERO
+            : sales;
+}
+
+@Override
+public BigDecimal getCurrentMonthRoyalty(
+        int franchiseId) {
+
+    BigDecimal totalRoyalty =
+            BigDecimal.ZERO;
+
+    List<Branches> branches =
+        em.createQuery(
+
+            "SELECT b FROM Branches b " +
+            "WHERE b.fid.fid = :fid",
+
+            Branches.class
+
+        )
+        .setParameter("fid", franchiseId)
+        .getResultList();
+
+    for (Branches branch : branches) {
+
+        BigDecimal salesAmount =
+            em.createQuery(
+
+                "SELECT SUM(s.totalAmount) " +
+                "FROM Sales s " +
+                "WHERE s.bid.bid = :bid " +
+                "AND FUNCTION('MONTH', s.saleDate) = FUNCTION('MONTH', CURRENT_DATE) " +
+                "AND FUNCTION('YEAR', s.saleDate) = FUNCTION('YEAR', CURRENT_DATE)",
+
+                BigDecimal.class
+
+            )
+            .setParameter("bid", branch.getBid())
+            .getSingleResult();
+
+        if (salesAmount == null) {
+
+            salesAmount = BigDecimal.ZERO;
+        }
+
+        int companyId =
+            branch.getFid()
+                  .getCid()
+                  .getCid();
+
+        CommissionRules rule =
+            commissionRuleService
+            .getMatchingRule(
+                companyId,
+                salesAmount
+            );
+
+        if (rule != null &&
+            salesAmount.compareTo(BigDecimal.ZERO) > 0) {
+
+            BigDecimal royalty =
+                salesAmount
+                .multiply(rule.getCoPercentage())
+                .divide(new BigDecimal("100"));
+
+            totalRoyalty =
+                totalRoyalty.add(royalty);
+        }
+    }
+
+    return totalRoyalty;
+}
 }

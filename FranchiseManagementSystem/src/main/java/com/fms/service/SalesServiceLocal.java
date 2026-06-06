@@ -28,4 +28,6 @@ public interface SalesServiceLocal {
     List<Object[]> getMonthlySalesRevenueByStaff(int staffId);
 
     List<Object[]> getPaymentModeDistributionByStaff(int staffId);
+    
+    List<Object[]> getBranchPerformance(int franchiseId);
 }

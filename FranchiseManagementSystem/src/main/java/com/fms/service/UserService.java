@@ -424,5 +424,23 @@ public List<Object[]> getStaffStatusDistribution(
     .setParameter("bid", branchId)
     .getResultList();
 }
+
+@Override
+public long getTotalManagersByFranchise(
+        int franchiseId) {
+
+    return em.createQuery(
+
+        "SELECT COUNT(u) " +
+        "FROM Users u " +
+        "WHERE u.bid.fid.fid = :fid " +
+        "AND u.rid.roleName = 'BRANCH_MANAGER'",
+
+        Long.class
+
+    )
+    .setParameter("fid", franchiseId)
+    .getSingleResult();
+}
 } 
 

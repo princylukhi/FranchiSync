@@ -14,4 +14,8 @@ public interface RoyaltyServiceLocal {
     BigDecimal getTotalRoyalty(int franchiseId);
 
     BigDecimal getTotalSales(int franchiseId);
+    
+    BigDecimal getCurrentMonthSales(int franchiseId);
+    
+    BigDecimal getCurrentMonthRoyalty(int franchiseId);
 }

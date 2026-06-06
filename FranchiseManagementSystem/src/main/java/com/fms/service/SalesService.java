@@ -202,4 +202,27 @@ public List<Object[]> getPaymentModeDistributionByStaff(
     .setParameter("uid", staffId)
     .getResultList();
 }
+
+@Override
+public List<Object[]> getBranchPerformance(
+        int franchiseId) {
+
+    return em.createQuery(
+
+        "SELECT " +
+        "b.branchName, " +
+        "b.location, " +
+        "COALESCE(SUM(s.totalAmount),0) " +
+        "FROM Branches b " +
+        "LEFT JOIN b.salesCollection s " +
+        "WHERE b.fid.fid = :fid " +
+        "GROUP BY b.branchName, b.location " +
+        "ORDER BY COALESCE(SUM(s.totalAmount),0) DESC",
+
+        Object[].class
+
+    )
+    .setParameter("fid", franchiseId)
+    .getResultList();
+}
 }
