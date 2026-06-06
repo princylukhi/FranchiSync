@@ -24,4 +24,8 @@ public interface SalesServiceLocal {
     
     List<Object[]> getPaymentModeDistribution(
         int branchId);
+    
+    List<Object[]> getMonthlySalesRevenueByStaff(int staffId);
+
+    List<Object[]> getPaymentModeDistributionByStaff(int staffId);
 }

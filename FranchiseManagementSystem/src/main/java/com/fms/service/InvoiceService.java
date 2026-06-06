@@ -65,5 +65,24 @@ public class InvoiceService implements InvoiceServiceLocal {
         .getResultList();
     }
     
+    @Override
+public List<Object[]> getMonthlyInvoiceTrendByStaff(
+        int staffId) {
+
+    return em.createQuery(
+
+        "SELECT FUNCTION('MONTH', i.invoiceDate), " +
+        "COUNT(i) " +
+        "FROM Invoices i " +
+        "WHERE i.sid.staffId.uid = :uid " +
+        "GROUP BY FUNCTION('MONTH', i.invoiceDate) " +
+        "ORDER BY FUNCTION('MONTH', i.invoiceDate)",
+
+        Object[].class
+
+    )
+    .setParameter("uid", staffId)
+    .getResultList();
+}
     
 }

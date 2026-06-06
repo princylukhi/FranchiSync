@@ -7,7 +7,7 @@
 
     <title>Login | FranchiSync</title>
 
-    <!-- Tailwind -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- PrimeIcons -->
@@ -16,250 +16,177 @@
 
 </h:head>
 
-<h:body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-slate-100 overflow-x-hidden">
+<h:body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-slate-100">
 
-    <!-- MAIN CONTAINER -->
+    <!-- BACK TO HOME -->
+    <div class="px-8 py-5 flex items-center">
+
+        <h:link outcome="/index.xhtml"
+                styleClass="inline-flex items-center gap-2
+                            text-slate-600 hover:text-emerald-600
+                            font-semibold transition-all">
+
+            <i class="pi pi-arrow-left"></i>
+
+            <span>Back to Home</span>
+
+        </h:link>
+
+    </div>
+
+    <!-- MAIN -->
     <div class="min-h-screen flex items-center justify-center px-6 py-10">
 
-        <!-- LOGIN CARD -->
-        <div class="w-full max-w-6xl grid lg:grid-cols-2
-                    bg-white/80 backdrop-blur-xl
-                    rounded-[35px] shadow-2xl overflow-hidden">
+        <!-- CARD -->
+        <div class="w-full max-w-lg
+                    bg-white
+                    rounded-[35px]
+                    shadow-2xl
+                    p-10">
 
-            <!-- LEFT SIDE -->
-            <div class="hidden lg:flex flex-col justify-center
-                        bg-gradient-to-br from-emerald-500 to-emerald-600
-                        text-white p-14 relative overflow-hidden">
+            <!-- HEADER -->
+            <div class="mb-8 text-center">
 
-                <!-- CIRCLE EFFECT -->
-                <div class="absolute -top-16 -right-16 w-52 h-52
-                            bg-white/10 rounded-full"></div>
+                <div class="flex justify-center mb-6">
 
-                <div class="absolute bottom-0 -left-10 w-40 h-40
-                            bg-white/10 rounded-full"></div>
+                    <div class="w-20 h-20
+                                rounded-3xl
+                                bg-emerald-100
+                                flex items-center
+                                justify-center">
 
-                <!-- LOGO -->
-                <div class="flex items-center gap-4 mb-10 z-10">
-
-                    <div class="w-16 h-16 rounded-2xl
-                                bg-white/20 backdrop-blur-md
-                                flex items-center justify-center">
-
-                        <i class="pi pi-building text-3xl"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h1 class="text-4xl font-black">
-                            FranchiSync
-                        </h1>
-
-                        <p class="text-emerald-100">
-                            Franchise Management System
-                        </p>
+                        <i class="pi pi-building
+                                  text-4xl
+                                  text-emerald-600"></i>
 
                     </div>
 
                 </div>
 
-                <!-- TEXT -->
-                <div class="z-10">
+                <h2 class="text-4xl font-black text-slate-900 mb-3">
+                    Login
+                </h2>
 
-                    <h2 class="text-5xl font-black leading-tight mb-6">
-
-                        Welcome
-                        Back!
-
-                    </h2>
-
-                    <p class="text-emerald-50 text-lg leading-8">
-
-                        Manage franchises, branches,
-                        inventory, billing and operations
-                        through one centralized platform.
-
-                    </p>
-
-                </div>
+                <p class="text-slate-500 text-lg">
+                    Access your dashboard securely.
+                </p>
 
             </div>
 
-            <!-- RIGHT SIDE -->
-            <div class="relative p-10 lg:p-14 flex flex-col justify-center">
+            <!-- FORM -->
+            <h:form styleClass="space-y-5">
 
-                <!-- MOBILE LOGO -->
-                <div class="lg:hidden flex items-center gap-3 mb-10">
+                <!-- MESSAGES -->
+                <p:growl id="growl"
+                         showDetail="true"
+                         life="3000"/>
 
-                    <div class="w-12 h-12 rounded-2xl
-                                bg-emerald-500
-                                flex items-center justify-center">
+                <!-- EMAIL -->
+                <div>
 
-                        <i class="pi pi-building text-white text-xl"></i>
-                        
-                        
+                    <label class="block text-slate-700
+                                  font-semibold mb-2">
 
-                    </div>
+                        Email Address
 
-                    <div>
+                    </label>
 
-                        <h1 class="text-2xl font-black text-slate-900">
-                            FranchiSync
-                        </h1>
-
-                        <p class="text-sm text-slate-500">
-                            Franchise Management System
-                        </p>
-
-                    </div>
-                    
-                    
+                    <p:inputText
+                        value="#{loginBean.email}"
+                        required="true"
+                        requiredMessage="Email is required"
+                        placeholder="Enter Email Address"
+                        styleClass="w-full !rounded-2xl
+                        !py-4 !px-4 !border-slate-200
+                        focus:!border-emerald-500
+                        focus:!shadow-none"/>
 
                 </div>
 
-                <!-- TITLE -->
-                <div class="mb-10">
+                <!-- PASSWORD -->
+                <div>
 
-                    <h2 class="text-4xl font-black text-slate-900 mb-3">
-                        Login
-                    </h2>
+                    <label class="block text-slate-700
+                                  font-semibold mb-2">
 
-                    <p class="text-slate-500 text-lg">
-                        Access your dashboard securely.
-                    </p>
+                        Password
+
+                    </label>
+
+                    <p:password
+                        value="#{loginBean.password}"
+                        required="true"
+                        requiredMessage="Password is required"
+                        placeholder="Enter Password"
+                        feedback="false"
+                        toggleMask="true"
+                        styleClass="w-full !rounded-2xl
+                        !py-4 !px-4 !border-slate-200
+                        focus:!border-emerald-500
+                        focus:!shadow-none"/>
+
+                </div>
+
+                <!-- REMEMBER ME -->
+                <div class="flex items-center justify-between">
+
+                    <div class="flex items-center gap-2">
+
+                        <p:selectBooleanCheckbox
+                            value="#{loginBean.rememberMe}"/>
+
+                        <span class="text-slate-600 text-sm">
+                            Remember Me
+                        </span>
+
+                    </div>
+
+                    <h:link outcome="/forgot-password.xhtml"
+                            value="Forgot Password?"
+                            styleClass="text-emerald-600
+                            font-semibold hover:underline"/>
 
                 </div>
 
-                <!-- FORM -->
-                <h:form styleClass="space-y-6">
+                <!-- BUTTON -->
+                <p:commandButton
+                    value="Login"
+                    action="#{loginBean.login()}"
+                    process="@form"
+                    update="growl"
+                    ajax="false"
+                    styleClass="!w-full !bg-emerald-500
+                    hover:!bg-emerald-600
+                    !border-0 !rounded-2xl
+                    !py-4 !text-lg !font-semibold
+                    !shadow-lg"/>
 
-                    <!-- ERROR MESSAGE -->
-                    <p:growl id="growl"
-                    showDetail="true"
-                    life="3000"/>
+            </h:form>
 
-                    <!-- EMAIL -->
-                    <div>
+            <!-- FOOTER -->
+            <div class="mt-5 text-center space-y-2">
 
-                        <label class="block text-slate-700 font-semibold mb-2">
-                            Email Address
-                        </label>
+                <p class="text-slate-500 text-sm">
 
-                        <div class="relative">
+                    New company?
 
-                            <i class="pi pi-envelope absolute
-                                     left-4 top-1/2 -translate-y-1/2
-                                     text-slate-400"></i>
+                    <h:link outcome="/company_register.xhtml"
+                            value="Register here"
+                            styleClass="text-emerald-600
+                            font-semibold hover:underline"/>
 
-                            <p:inputText
-                                value="#{loginBean.email}"
-                                required="true"
-                                requiredMessage="Email is required"
-                                placeholder="Enter your email"
-                                styleClass="w-full !pl-12 !py-4
-                                !rounded-2xl !border-slate-200
-                                focus:!border-emerald-500
-                                focus:!shadow-none"/>
+                </p>
 
-                        </div>
+                <h:link outcome="/index.xhtml"
+                        styleClass="inline-flex items-center gap-2
+                        text-slate-500 hover:text-emerald-600
+                        text-xs font-medium transition">
 
-                    </div>
+                    <i class="pi pi-arrow-left scale-75"></i>
 
-                    <!-- PASSWORD -->
-                    <div>
+                    <span>Back to Home</span>
 
-                        <label class="block text-slate-700 font-semibold mb-2">
-                            Password
-                        </label>
-
-                        <div class="relative">
-
-                            <i class="pi pi-lock absolute
-                                     left-4 top-1/2 -translate-y-1/2
-                                     text-slate-400 z-10"></i>
-
-                            <p:password
-                                value="#{loginBean.password}"
-                                required="true"
-                                requiredMessage="Password is required"
-                                placeholder="Enter your password"
-                                feedback="false"
-                                toggleMask="true"
-                                styleClass="w-full !pl-12 !py-4
-                                !rounded-2xl !border-slate-200
-                                focus:!border-emerald-500
-                                focus:!shadow-none"/>
-
-                        </div>
-
-                    </div>
-
-                    <!-- OPTIONS -->
-                    <div class="flex items-center justify-between">
-
-                        <div class="flex items-center gap-2">
-
-                            <p:selectBooleanCheckbox
-                                value="#{loginBean.rememberMe}"/>
-
-                            <span class="text-slate-600 text-sm">
-                                Remember me
-                            </span>
-
-                        </div>
-
-                        <h:link
-                        outcome="/forgot-password.xhtml"
-                        value="Forgot Password?"
-                        styleClass="text-emerald-600
-                                    font-semibold
-                                    text-sm
-                                    hover:underline"/>
-
-                    </div>
-
-                    <!-- BUTTON -->
-                    <p:commandButton
-                        value="Login"
-                        action="#{loginBean.login()}"
-                        update="growl"
-                        process="@form"
-                        ajax="false"
-                        styleClass="!w-full !bg-emerald-500
-                        hover:!bg-emerald-600
-                        !border-0 !rounded-2xl
-                        !py-4 !text-lg !font-semibold
-                        !shadow-lg"/>
-
-                </h:form>
-
-                <!-- FOOTER -->
-                <div class="mt-5 text-center space-y-2">
-
-                    <!-- REGISTER -->
-                    <p class="text-slate-500 text-sm">
-
-                        New company?
-
-                        <h:link outcome="/company_register.xhtml"
-                                value="Register here"
-                                styleClass="text-emerald-600 font-semibold hover:underline"/>
-
-                    </p>
-
-                    <!-- BACK -->
-                    <h:link outcome="/index.xhtml"
-                            styleClass="inline-flex items-center gap-2
-                            text-slate-500 hover:text-emerald-600
-                            text-xs font-medium transition">
-
-                        <i class="pi pi-arrow-left scale-75"></i>
-                        
-                        <span>Back to Home</span>
-
-                    </h:link>
-
-                </div>
+                </h:link>
 
             </div>
 

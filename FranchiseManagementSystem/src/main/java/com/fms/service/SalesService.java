@@ -164,4 +164,42 @@ public List<Object[]> getPaymentModeDistribution(
     .setParameter("bid", branchId)
     .getResultList();
 }
+
+@Override
+public List<Object[]> getMonthlySalesRevenueByStaff(
+        int staffId) {
+
+    return em.createQuery(
+
+        "SELECT FUNCTION('MONTH', s.saleDate), " +
+        "COALESCE(SUM(s.totalAmount),0) " +
+        "FROM Sales s " +
+        "WHERE s.staffId.uid = :uid " +
+        "GROUP BY FUNCTION('MONTH', s.saleDate) " +
+        "ORDER BY FUNCTION('MONTH', s.saleDate)",
+
+        Object[].class
+
+    )
+    .setParameter("uid", staffId)
+    .getResultList();
+}
+
+@Override
+public List<Object[]> getPaymentModeDistributionByStaff(
+        int staffId) {
+
+    return em.createQuery(
+
+        "SELECT s.paymentMode, COUNT(s) " +
+        "FROM Sales s " +
+        "WHERE s.staffId.uid = :uid " +
+        "GROUP BY s.paymentMode",
+
+        Object[].class
+
+    )
+    .setParameter("uid", staffId)
+    .getResultList();
+}
 }

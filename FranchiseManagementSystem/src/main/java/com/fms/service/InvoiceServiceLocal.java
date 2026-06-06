@@ -15,6 +15,8 @@ public interface InvoiceServiceLocal {
     
     List<Invoices> getInvoicesByBranch(int bid);
     
-    
+    List<Object[]> getMonthlyInvoiceTrendByStaff(
+        int staffId
+    );
 
 }
