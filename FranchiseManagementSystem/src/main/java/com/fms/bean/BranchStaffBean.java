@@ -33,6 +33,8 @@ public class BranchStaffBean implements Serializable {
             new Users();
 
     private Users loggedInUser;
+    
+    private String otherDesignation;
 
     @PostConstruct
     public void init() {
@@ -65,6 +67,8 @@ public class BranchStaffBean implements Serializable {
     public void openAddDialog() {
 
         staff = new Users();
+        otherDesignation = null;
+
     }
 
     // ADD STAFF
@@ -73,9 +77,14 @@ public class BranchStaffBean implements Serializable {
 
          try {
 
-             // AUTO JOINING DATE
-             staff.setJoiningDate(new Date());
+             if ("Other".equals(staff.getDesignation())
+                    && otherDesignation != null
+                    && !otherDesignation.trim().isEmpty()) {
 
+                staff.setDesignation(otherDesignation.trim());
+            }
+             
+             
              userService.createStaffUser(
 
                  staff,
@@ -88,6 +97,7 @@ public class BranchStaffBean implements Serializable {
              loadStaff();
 
              staff = new Users();
+             otherDesignation = null;
 
          } catch (Exception e) {
 
@@ -100,11 +110,36 @@ public class BranchStaffBean implements Serializable {
     public void edit(Users u) {
 
         staff = u;
+
+        List<String> predefined = List.of(
+            "Sales Executive",
+            "Cashier",
+            "Store Assistant",
+            "Team Member"
+        );
+
+        if (!predefined.contains(staff.getDesignation())) {
+
+            otherDesignation = staff.getDesignation();
+
+            staff.setDesignation("Other");
+        }
+        else {
+
+            otherDesignation = null;
+        }
     }
 
     // UPDATE
 
     public void updateStaff() {
+        
+        if ("Other".equals(staff.getDesignation())
+        && otherDesignation != null
+        && !otherDesignation.trim().isEmpty()) {
+
+            staff.setDesignation(otherDesignation.trim());
+        }
 
         userService.updateUser(staff);
 
@@ -143,5 +178,13 @@ public class BranchStaffBean implements Serializable {
 
     public void setStaff(Users staff) {
         this.staff = staff;
+    }
+    
+    public String getOtherDesignation() {
+        return otherDesignation;
+    }
+
+    public void setOtherDesignation(String otherDesignation) {
+        this.otherDesignation = otherDesignation;
     }
 }

@@ -183,7 +183,8 @@
                                 value="#{s.joiningDate}">
 
                                 <f:convertDateTime
-                                    pattern="dd MMM yyyy"/>
+                                    pattern="dd MMM yyyy"
+                                    timeZone="Asia/Kolkata"/>
 
                             </h:outputText>
 
@@ -267,14 +268,18 @@
             <!-- DIALOG -->
 
             <p:dialog
-                header="Staff Details"
-                widgetVar="staffDialog"
-                modal="true"
-                responsive="true"
-                width="500"
-                closable="true"
-                draggable="false"
-                resizable="false">
+            header="Staff Details"
+            widgetVar="staffDialog"
+            modal="true"
+            responsive="true"
+            width="500"
+            closable="true"
+            draggable="false"
+            resizable="false"
+            fitViewport="true">
+                
+            <div style="max-height:70vh; overflow-y:auto;">
+
 
                 <h:panelGroup id="dialogPanel">
 
@@ -356,10 +361,53 @@
 
                         </label>
 
-                        <p:inputText
+                        <p:selectOneMenu
                             value="#{branchStaffBean.staff.designation}"
-                            styleClass="w-full"/>
+                            styleClass="w-full">
 
+                            <f:selectItem itemLabel="Select Designation"
+                                          itemValue="" />
+
+                            <f:selectItem itemLabel="Sales Executive"
+                                          itemValue="Sales Executive" />
+
+                            <f:selectItem itemLabel="Cashier"
+                                          itemValue="Cashier" />
+
+                            <f:selectItem itemLabel="Store Assistant"
+                                          itemValue="Store Assistant" />
+
+                            <f:selectItem itemLabel="Team Member"
+                                          itemValue="Team Member" />
+
+                            <f:selectItem itemLabel="Other"
+                                          itemValue="Other" />
+
+                            <p:ajax process="@this"
+                                    update="designationContainer"/>
+
+                        </p:selectOneMenu>
+                        
+                      <h:panelGroup id="designationContainer">
+
+    <h:panelGroup
+        id="otherDesignationPanel"
+        layout="block"
+        rendered="#{branchStaffBean.staff.designation eq 'Other'}">
+
+        <div class="mt-3">
+
+            <p:inputText
+                value="#{branchStaffBean.otherDesignation}"
+                placeholder="Enter designation"
+                styleClass="w-full"/>
+
+        </div>
+
+    </h:panelGroup>
+
+</h:panelGroup>
+                        
                     </div>
                     
                     <!-- JOINING DATE -->
@@ -377,7 +425,7 @@
 
                             <p:datePicker
                                 value="#{branchStaffBean.staff.joiningDate}"
-                                pattern="dd/MM/yyyy"
+                                pattern="dd/MM/yyyy" timeZone="Asia/Kolkata"
                                 showIcon="true"
                                 styleClass="w-full"/>
 
@@ -428,6 +476,8 @@
                     </div>
 
                 </h:panelGroup>
+                
+            </div>
 
             </p:dialog>
 

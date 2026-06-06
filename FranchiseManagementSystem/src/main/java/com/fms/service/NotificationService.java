@@ -157,12 +157,9 @@ public class NotificationService implements NotificationServiceLocal {
 
         + "Your company registration has been approved "
         + "and your company account has been created successfully.\n\n"
-
-        + "Using this account you can:\n"
-        + "• Manage franchise requests\n"
-        + "• Monitor franchise performance\n"
-        + "• View reports and feedback\n\n"
-
+                
+        + "You can now access the system using the credentials below:\n\n"
+        
         + "Login Credentials:\n\n"
 
         + "Email: " + email + "\n"
@@ -193,12 +190,9 @@ public class NotificationService implements NotificationServiceLocal {
 
             + "Congratulations on becoming a franchise partner.\n\n"
 
-            + "Your franchise account is now active.\n\n"
+            + "Your Franchise Owner account has been created successfully.\n\n"
 
-            + "Using this account you can:\n"
-            + "• Manage branches\n"
-            + "• Assign branch managers\n"
-            + "• Monitor branch operations\n\n"
+            + "You can now access the system using the credentials below:\n\n"
 
             + "Login Credentials:\n\n"
 
@@ -336,10 +330,7 @@ public class NotificationService implements NotificationServiceLocal {
 
             + "Your staff account has been created successfully.\n\n"
 
-            + "Using this account you can:\n"
-            + "• Access assigned tasks\n"
-            + "• Manage daily operations\n"
-            + "• Update work related information\n\n"
+            + "You can now access the system using the credentials below:\n\n"
 
             + "Login Credentials:\n\n"
 
@@ -368,12 +359,8 @@ public class NotificationService implements NotificationServiceLocal {
 
             "Dear Branch Manager,\n\n"
 
-            + "You have been assigned to manage a branch in FranchiSync.\n\n"
-
-            + "Using this account you can:\n"
-            + "• Manage branch staff\n"
-            + "• Handle inventory\n"
-            + "• Track sales activities\n\n"
+            + "Your Branch Manager account has been created successfully.\n\n"
+            + "You can now access the system using the credentials below:\n\n"
 
             + "Login Credentials:\n\n"
 
@@ -407,6 +394,9 @@ public void sendFranchiseCredentialsWithCertificate(
 
             + "Your franchise account has been "
             + "activated successfully.\n\n"
+            
+            + "You can now access the system using "
+            + "the credentials below:\n\n"
 
             + "Login Credentials:\n\n"
 

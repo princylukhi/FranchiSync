@@ -14,7 +14,7 @@
         <!-- HEADER -->
         <div class="mb-8">
 
-            <h1 class="text-4xl font-bold text-slate-900">
+            <h1 class="text-4xl font-black text-slate-900">
                 Companies
             </h1>
 
@@ -196,12 +196,26 @@
 
             </p:column>
 
-            <!-- APPROVED DATE -->
+            <!-- APPROVED/REJECTED DATE -->
             <p:column headerText="Approved/Rejected Date">
 
-                <h:outputText value="#{c.approvedDate}">
-                    <f:convertDateTime pattern="dd MMM yyyy" timeZone="Asia/Kolkata"/>
-                </h:outputText>
+                <ui:fragment rendered="#{not empty c.approvedDate}">
+
+                    <h:outputText value="#{c.approvedDate}">
+                        <f:convertDateTime
+                            pattern="dd MMM yyyy"
+                            timeZone="Asia/Kolkata"/>
+                    </h:outputText>
+
+                </ui:fragment>
+
+                <ui:fragment rendered="#{empty c.approvedDate}">
+
+                    <span class="text-slate-400 font-medium">
+                        -
+                    </span>
+
+                </ui:fragment>
 
             </p:column>
 
