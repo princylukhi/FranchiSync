@@ -43,6 +43,9 @@ implements Serializable {
     
     private List<Inventory> inventoryList =
         new ArrayList<>();
+    
+    private String companyName;
+    private String branchName;
 
     @PostConstruct
     public void init() {
@@ -61,11 +64,22 @@ implements Serializable {
 
             Users user =
                 (Users) session.getAttribute("user");
-
+            
             if(user == null) {
                 return;
             }
+            
+            companyName =
+                user.getBid()
+                    .getFid()
+                    .getCid()
+                    .getCompanyName();
 
+            branchName =
+                user.getBid()
+                    .getBranchName();
+
+           
             int branchId =
                 user.getBid().getBid();
 
@@ -105,6 +119,27 @@ implements Serializable {
         }
     }
 
+    public String formatAmount(BigDecimal amount) {
+
+        if (amount == null) {
+            return "₹0";
+        }
+
+        double value = amount.doubleValue();
+
+        if (value >= 10000000) {
+            return String.format("₹%.1fCr", value / 10000000);
+        }
+        else if (value >= 100000) {
+            return String.format("₹%.1fL", value / 100000);
+        }
+        else if (value >= 1000) {
+            return String.format("₹%.1fK", value / 1000);
+        }
+
+        return String.format("₹%.0f", value);
+    }
+    
     public Long getTotalProducts() {
         return totalProducts;
     }
@@ -129,24 +164,12 @@ implements Serializable {
         return inventoryList;
     }
     
-    public String formatAmount(BigDecimal amount) {
-
-    if (amount == null) {
-        return "₹0";
+    public String getCompanyName() {
+        return companyName;
     }
 
-    double value = amount.doubleValue();
-
-    if (value >= 10000000) {
-        return String.format("₹%.1fCr", value / 10000000);
+    public String getBranchName() {
+        return branchName;
     }
-    else if (value >= 100000) {
-        return String.format("₹%.1fL", value / 100000);
-    }
-    else if (value >= 1000) {
-        return String.format("₹%.1fK", value / 1000);
-    }
-
-    return String.format("₹%.0f", value);
-}
+     
 }

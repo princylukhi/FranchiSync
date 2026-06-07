@@ -48,6 +48,8 @@ implements Serializable {
     private List<Object[]> branchPerformance =
         new ArrayList<>();
     
+    private String companyName;
+    
     @PostConstruct
     public void init() {
 
@@ -70,11 +72,17 @@ implements Serializable {
                 return;
             }
 
-            int franchiseId =
+            var franchise =
                 user.getFranchisesCollection()
                     .iterator()
-                    .next()
-                    .getFid();
+                    .next();
+
+            int franchiseId =
+                franchise.getFid();
+
+            companyName =
+                franchise.getCid()
+                         .getCompanyName();
 
             totalBranches =
                 branchService
@@ -111,6 +119,29 @@ implements Serializable {
             e.printStackTrace();
         }
     }
+    
+    public String formatAmount(BigDecimal amount) {
+
+        if (amount == null) {
+            return "₹0";
+        }
+
+        double value = amount.doubleValue();
+
+        if (value >= 10000000) { // Crore
+            return String.format("₹%.1fCr", value / 10000000);
+        }
+
+        if (value >= 100000) { // Lakh
+            return String.format("₹%.1fL", value / 100000);
+        }
+
+        if (value >= 1000) { // Thousand
+            return String.format("₹%.1fK", value / 1000);
+        }
+
+        return String.format("₹%.2f", value);
+    }
 
     public Long getTotalBranches() {
         return totalBranches;
@@ -132,26 +163,8 @@ implements Serializable {
         return branchPerformance;
     }
     
-    public String formatAmount(BigDecimal amount) {
-
-    if (amount == null) {
-        return "₹0";
+    public String getCompanyName() {
+        return companyName;
     }
-
-    double value = amount.doubleValue();
-
-    if (value >= 10000000) { // Crore
-        return String.format("₹%.1fCr", value / 10000000);
-    }
-
-    if (value >= 100000) { // Lakh
-        return String.format("₹%.1fL", value / 100000);
-    }
-
-    if (value >= 1000) { // Thousand
-        return String.format("₹%.1fK", value / 1000);
-    }
-
-    return String.format("₹%.2f", value);
-}
+      
 }

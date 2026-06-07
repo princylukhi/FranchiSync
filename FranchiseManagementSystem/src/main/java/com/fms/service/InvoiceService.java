@@ -84,5 +84,32 @@ public List<Object[]> getMonthlyInvoiceTrendByStaff(
     .setParameter("uid", staffId)
     .getResultList();
 }
-    
+
+@Override
+public Long getTotalInvoices(int bid) {
+
+    return em.createQuery(
+        "SELECT COUNT(i) " +
+        "FROM Invoices i " +
+        "WHERE i.sid.bid.bid = :bid",
+        Long.class
+    )
+    .setParameter("bid", bid)
+    .getSingleResult();
+}
+
+    @Override
+public List<Invoices> getRecentInvoices(int bid) {
+
+    return em.createQuery(
+        "SELECT i " +
+        "FROM Invoices i " +
+        "WHERE i.sid.bid.bid = :bid " +
+        "ORDER BY i.invoiceDate DESC, i.invid DESC",
+        Invoices.class
+    )
+    .setParameter("bid", bid)
+    .setMaxResults(5)
+    .getResultList();
+}
 }

@@ -8,6 +8,7 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="jakarta.faces.html"
     xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core"
     xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
@@ -16,11 +17,13 @@
         <div class="mb-8">
 
             <h1 class="text-4xl font-black text-slate-900">
-                Staff Dashboard
+                #{staffDashboardBean.companyName}
+                |
+                #{staffDashboardBean.branchName}
             </h1>
 
             <p class="text-slate-500 mt-2 text-lg">
-                Manage billing, invoices and customer sales.
+                Staff Dashboard
             </p>
 
         </div>
@@ -40,7 +43,7 @@
                         </p>
 
                         <h2 class="text-4xl font-black text-slate-900 mt-3">
-                            86
+                            #{staffDashboardBean.todayBills}
                         </h2>
 
                     </div>
@@ -69,7 +72,7 @@
                         </p>
 
                         <h2 class="text-4xl font-black text-slate-900 mt-3">
-                            124
+                            #{staffDashboardBean.totalInvoices}
                         </h2>
 
                     </div>
@@ -98,7 +101,7 @@
                         </p>
 
                         <h2 class="text-4xl font-black text-slate-900 mt-3">
-                            ₹48K
+                            ₹#{staffDashboardBean.formattedRevenue}
                         </h2>
 
                     </div>
@@ -127,7 +130,7 @@
                         </p>
 
                         <h2 class="text-4xl font-black text-slate-900 mt-3">
-                            12
+                            #{staffDashboardBean.totalCustomers}
                         </h2>
 
                     </div>
@@ -202,95 +205,73 @@
                                     </th>
 
                                     <th class="text-left py-4 pl-12 text-slate-500 font-semibold">
-                                        Status
+                                        Payment Mode
                                     </th>
 
                                 </tr>
 
                             </thead>
 
-                            <tbody>
+                           <tbody>
 
-                                <!-- ROW 1 -->
-                                <tr class="border-b border-slate-50">
+                            <!-- No Records -->
+                            <ui:fragment rendered="#{empty staffDashboardBean.recentInvoices}">
 
-                                    <td class="py-4 font-semibold text-slate-800">
-                                        INV-1001
-                                    </td>
-
-                                    <td class="py-4 text-slate-600">
-                                        Rahul Shah
-                                    </td>
-
-                                    <td class="py-4 text-slate-700">
-                                        ₹2,450
-                                    </td>
-
-                                    <td class="py-4 pl-12">
-
-                                        <span class="px-4 py-2 rounded-full
-                                                     bg-emerald-100 text-emerald-700
-                                                     text-sm font-semibold">
-
-                                            Paid
-
-                                        </span>
-
-                                    </td>
-
-                                </tr>
-
-                                <!-- ROW 2 -->
-                                <tr class="border-b border-slate-50">
-
-                                    <td class="py-4 font-semibold text-slate-800">
-                                        INV-1002
-                                    </td>
-
-                                    <td class="py-4 text-slate-600">
-                                        Priya Patel
-                                    </td>
-
-                                    <td class="py-4 text-slate-700">
-                                        ₹1,820
-                                    </td>
-
-                                    <td class="py-4 pl-12">
-
-                                        <span class="px-4 py-2 rounded-full
-                                                     bg-amber-100 text-amber-700
-                                                     text-sm font-semibold">
-
-                                            Pending
-
-                                        </span>
-
-                                    </td>
-
-                                </tr>
-
-                                <!-- ROW 3 -->
                                 <tr>
 
+                                    <td colspan="4"
+                                        class="py-8 text-center text-slate-500">
+
+                                        No recent billing records found.
+
+                                    </td>
+
+                                </tr>
+
+                            </ui:fragment>
+
+                            <!-- Records -->
+                            <ui:repeat
+                                value="#{staffDashboardBean.recentInvoices}"
+                                var="inv"
+                                rendered="#{not empty staffDashboardBean.recentInvoices}">
+
+                                <tr class="border-b border-slate-50">
+
                                     <td class="py-4 font-semibold text-slate-800">
-                                        INV-1003
+
+                                        <h:link outcome="/staff/invoice_details.xhtml">
+
+                                            <f:param name="id"
+                                                     value="#{inv.invid}" />
+
+                                            #{inv.invoiceNumber}
+
+                                        </h:link>
+
                                     </td>
 
                                     <td class="py-4 text-slate-600">
-                                        Amit Joshi
+                                        #{inv.sid.customerId.customerName}
                                     </td>
 
                                     <td class="py-4 text-slate-700">
-                                        ₹3,120
+                                        ₹ #{inv.invoiceAmount}
                                     </td>
 
                                     <td class="py-4 pl-12">
 
-                                        <span class="px-4 py-2 rounded-full
-                                                     bg-cyan-100 text-cyan-700
-                                                     text-sm font-semibold">
+                                        <span class="px-4 py-2 rounded-full text-sm font-semibold"
 
-                                            Completed
+                                              style="
+                                              #{inv.sid.paymentMode eq 'Cash'
+                                                  ? 'background:#dcfce7;color:#166534;'
+                                                  : inv.sid.paymentMode eq 'UPI'
+                                                  ? 'background:#dbeafe;color:#1d4ed8;'
+                                                  : 'background:#f3e8ff;color:#7e22ce;'}
+                                              ">
+
+                                            #{inv.sid.paymentMode}
 
                                         </span>
 
@@ -298,8 +279,9 @@
 
                                 </tr>
 
-                            </tbody>
+                            </ui:repeat>
 
+                        </tbody>
                         </table>
 
                     </div>

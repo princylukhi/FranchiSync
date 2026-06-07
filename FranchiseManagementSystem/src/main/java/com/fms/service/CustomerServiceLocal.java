@@ -20,5 +20,7 @@ public interface CustomerServiceLocal {
     public Customers findByEmail(String email);
     
     public Customers saveOrUpdate(Customers customer);
+    
+    Long getTotalCustomers(int bid);
 
 }

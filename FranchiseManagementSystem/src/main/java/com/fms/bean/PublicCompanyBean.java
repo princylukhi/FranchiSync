@@ -3,6 +3,7 @@ package com.fms.bean;
 import com.fms.entity.Companies;
 import com.fms.entity.FranchiseRequests;
 import com.fms.entity.Users;
+import com.fms.service.BillingServiceLocal;
 
 import com.fms.service.CompanyServiceLocal;
 import com.fms.service.FranchiseServiceLocal;
@@ -17,6 +18,7 @@ import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Named
@@ -32,6 +34,9 @@ implements Serializable {
 
     @EJB
     private ProductServiceLocal productService;
+    
+    @EJB
+    private BillingServiceLocal billingService;
 
     // EXISTING
     private List<Companies> companies;
@@ -42,6 +47,10 @@ implements Serializable {
     private long totalFranchises;
     private long pendingRequests;
     private long totalProducts;
+    
+    private String companyName;
+    
+    private String formattedRevenue;
 
     private List<FranchiseRequests> recentRequests;
 
@@ -69,6 +78,10 @@ implements Serializable {
 
                 companyId =
                     user.getCid().getCid();
+                
+                companyName =
+                    user.getCid()
+                        .getCompanyName();
 
                 loadDashboardData();
             }
@@ -94,6 +107,45 @@ implements Serializable {
         recentRequests =
             franchiseService
             .getRecentRequests(companyId);
+        
+        BigDecimal revenue =
+            billingService.getMonthlyRevenueByCompany(
+                companyId
+            );
+
+        formattedRevenue = formatRevenue(revenue);
+    }
+    
+        private String formatRevenue(
+            BigDecimal amount) {
+
+        double value = amount.doubleValue();
+
+        if (value >= 10000000) {
+            return String.format(
+                "%.1fCr",
+                value / 10000000
+            );
+        }
+
+        if (value >= 100000) {
+            return String.format(
+                "%.1fL",
+                value / 100000
+            );
+        }
+
+        if (value >= 1000) {
+            return String.format(
+                "%.1fK",
+                value / 1000
+            );
+        }
+
+        return String.format(
+            "%.0f",
+            value
+        );
     }
 
     // GETTERS & SETTERS
@@ -120,5 +172,13 @@ implements Serializable {
 
     public List<FranchiseRequests> getRecentRequests() {
         return recentRequests;
+    }
+    
+    public String getFormattedRevenue() {
+        return formattedRevenue;
+    }
+    
+    public String getCompanyName() {
+        return companyName;
     }
 }

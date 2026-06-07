@@ -11,6 +11,7 @@ import com.fms.entity.SaleItems;
 import com.fms.entity.Products;
 import com.fms.entity.Inventory;
 import com.fms.entity.Invoices;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Stateless
@@ -93,6 +94,9 @@ public class BillingService implements BillingServiceLocal {
             item.setPrice(product.getPrice());
 
             em.persist(item);
+            
+            em.flush();
+            em.refresh(sale);
 
             // 🔥 Update Total
             double total = sale.getTotalAmount().doubleValue();
@@ -141,7 +145,62 @@ public class BillingService implements BillingServiceLocal {
     @Override
     public Sales findSaleById(int saleId) {
 
-        return em.find(Sales.class, saleId);
+        em.flush();
 
+        Sales sale = em.find(Sales.class, saleId);
+
+        em.refresh(sale);
+
+        return sale;
     }
+    
+    @Override
+public Long getTodayBills(int bid) {
+
+    return em.createQuery(
+        "SELECT COUNT(s) " +
+        "FROM Sales s " +
+        "WHERE s.bid.bid = :bid " +
+        "AND s.saleDate = CURRENT_DATE",
+        Long.class
+    )
+    .setParameter("bid", bid)
+    .getSingleResult();
+}
+
+@Override
+public BigDecimal getTodayRevenue(int bid) {
+
+    BigDecimal total = em.createQuery(
+        "SELECT SUM(s.totalAmount) " +
+        "FROM Sales s " +
+        "WHERE s.bid.bid = :bid " +
+        "AND s.saleDate = CURRENT_DATE",
+        BigDecimal.class
+    )
+    .setParameter("bid", bid)
+    .getSingleResult();
+
+    return total != null ? total : BigDecimal.ZERO;
+}
+
+@Override
+public BigDecimal getMonthlyRevenueByCompany(int companyId) {
+
+    BigDecimal total = em.createQuery(
+
+        "SELECT SUM(s.totalAmount) " +
+        "FROM Sales s " +
+        "WHERE s.bid.fid.cid.cid = :cid " +
+        "AND FUNCTION('MONTH', s.saleDate) = FUNCTION('MONTH', CURRENT_DATE) " +
+        "AND FUNCTION('YEAR', s.saleDate) = FUNCTION('YEAR', CURRENT_DATE)",
+
+        BigDecimal.class
+
+    )
+    .setParameter("cid", companyId)
+    .getSingleResult();
+
+    return total != null ? total : BigDecimal.ZERO;
+}
 }

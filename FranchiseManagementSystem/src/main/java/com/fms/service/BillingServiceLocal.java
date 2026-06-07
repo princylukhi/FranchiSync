@@ -4,6 +4,7 @@ import jakarta.ejb.Local;
 import java.util.List;
 import com.fms.entity.Sales;
 import com.fms.entity.SaleItems;
+import java.math.BigDecimal;
 
 @Local
 public interface BillingServiceLocal {
@@ -15,5 +16,11 @@ public interface BillingServiceLocal {
     public void completeSale(int saleId);
     
     public Sales findSaleById(int saleId);
+    
+    Long getTodayBills(int bid);
+
+    BigDecimal getTodayRevenue(int bid);
+    
+    BigDecimal getMonthlyRevenueByCompany(int companyId);
 
 }

@@ -18,5 +18,9 @@ public interface InvoiceServiceLocal {
     List<Object[]> getMonthlyInvoiceTrendByStaff(
         int staffId
     );
+    
+    Long getTotalInvoices(int bid);
+    
+    List<Invoices> getRecentInvoices(int bid);
 
 }

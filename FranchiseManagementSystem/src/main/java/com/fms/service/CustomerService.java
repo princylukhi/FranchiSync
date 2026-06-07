@@ -89,4 +89,17 @@ public class CustomerService implements CustomerServiceLocal {
 
         return em.merge(customer);
     }
+    
+    @Override
+public Long getTotalCustomers(int bid) {
+
+    return em.createQuery(
+        "SELECT COUNT(DISTINCT s.customerId.customerId) " +
+        "FROM Sales s " +
+        "WHERE s.bid.bid = :bid",
+        Long.class
+    )
+    .setParameter("bid", bid)
+    .getSingleResult();
+}
 }
