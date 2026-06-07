@@ -223,6 +223,28 @@ public List<Object[]> getBranchPerformance(
 
     )
     .setParameter("fid", franchiseId)
+    .setMaxResults(5)
     .getResultList();
+}
+
+@Override
+public BigDecimal getTodaySales(int branchId) {
+
+    BigDecimal amount =
+
+        em.createQuery(
+
+            "SELECT COALESCE(SUM(s.totalAmount),0) " +
+            "FROM Sales s " +
+            "WHERE s.bid.bid = :bid " +
+            "AND s.saleDate = CURRENT_DATE",
+
+            BigDecimal.class
+
+        )
+        .setParameter("bid", branchId)
+        .getSingleResult();
+
+    return amount;
 }
 }

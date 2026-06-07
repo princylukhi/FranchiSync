@@ -130,4 +130,54 @@ public class InventoryService implements InventoryServiceLocal {
         .setParameter("bid", branchId)
         .getResultList();
     }
+    
+    @Override
+public long getTotalProductsByBranch(int branchId) {
+
+    return em.createQuery(
+
+        "SELECT COUNT(i) " +
+        "FROM Inventory i " +
+        "WHERE i.bid.bid = :bid",
+
+        Long.class
+
+    )
+    .setParameter("bid", branchId)
+    .getSingleResult();
+}
+
+@Override
+public long getLowStockCount(int branchId) {
+
+    return em.createQuery(
+
+        "SELECT COUNT(i) " +
+        "FROM Inventory i " +
+        "WHERE i.bid.bid = :bid " +
+        "AND i.quantity <= i.minThreshold",
+
+        Long.class
+
+    )
+    .setParameter("bid", branchId)
+    .getSingleResult();
+}
+
+@Override
+public List<Inventory> getRecentInventoryByBranch(int bid) {
+
+    return em.createQuery(
+
+        "SELECT i FROM Inventory i " +
+        "WHERE i.bid.bid = :bid " +
+        "ORDER BY i.lastUpdated DESC",
+
+        Inventory.class
+
+    )
+    .setParameter("bid", bid)
+    .setMaxResults(5)
+    .getResultList();
+}
 }

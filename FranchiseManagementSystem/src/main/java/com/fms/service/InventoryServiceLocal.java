@@ -27,5 +27,11 @@ public interface InventoryServiceLocal {
     public List<Inventory> getAvailableInventory(
         int branchId
     );
+    
+    long getTotalProductsByBranch(int branchId);
+    
+    long getLowStockCount(int branchId);
+    
+    List<Inventory> getRecentInventoryByBranch(int bid);
 
 }

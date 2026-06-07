@@ -30,4 +30,6 @@ public interface SalesServiceLocal {
     List<Object[]> getPaymentModeDistributionByStaff(int staffId);
     
     List<Object[]> getBranchPerformance(int franchiseId);
+    
+    BigDecimal getTodaySales(int branchId);
 }

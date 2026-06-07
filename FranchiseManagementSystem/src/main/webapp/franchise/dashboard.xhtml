@@ -182,9 +182,25 @@
                         </h:link>
 
                     </div>
+                    
+                    <ui:fragment rendered="#{empty franchiseDashboardBean.branchPerformance}">
+
+                        <div class="text-center py-10">
+
+                            <i class="pi pi-building text-4xl text-slate-300"></i>
+
+                            <p class="mt-3 text-slate-500 font-medium">
+                                No branch performance records found.
+                            </p>
+
+                        </div>
+
+                    </ui:fragment>
 
                     <!-- TABLE -->
                     <div class="overflow-x-auto">
+                        
+                        <ui:fragment rendered="#{not empty franchiseDashboardBean.branchPerformance}">
 
                         <table class="w-full">
 
@@ -271,6 +287,8 @@
                         </tbody> 
 
                         </table>
+                                
+                    </ui:fragment>
 
                     </div>
 
@@ -346,7 +364,7 @@
                             </div>
 
                             <span class="font-semibold text-slate-700">
-                                Generate Reports
+                                View Reports
                             </span>
 
                         </h:link>
