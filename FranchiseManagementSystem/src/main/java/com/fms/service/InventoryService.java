@@ -6,6 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import java.util.List;
 import com.fms.entity.Inventory;
+import java.util.Date;
 
 
 @Stateless
@@ -19,6 +20,7 @@ public class InventoryService implements InventoryServiceLocal {
         public void addStock(Inventory inventory) {
 
         inventory.setStatus("ACTIVE");
+        inventory.setLastUpdated(new Date());
         em.persist(inventory);
         em.flush();
         em.refresh(inventory);
@@ -27,11 +29,10 @@ public class InventoryService implements InventoryServiceLocal {
     // Update full inventory
     @Override
     public void updateStock(Inventory inventory) {
-
+        
+        inventory.setLastUpdated(new Date());
         em.merge(inventory);
-
         em.flush();
-
         em.clear();
     }
     

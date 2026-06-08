@@ -123,12 +123,18 @@
         <div class="flex items-center gap-5">
 
             <!-- NOTIFICATION -->
-            <h:link outcome="#{loginBean.notificationPage}"
-            styleClass="relative w-11 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 transition flex items-center justify-center">
+            <h:link id="notificationBtn"
+                    outcome="#{loginBean.notificationPage}"
+                    styleClass="relative w-11 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 transition flex items-center justify-center">
 
                 <i class="pi pi-bell text-white text-lg"></i>
 
             </h:link>
+
+            <p:tooltip
+                for="notificationBtn"
+                value="Notifications"
+                position="bottom"/>
 
             <!-- PROFILE -->
             <h:link outcome="/profile.xhtml"
@@ -169,9 +175,15 @@
             <h:form>
 
                 <p:commandButton
+                    id="logoutBtn"
                     icon="pi pi-sign-out"
                     action="#{loginBean.logout()}"
                     styleClass="!bg-emerald-500 hover:!bg-emerald-600 !border-0 !rounded-xl !w-11 !h-11"/>
+
+                <p:tooltip
+                    for="logoutBtn"
+                    value="Logout"
+                    position="bottom"/>
 
             </h:form>
 

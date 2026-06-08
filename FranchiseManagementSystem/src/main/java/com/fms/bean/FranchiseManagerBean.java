@@ -76,12 +76,18 @@ public class FranchiseManagerBean implements Serializable {
 
     public void loadManagers() {
 
-        int companyId =
-            loggedInUser.getCid().getCid();
+    int franchiseId =
+        loggedInUser
+            .getFranchisesCollection()
+            .iterator()
+            .next()
+            .getFid();
 
-        managers =
-            userService.getManagersByCompany(companyId);
-    }
+    managers =
+        userService.getManagersByFranchise(
+            franchiseId
+        );
+}
 
     // LOAD BRANCHES
 

@@ -58,7 +58,7 @@ public class InvoiceService implements InvoiceServiceLocal {
         return em.createQuery(
             "SELECT i FROM Invoices i " +
             "WHERE i.sid.bid.bid = :bid " +
-            "ORDER BY i.invoiceDate DESC",
+            "ORDER BY i.invoiceDate DESC, i.invid DESC",
             Invoices.class
         )
         .setParameter("bid", bid)

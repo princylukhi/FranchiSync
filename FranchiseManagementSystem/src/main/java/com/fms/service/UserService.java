@@ -416,12 +416,14 @@ public List<Object[]> getStaffStatusDistribution(
         "SELECT u.status, COUNT(u) " +
         "FROM Users u " +
         "WHERE u.bid.bid = :bid " +
+        "AND u.rid.roleName = :role " +
         "GROUP BY u.status",
 
         Object[].class
 
     )
     .setParameter("bid", branchId)
+    .setParameter("role", "STAFF")
     .getResultList();
 }
 
@@ -441,6 +443,19 @@ public long getTotalManagersByFranchise(
     )
     .setParameter("fid", franchiseId)
     .getSingleResult();
+}
+
+@Override
+public List<Users> getManagersByFranchise(int franchiseId) {
+
+    return em.createQuery(
+        "SELECT u FROM Users u " +
+        "WHERE u.rid.rid = 4 " +
+        "AND u.bid.fid.fid = :fid",
+        Users.class
+    )
+    .setParameter("fid", franchiseId)
+    .getResultList();
 }
 } 
 

@@ -53,6 +53,8 @@ implements Serializable {
     private String formattedRevenue;
 
     private List<FranchiseRequests> recentRequests;
+    
+    private String searchKeyword;
 
     @PostConstruct
     public void init() {
@@ -115,6 +117,42 @@ implements Serializable {
 
         formattedRevenue = formatRevenue(revenue);
     }
+    
+    public List<Companies> getFilteredCompanies() {
+
+    if(searchKeyword == null ||
+       searchKeyword.trim().isEmpty()) {
+
+        return companies;
+    }
+
+    String keyword =
+        searchKeyword.toLowerCase();
+
+    return companies.stream()
+        .filter(c ->
+
+            (c.getCompanyName() != null &&
+             c.getCompanyName()
+              .toLowerCase()
+              .contains(keyword))
+
+            ||
+
+            (c.getCity() != null &&
+             c.getCity()
+              .toLowerCase()
+              .contains(keyword))
+
+            ||
+
+            (c.getBusinessType() != null &&
+             c.getBusinessType()
+              .toLowerCase()
+              .contains(keyword))
+        )
+        .toList();
+}
     
         private String formatRevenue(
             BigDecimal amount) {
@@ -180,5 +218,13 @@ implements Serializable {
     
     public String getCompanyName() {
         return companyName;
+    }
+    
+    public String getSearchKeyword() {
+        return searchKeyword;
+    }
+
+    public void setSearchKeyword(String searchKeyword) {
+        this.searchKeyword = searchKeyword;
     }
 }

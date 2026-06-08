@@ -98,37 +98,65 @@
         <div class="max-w-7xl mx-auto">
 
             <!-- SECTION TITLE -->
-            <div class="flex items-center
-                        justify-between mb-10">
+            <div class="flex flex-col md:flex-row
+            md:items-center
+            md:justify-between
+            gap-4 mb-10">
 
-                <div>
+    <div>
 
-                    <h2 class="text-3xl font-bold
-                               text-slate-900">
+        <h2 class="text-3xl font-bold text-slate-900">
+            Available Companies
+        </h2>
 
-                        Available Companies
+        <p class="text-slate-500 mt-2">
+            Apply to verified and approved companies.
+        </p>
 
-                    </h2>
+    </div>
 
-                    <p class="text-slate-500 mt-2">
+    <h:form id="searchForm">
 
-                        Apply to verified and approved companies.
+        <div class="relative">
 
-                    </p>
+    <i class="pi pi-search
+              absolute left-4 top-4
+              text-slate-400 z-10"></i>
 
-                </div>
+    <p:inputText
+        value="#{publicCompanyBean.searchKeyword}"
+        placeholder="Search by company, city or business type..."
 
-            </div>
+        styleClass="
+            !pl-12
+            !w-96
+            !rounded-2xl
+            !border-slate-200
+            focus:!border-emerald-500
+            !shadow-sm">
 
-            <!-- COMPANY GRID -->
-            <div class="grid grid-cols-1
-                        md:grid-cols-2
-                        xl:grid-cols-3
-                        gap-8">
+        <p:ajax
+            event="keyup"
+            update="companyGrid"/>
 
-                <ui:repeat
-                    value="#{publicCompanyBean.companies}"
-                    var="c">
+    </p:inputText>
+
+</div>
+
+    </h:form>
+
+</div>
+
+            <h:panelGroup id="companyGrid" layout="block">
+
+<div class="grid grid-cols-1
+            md:grid-cols-2
+            xl:grid-cols-3
+            gap-8">
+
+               <ui:repeat
+    value="#{publicCompanyBean.filteredCompanies}"
+    var="c">
 
                     <!-- CARD -->
                     <div class="bg-white rounded-3xl
@@ -259,6 +287,8 @@
                 </ui:repeat>
 
             </div>
+                
+            </h:panelGroup>
 
         </div>
 

@@ -413,6 +413,21 @@ public void sendFranchiseCredentialsWithCertificate(
 
             + "Regards,\n"
             + "FranchiSync Team";
+    
+    Notifications n = new Notifications();
+
+    n.setRecipientEmail(email);
+    n.setSubject(subject);
+
+    n.setMessage(
+        "Your franchise account has been activated successfully. Login credentials and franchise certificate have been sent to your registered email."
+    );
+
+    n.setNotificationType("FRANCHISE_CREDENTIALS");
+
+    n.setSentDate(new Date());
+
+    em.persist(n);
 
     emailService.sendEmailWithAttachment(
 
