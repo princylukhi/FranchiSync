@@ -304,6 +304,7 @@
                             <p:inputText
                                 value="#{branchStaffBean.staff.name}"
                                 required="true"
+                                placeholder="Enter staff name"
                                 styleClass="w-full"/>
 
                         </div>
@@ -324,6 +325,7 @@
                             <p:inputText
                                 value="#{branchStaffBean.staff.email}"
                                 required="true"
+                                placeholder="Enter email address"
                                 styleClass="w-full"/>
 
                         </div>
@@ -343,6 +345,8 @@
 
                             <p:inputText
                                 value="#{branchStaffBean.staff.phone}"
+                                required="true"
+                                placeholder="Enter phone number"
                                 styleClass="w-full"/>
 
                         </div>
@@ -425,6 +429,7 @@
 
                             <p:datePicker
                                 value="#{branchStaffBean.staff.joiningDate}"
+                                required="true"
                                 pattern="dd/MM/yyyy" timeZone="Asia/Kolkata"
                                 showIcon="true"
                                 styleClass="w-full"/>
