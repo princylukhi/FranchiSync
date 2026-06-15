@@ -91,7 +91,7 @@ public class FeedbackService implements FeedbackServiceLocal {
 
             "SELECT f FROM Feedbacks f " +
             "WHERE f.cid.cid = :cid " +
-            "AND f.feedbackType <> 'COMPANY' " +
+            "AND f.feedbackType = 'COMPANY' " +
             "ORDER BY f.feedbackDate DESC",
 
             Feedbacks.class
