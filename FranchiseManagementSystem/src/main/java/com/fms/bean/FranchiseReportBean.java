@@ -6,6 +6,8 @@ import com.fms.entity.Users;
 import com.fms.service.BranchServiceLocal;
 import com.fms.service.FeedbackServiceLocal;
 import com.fms.service.FranchiseServiceLocal;
+import com.fms.service.RoyaltyServiceLocal;
+import com.fms.service.SalesServiceLocal;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
@@ -31,6 +33,12 @@ implements Serializable {
 
     @EJB
     private FranchiseServiceLocal franchiseService;
+    
+    @EJB
+    private SalesServiceLocal salesService;
+
+    @EJB
+    private RoyaltyServiceLocal royaltyService;
 
     private int franchiseId;
 
@@ -40,9 +48,7 @@ implements Serializable {
 
     private long totalStaff;
 
-    private long totalFeedbacks;
 
-    private double averageRating;
 
     // STAFF DISTRIBUTION
 
@@ -50,11 +56,11 @@ implements Serializable {
 
     private String staffData;
 
-    // FEEDBACK DISTRIBUTION
+    private String salesLabels;
+    private String salesData;
 
-    private String feedbackLabels;
-
-    private String feedbackData;
+    private String royaltyLabels;
+    private String royaltyData;
 
     // TOP PERFORMERS
 
@@ -97,7 +103,9 @@ implements Serializable {
 
         loadStaffDistribution();
 
-        loadFeedbackDistribution();
+        loadSalesDistribution();
+
+        loadRoyaltyDistribution();
 
         loadTopPerformers();
     }
@@ -116,13 +124,7 @@ implements Serializable {
             branchService
             .getTotalStaffByFranchise(franchiseId);
 
-        totalFeedbacks =
-            feedbackService
-            .getTotalBranchFeedbacks(franchiseId);
-
-        averageRating =
-            feedbackService
-            .getAverageBranchRating(franchiseId);
+       
     }
 
     // ======================
@@ -158,38 +160,7 @@ implements Serializable {
             data.toString();
     }
 
-    // ======================
-    // FEEDBACK DISTRIBUTION
-    // ======================
-
-    private void loadFeedbackDistribution() {
-
-        StringBuilder labels =
-            new StringBuilder();
-
-        StringBuilder data =
-            new StringBuilder();
-
-        List<Object[]> result =
-            feedbackService
-            .getBranchFeedbackDistribution(franchiseId);
-
-        for(Object[] row : result) {
-
-            labels.append("'")
-                  .append(row[0])
-                  .append("',");
-
-            data.append(row[1])
-                .append(",");
-        }
-
-        feedbackLabels =
-            labels.toString();
-
-        feedbackData =
-            data.toString();
-    }
+  
 
     // ======================
     // TOP PERFORMERS
@@ -204,8 +175,7 @@ implements Serializable {
             new StringBuilder();
 
         List<Object[]> result =
-            branchService
-            .getTopPerformingBranches(franchiseId);
+            salesService.getTopRevenueBranches(franchiseId);
 
         for(Object[] row : result) {
 
@@ -224,6 +194,48 @@ implements Serializable {
             data.toString();
     }
 
+    private void loadSalesDistribution() {
+
+        StringBuilder labels = new StringBuilder();
+        StringBuilder data = new StringBuilder();
+
+        List<Object[]> result =
+                salesService.getSalesDistribution(franchiseId);
+
+        for(Object[] row : result) {
+
+            labels.append("'")
+                  .append(row[0])
+                  .append("',");
+
+            data.append(row[1])
+                .append(",");
+        }
+
+        salesLabels = labels.toString();
+        salesData = data.toString();
+    }
+    
+    private void loadRoyaltyDistribution() {
+
+        StringBuilder labels = new StringBuilder();
+        StringBuilder data = new StringBuilder();
+
+        royaltyService
+                .getRoyaltyReport(franchiseId)
+                .forEach(r -> {
+
+                    labels.append("'")
+                          .append(r.getBranchName())
+                          .append("',");
+
+                    data.append(r.getRoyaltyAmount())
+                        .append(",");
+                });
+
+        royaltyLabels = labels.toString();
+        royaltyData = data.toString();
+    }
     // ======================
     // GETTERS
     // ======================
@@ -236,14 +248,6 @@ implements Serializable {
         return totalStaff;
     }
 
-    public long getTotalFeedbacks() {
-        return totalFeedbacks;
-    }
-
-    public double getAverageRating() {
-        return averageRating;
-    }
-
     public String getStaffLabels() {
         return staffLabels;
     }
@@ -252,19 +256,27 @@ implements Serializable {
         return staffData;
     }
 
-    public String getFeedbackLabels() {
-        return feedbackLabels;
-    }
-
-    public String getFeedbackData() {
-        return feedbackData;
-    }
-
     public String getTopLabels() {
         return topLabels;
     }
 
     public String getTopData() {
         return topData;
+    }
+    
+    public String getSalesLabels() {
+        return salesLabels;
+    }
+
+    public String getSalesData() {
+        return salesData;
+    }
+
+    public String getRoyaltyLabels() {
+        return royaltyLabels;
+    }
+
+    public String getRoyaltyData() {
+        return royaltyData;
     }
 }

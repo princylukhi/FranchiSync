@@ -100,7 +100,16 @@
                             <p:inputText
                                 value="#{franchiseApplyBean.request.ownerName}"
                                 required="true"
-                                styleClass="w-full rounded-xl"/>
+                                requiredMessage="Owner name is required"
+                                validatorMessage="Owner name can contain only letters and spaces"
+                                placeholder="Enter owner name"
+                                styleClass="w-full rounded-xl">
+
+                                <f:validateRegex pattern="^[A-Za-z ]+$"/>
+
+                                </p:inputText>
+
+                                <p:message for="@previous"/>
 
                         </div>
 
@@ -118,7 +127,17 @@
                             <p:inputText
                                 value="#{franchiseApplyBean.request.email}"
                                 required="true"
-                                styleClass="w-full rounded-xl"/>
+                                requiredMessage="Email address is required"
+                                validatorMessage="Enter a valid email address"
+                                placeholder="Enter email address"
+                                styleClass="w-full rounded-xl">
+
+                                <f:validateRegex
+                                    pattern="^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"/>
+
+                            </p:inputText>
+
+                            <p:message for="@previous"/>
 
                         </div>
 
@@ -136,7 +155,16 @@
                             <p:inputText
                                 value="#{franchiseApplyBean.request.phone}"
                                 required="true"
-                                styleClass="w-full rounded-xl"/>
+                                requiredMessage="Phone number is required"
+                                validatorMessage="Enter a valid 10-digit mobile number"
+                                placeholder="Enter 10-digit mobile number"
+                                styleClass="w-full rounded-xl">
+
+                                <f:validateRegex pattern="^[6-9][0-9]{9}$"/>
+
+                            </p:inputText>
+
+                            <p:message for="@previous"/>
 
                         </div>
 
@@ -174,9 +202,14 @@
 
                         <p:inputTextarea
                             value="#{franchiseApplyBean.request.reason}"
+                            required="true"
+                            requiredMessage="Please provide a reason for applying"
+                            placeholder="Describe your business experience and why you want this franchise"
                             rows="5"
                             autoResize="false"
                             styleClass="w-full rounded-xl"/>
+                        
+                        <p:message for="@previous"/>
 
                     </div>
 

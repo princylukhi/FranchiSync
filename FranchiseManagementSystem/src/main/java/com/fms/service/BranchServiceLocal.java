@@ -28,5 +28,7 @@ public interface BranchServiceLocal {
     long getTotalStaffByFranchise(int franchiseId);
 
     List<Object[]> getTopPerformingBranches(int franchiseId);
+    
+    long getActiveBranchesByFranchise(int franchiseId);
 
 }

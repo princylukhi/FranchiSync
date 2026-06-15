@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<ui:composition template="/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        
+
+       <div class="bg-white rounded-3xl shadow-xl max-w-6xl mx-auto p-10">
+
+    <!-- INVOICE HEADER -->
+
+    <div class="h-3 bg-slate-900 rounded-t-xl mb-6"></div>
+    
+    <div class="bg-white border border-slate-200 rounded-3xl px-8 py-8 mb-10 shadow-sm">
+    <div class="flex justify-between items-start">
+
+        <!-- LEFT SIDE -->
+
+       <div class="flex items-center gap-6">
+
+    <img
+            src="#{request.contextPath}/company-logo/#{invoiceDetailsBean.invoice.sid.bid.fid.cid.logo}"
+
+        style="width:80px;height:80px;object-fit:contain;" />
+
+    <div>
+
+        <h2 class="text-4xl font-extrabold text-slate-900 mb-3">
+            #{invoiceDetailsBean.invoice.sid.bid.fid.cid.companyName}
+        </h2>
+
+        <div class="space-y-1 text-base text-slate-700">
+
+            <p>
+                <strong>Invoice No:</strong>
+                #{invoiceDetailsBean.invoice.invoiceNumber}
+            </p>
+
+            <p>
+                <strong>Date: </strong>
+
+                <h:outputText
+                    value="#{invoiceDetailsBean.invoice.invoiceDate}">
+                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="Asia/Kolkata"/>
+                </h:outputText>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+        <!-- RIGHT SIDE -->
+
+        <div class="mt-4">
+
+          <div class="bg-slate-900
+            text-white
+            px-10
+            py-3
+            border-l-4
+            border-emerald-500
+            rounded-sm">
+
+                <h1 class="text-2xl font-black tracking-[0.2em]">
+                    INVOICE
+                </h1>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- COMPANY + CUSTOMER -->
+
+    <div class="grid md:grid-cols-2 gap-10 mt-8">
+
+        <!-- COMPANY -->
+
+        <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50">
+
+            <h3 class="text-xl font-bold text-slate-800 mb-4">
+                Bill From:
+            </h3>
+
+            <p>
+                <strong>Company :</strong>
+                #{invoiceDetailsBean.invoice.sid.bid.fid.cid.companyName}
+            </p>
+
+            <p>
+                <strong>Branch :</strong>
+                #{invoiceDetailsBean.invoice.sid.bid.branchName}
+            </p>
+
+            <p>
+                <strong>Sales Executive :</strong>
+                #{invoiceDetailsBean.invoice.sid.staffId.name}
+            </p>
+
+        </div>
+
+        <!-- CUSTOMER -->
+
+        <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50">
+
+            <h3 class="text-xl font-bold text-slate-800 mb-4">
+                Bill To:
+            </h3>
+
+            <p>
+                <strong>Name :</strong>
+                #{invoiceDetailsBean.invoice.sid.customerId.customerName}
+            </p>
+
+            <p>
+                <strong>Mobile :</strong>
+                #{invoiceDetailsBean.invoice.sid.customerId.mobileNo}
+            </p>
+
+            <p>
+                <strong>Email :</strong>
+                #{invoiceDetailsBean.invoice.sid.customerId.email}
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- PRODUCT TABLE -->
+
+    <div class="mt-10 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+
+        <h3 class="text-xl font-bold text-slate-800 mb-4">
+            Purchased Products
+        </h3>
+        
+        <p class="text-slate-500 mb-4">
+            Total Products :
+            #{invoiceDetailsBean.invoice.sid.saleItemsCollection.size()}
+        </p>
+
+        <p:dataTable
+            value="#{invoiceDetailsBean.invoice.sid.saleItemsCollection}"
+            var="item"
+            styleClass="invoice-table rounded-xl overflow-hidden shadow-sm">
+
+            
+
+            <p:column headerText="Product">
+
+                #{item.pid.productName}
+
+            </p:column>
+
+            <p:column headerText="Qty"
+                       style="text-align:center;width:120px;">
+
+                #{item.quantity}
+
+            </p:column>
+
+            <p:column headerText="Rate"
+                      style="text-align:right;width:180px;">
+
+                ₹ #{item.price}
+
+            </p:column>
+
+            <p:column headerText="Amount"
+                      style="text-align:right;width:180px;">
+
+                ₹ #{invoiceDetailsBean.getLineTotal(item)}
+
+            </p:column>
+
+        </p:dataTable>
+
+    </div>
+
+    <!-- PAYMENT + SUMMARY -->
+
+<div class="grid md:grid-cols-2 gap-8 mt-8">
+
+    <!-- PAYMENT INFO -->
+
+    <div class="border border-slate-200 rounded-2xl p-6">
+
+        <h3 class="text-xl font-semibold mb-4">
+            Payment Information
+        </h3>
+
+        <p>
+            <strong>Payment Mode :</strong>
+            #{invoiceDetailsBean.invoice.sid.paymentMode}
+        </p>
+
+        <p class="mt-2">
+            <strong>Order Status :</strong>
+            <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium">
+                #{invoiceDetailsBean.invoice.sid.status}
+            </span>
+        </p>
+
+    </div>
+
+    <!-- SUMMARY -->
+
+    <div class="border border-slate-200 rounded-2xl p-6 bg-white shadow-md">
+
+        <div class="flex justify-between mb-3">
+            <span>Subtotal</span>
+            <span>₹ #{invoiceDetailsBean.invoice.invoiceAmount}</span>
+        </div>
+
+        <div class="flex justify-between mb-3">
+            <span>Tax</span>
+            <span>₹ 0.00</span>
+        </div>
+
+        <div class="flex justify-between mb-3">
+            <span>Discount</span>
+            <span>₹ 0.00</span>
+        </div>
+
+        <hr class="my-3"/>
+
+        <div class="bg-emerald-50 rounded-xl p-4 flex justify-between text-3xl font-bold text-emerald-600">
+
+            <span>Total</span>
+
+            <span>
+                ₹ #{invoiceDetailsBean.invoice.invoiceAmount}
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- FOOTER -->
+
+    <div class="mt-10 border-t pt-6">
+
+        <div class="flex justify-between items-end">
+
+            <div>
+
+                <p class="text-slate-600 font-medium">
+    Thank you for choosing us.
+</p>
+
+<p class="text-slate-400 text-sm mt-1">
+    This is a computer-generated invoice and does not require a physical signature.
+</p>
+                
+            </div>
+
+            <div class="text-center">
+
+    
+     <p style="font-family:'Brush Script MT', cursive;
+              font-size:28px;
+              color:#1e293b;">
+       #{invoiceDetailsBean.invoice.sid.bid.fid.cid.contactPerson}
+    </p>
+                
+        <div class="border-t border-slate-400 w-56 mb-2"></div>
+
+
+    <p class="font-semibold text-slate-700">
+        Authorized Signatory
+    </p>
+
+    <p class="text-xs text-slate-400 mt-1">
+        #{invoiceDetailsBean.invoice.sid.bid.fid.cid.companyName}
+    </p>
+
+</div>
+
+        </div>
+
+    </div>
+
+    <!-- BUTTONS -->
+
+    <div class="flex gap-4 mt-12 no-print">
+
+        <p:button
+            value="Back"
+            icon="pi pi-arrow-left"
+            outcome="/staff/invoices.xhtml"
+            styleClass="!bg-slate-500 !border-0"/>
+
+        <p:commandButton
+            type="button"
+            value="Print Invoice"
+            icon="pi pi-print"
+            onclick="window.print();"
+            styleClass="!bg-emerald-500 !border-0"/>
+
+    </div>
+
+</div>
+
+    </ui:define>
+
+</ui:composition>

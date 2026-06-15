@@ -20,7 +20,7 @@
 
             <div>
 
-                <h1 class="text-4xl font-bold text-slate-900">
+                <h1 class="text-4xl font-black text-slate-900">
                     Company Requests
                 </h1>
 
@@ -40,7 +40,7 @@
                 value="#{adminRequestBean.requests}"
                 var="r"
                 reflow="true"
-                tableStyle="min-width:1400px"
+                tableStyle="min-width:1800px"
                 styleClass="rounded-2xl overflow-hidden">
 
                 <!-- LOGO -->
@@ -97,19 +97,52 @@
         #{r.businessType}
 
     </p:column>
+    
+    <p:column headerText="GST No">
+
+        #{r.gstNumber}
+
+    </p:column>
+
+    <p:column headerText="PAN No">
+
+        #{r.panNumber}
+
+    </p:column>
 
     <!-- STATUS -->
-    <p:column headerText="Status">
+    <p:column headerText="Verification"
+               style="width:160px;text-align:center;">
 
-        <span class="bg-yellow-100 text-yellow-700
-                      px-3 py-1 rounded-full
-                      text-xs font-semibold">
+    <ui:fragment rendered="#{not empty r.gstCertificate and not empty r.businessLicense}">
 
-            #{r.status}
+        <span class="bg-yellow-100
+                     text-yellow-700
+                     px-3 py-1
+                     rounded-full
+                     text-xs font-semibold">
+
+            PENDING 
 
         </span>
 
-    </p:column>
+    </ui:fragment>
+
+    <ui:fragment rendered="#{empty r.gstCertificate or empty r.businessLicense}">
+
+        <span class="bg-red-100
+                     text-red-700
+                     px-3 py-1
+                     rounded-full
+                     text-xs font-semibold">
+
+            MISSING DOCS
+
+        </span>
+
+    </ui:fragment>
+
+</p:column>
 
     <!-- DATE -->
     <p:column headerText="Request Date">
@@ -119,6 +152,41 @@
         </h:outputText>
 
     </p:column>
+    
+    
+    <p:column headerText="Documents">
+
+    <div class="flex flex-col gap-2">
+
+        <!-- GST -->
+
+        <h:outputLink
+            value="#{request.contextPath}/company-document/#{r.gstCertificate}"
+            target="_blank"
+            rendered="#{not empty r.gstCertificate}">
+
+            <span class="text-emerald-600 font-medium">
+                View GST
+            </span>
+
+        </h:outputLink>
+
+        <!-- LICENSE -->
+
+        <h:outputLink
+            value="#{request.contextPath}/company-document/#{r.businessLicense}"
+            target="_blank"
+            rendered="#{not empty r.businessLicense}">
+
+            <span class="text-blue-600 font-medium">
+                View License
+            </span>
+
+        </h:outputLink>
+
+    </div>
+
+</p:column>
 
     <!-- ACTIONS -->
     <p:column headerText="Actions" style="width:140px">

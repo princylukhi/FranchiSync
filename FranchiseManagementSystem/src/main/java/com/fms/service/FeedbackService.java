@@ -62,7 +62,7 @@ public class FeedbackService implements FeedbackServiceLocal {
         
         notificationService.sendNotification(
 
-        "admin@franchisync.com",
+        "franchisync@gmail.com",
 
         "New Feedback Received",
 

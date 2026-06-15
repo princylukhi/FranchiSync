@@ -1,0 +1,328 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:body>
+
+<ui:composition template="/templates/layout.xhtml">
+
+<ui:define name="content">
+
+<!-- PAGE HEADER -->
+
+<div class="mb-8">
+
+    <h1 class="text-4xl font-black text-slate-900">
+        Staff Reports
+    </h1>
+
+    <p class="text-slate-500 mt-2 text-lg">
+        Personal sales and performance analytics.
+    </p>
+
+</div>
+
+<!-- MONTHLY SALES REVENUE -->
+
+<div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+
+    <h2 class="text-2xl font-bold mb-6">
+        Monthly Sales Revenue
+    </h2>
+
+    <div style="height:350px">
+
+        <canvas id="salesChart"></canvas>
+
+    </div>
+
+</div>
+
+<!-- SECOND ROW -->
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+
+    <!-- PAYMENT MODE -->
+
+    <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+
+        <h2 class="text-2xl font-bold mb-6">
+            Sales by Payment Mode
+        </h2>
+
+        <div style="height:350px">
+
+            <canvas id="paymentChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- INVOICE TREND -->
+
+    <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+
+        <h2 class="text-2xl font-bold mb-6">
+            Monthly Invoice Generation
+        </h2>
+
+        <div style="height:350px">
+
+            <canvas id="invoiceChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CHART JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        // =====================================
+        // MONTHLY SALES REVENUE
+        // =====================================
+
+        new Chart(
+
+            document.getElementById("salesChart"),
+
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels: [
+
+                        #{staffReportBean.salesLabels}
+
+                    ],
+
+                    datasets: [
+
+                        {
+
+                            label: "Revenue (₹)",
+
+                            data: [
+
+                                #{staffReportBean.salesData}
+
+                            ],
+
+                            backgroundColor: "#10B981",
+
+                            borderRadius: 10,
+
+                            barPercentage: 0.20,
+
+                            categoryPercentage: 0.6
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+        // =====================================
+        // PAYMENT MODE DISTRIBUTION
+        // =====================================
+
+        new Chart(
+
+            document.getElementById("paymentChart"),
+
+            {
+
+                type: "doughnut",
+
+                data: {
+
+                    labels: [
+
+                        #{staffReportBean.paymentLabels}
+
+                    ],
+
+                    datasets: [
+
+                        {
+
+                            data: [
+
+                                #{staffReportBean.paymentData}
+
+                            ],
+
+                            backgroundColor: [
+
+                                "#10B981",
+                                "#3B82F6",
+                                "#F59E0B",
+                                "#EF4444"
+
+                            ]
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            position: "bottom"
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+        // =====================================
+        // MONTHLY INVOICE TREND
+        // =====================================
+
+        new Chart(
+
+            document.getElementById("invoiceChart"),
+
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels: [
+
+                        #{staffReportBean.invoiceLabels}
+
+                    ],
+
+                    datasets: [
+
+                        {
+
+                            label: "Invoices",
+
+                            data: [
+
+                                #{staffReportBean.invoiceData}
+
+                            ],
+
+                            backgroundColor: "#3B82F6",
+
+                            borderRadius: 10,
+
+                            barPercentage: 0.25,
+
+                            categoryPercentage: 0.6
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+    }
+
+);
+
+</script>
+
+</ui:define>
+
+</ui:composition>
+
+</h:body>
+
+</html>

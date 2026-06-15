@@ -6,6 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import java.util.List;
 import com.fms.entity.Inventory;
+import java.util.Date;
 
 
 @Stateless
@@ -19,6 +20,7 @@ public class InventoryService implements InventoryServiceLocal {
         public void addStock(Inventory inventory) {
 
         inventory.setStatus("ACTIVE");
+        inventory.setLastUpdated(new Date());
         em.persist(inventory);
         em.flush();
         em.refresh(inventory);
@@ -27,11 +29,10 @@ public class InventoryService implements InventoryServiceLocal {
     // Update full inventory
     @Override
     public void updateStock(Inventory inventory) {
-
+        
+        inventory.setLastUpdated(new Date());
         em.merge(inventory);
-
         em.flush();
-
         em.clear();
     }
     
@@ -112,4 +113,72 @@ public class InventoryService implements InventoryServiceLocal {
                 ? null
                 : list.get(0);
     }
+    
+    @Override
+    public List<Inventory> getAvailableInventory(
+            int branchId) {
+
+        return em.createQuery(
+
+            "SELECT i FROM Inventory i " +
+            "WHERE i.bid.bid = :bid " +
+            "AND i.quantity > 0 " +
+            "AND i.status = 'ACTIVE'",
+
+            Inventory.class
+
+        )
+        .setParameter("bid", branchId)
+        .getResultList();
+    }
+    
+    @Override
+public long getTotalProductsByBranch(int branchId) {
+
+    return em.createQuery(
+
+        "SELECT COUNT(i) " +
+        "FROM Inventory i " +
+        "WHERE i.bid.bid = :bid",
+
+        Long.class
+
+    )
+    .setParameter("bid", branchId)
+    .getSingleResult();
+}
+
+@Override
+public long getLowStockCount(int branchId) {
+
+    return em.createQuery(
+
+        "SELECT COUNT(i) " +
+        "FROM Inventory i " +
+        "WHERE i.bid.bid = :bid " +
+        "AND i.quantity <= i.minThreshold",
+
+        Long.class
+
+    )
+    .setParameter("bid", branchId)
+    .getSingleResult();
+}
+
+@Override
+public List<Inventory> getRecentInventoryByBranch(int bid) {
+
+    return em.createQuery(
+
+        "SELECT i FROM Inventory i " +
+        "WHERE i.bid.bid = :bid " +
+        "ORDER BY i.lastUpdated DESC",
+
+        Inventory.class
+
+    )
+    .setParameter("bid", bid)
+    .setMaxResults(5)
+    .getResultList();
+}
 }

@@ -238,6 +238,8 @@ Paragraph owner =
 owner.setAlignment(
         Element.ALIGN_CENTER);
 
+owner.setSpacingAfter(0);
+
 document.add(owner);
 
 Paragraph line =
@@ -246,6 +248,8 @@ Paragraph line =
 
 line.setAlignment(
         Element.ALIGN_CENTER);
+
+line.setSpacingBefore(-10);
 
 document.add(line);
 
@@ -330,48 +334,20 @@ verify.setAlignment(
 
 document.add(verify);
 
-// SIGNATURE
-
-
-
-document.add(
-        new Paragraph("\n\n"));
-
-Font signFont =
-        FontFactory.getFont(
-                FontFactory.TIMES_ITALIC,
-                24);
-
-Paragraph companySignature =
-        new Paragraph(
-                franchise.getCid()
-                         .getCompanyName(),
-                signFont);
-
-companySignature.setAlignment(
-        Element.ALIGN_CENTER);
-
-document.add(companySignature);
-
-Paragraph signLine =
-        new Paragraph(
-                "____________________");
-
-signLine.setAlignment(
-        Element.ALIGN_CENTER);
-
-document.add(signLine);
-
-Paragraph authority =
-        new Paragraph(
-                "Authorized Company",
-                normalFont);
-
-authority.setAlignment(
-        Element.ALIGN_CENTER);
-
+// SIGNATURE 
+document.add( new Paragraph("\n\n")); 
+Font signFont = FontFactory.getFont( FontFactory.TIMES_ITALIC, 24); 
+Paragraph companySignature = new Paragraph( franchise.getCid() .getContactPerson(), signFont); 
+companySignature.setAlignment( Element.ALIGN_CENTER); 
+companySignature.setSpacingAfter(0);
+document.add(companySignature); 
+Paragraph signLine = new Paragraph( "____________________"); 
+signLine.setAlignment( Element.ALIGN_CENTER);
+signLine.setSpacingBefore(-10);
+document.add(signLine); 
+Paragraph authority = new Paragraph( "Authorized Signatory", normalFont); 
+authority.setAlignment( Element.ALIGN_CENTER); 
 document.add(authority);
-        
 
         document.close();
 

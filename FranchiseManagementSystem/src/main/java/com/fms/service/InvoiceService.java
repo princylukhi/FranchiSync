@@ -21,9 +21,17 @@ public class InvoiceService implements InvoiceServiceLocal {
 
         invoice.setInvoiceDate(new Date());
 
-        // Generate simple invoice number
-        String invoiceNumber = "INV-" + System.currentTimeMillis();
+        String invoiceNumber =
+                "INV-" + System.currentTimeMillis();
+
         invoice.setInvoiceNumber(invoiceNumber);
+
+        // Take amount from sale
+        invoice.setInvoiceAmount(
+                invoice.getSid().getTotalAmount()
+        );
+
+        invoice.setStatus("GENERATED"); 
 
         em.persist(invoice);
     }
@@ -43,4 +51,65 @@ public class InvoiceService implements InvoiceServiceLocal {
 
         return em.find(Invoices.class, id);
     }
+    
+    @Override
+    public List<Invoices> getInvoicesByBranch(int bid) {
+
+        return em.createQuery(
+            "SELECT i FROM Invoices i " +
+            "WHERE i.sid.bid.bid = :bid " +
+            "ORDER BY i.invoiceDate DESC, i.invid DESC",
+            Invoices.class
+        )
+        .setParameter("bid", bid)
+        .getResultList();
+    }
+    
+    @Override
+public List<Object[]> getMonthlyInvoiceTrendByStaff(
+        int staffId) {
+
+    return em.createQuery(
+
+        "SELECT FUNCTION('MONTH', i.invoiceDate), " +
+        "COUNT(i) " +
+        "FROM Invoices i " +
+        "WHERE i.sid.staffId.uid = :uid " +
+        "GROUP BY FUNCTION('MONTH', i.invoiceDate) " +
+        "ORDER BY FUNCTION('MONTH', i.invoiceDate)",
+
+        Object[].class
+
+    )
+    .setParameter("uid", staffId)
+    .getResultList();
+}
+
+@Override
+public Long getTotalInvoices(int bid) {
+
+    return em.createQuery(
+        "SELECT COUNT(i) " +
+        "FROM Invoices i " +
+        "WHERE i.sid.bid.bid = :bid",
+        Long.class
+    )
+    .setParameter("bid", bid)
+    .getSingleResult();
+}
+
+    @Override
+public List<Invoices> getRecentInvoices(int bid) {
+
+    return em.createQuery(
+        "SELECT i " +
+        "FROM Invoices i " +
+        "WHERE i.sid.bid.bid = :bid " +
+        "ORDER BY i.invoiceDate DESC, i.invid DESC",
+        Invoices.class
+    )
+    .setParameter("bid", bid)
+    .setMaxResults(5)
+    .getResultList();
+}
 }

@@ -62,7 +62,13 @@ public class CompanyService implements CompanyServiceLocal {
         CompanyRegistrationRequests req =
                 em.find(CompanyRegistrationRequests.class, requestId);
 
-        // ✅ FIX 1: Update request status
+        if(req.getGstCertificate() == null
+            || req.getBusinessLicense() == null) {
+
+             throw new RuntimeException(
+                 "Company documents not uploaded.");
+         }
+                 // ✅ FIX 1: Update request status
         req.setStatus("APPROVED");
         req.setApprovedDate(new Date());
         em.merge(req);
@@ -93,6 +99,17 @@ public class CompanyService implements CompanyServiceLocal {
             company.setBusinessType(req.getBusinessType());
             company.setCity(req.getCity());
             company.setLogo(req.getLogo());
+            company.setGstNumber(
+                    req.getGstNumber());
+
+            company.setPanNumber(
+                    req.getPanNumber());
+
+            company.setGstCertificate(
+                    req.getGstCertificate());
+
+            company.setBusinessLicense(
+                    req.getBusinessLicense());
             company.setStatus("ACTIVE");
             company.setCreatedDate(new Date());
 

@@ -72,4 +72,8 @@ public interface UserServiceLocal {
     List<Object[]> getMonthlyStaffJoiningTrend(int branchId);
 
     List<Object[]> getStaffStatusDistribution(int branchId);
+    
+    long getTotalManagersByFranchise(int franchiseId);
+    
+    public List<Users> getManagersByFranchise(int franchiseId);
 }

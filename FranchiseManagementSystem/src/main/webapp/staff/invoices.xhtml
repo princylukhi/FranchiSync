@@ -1,11 +1,109 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+
+            <h1 class="text-4xl font-black text-slate-900">
+                Invoices
+            </h1>
+
+            <p class="text-slate-500 mt-2 text-lg">
+                View all generated invoices for your branch.
+            </p>
+
+        </div>
+
+        <h:form id="invoiceForm">
+
+            <div class="bg-white rounded-3xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+
+                    <h3 class="text-xl text-slate-900 font-semibold flex items-center gap-2">
+                        <i class="pi pi-file text-emerald-500"></i>
+                        Invoice Records
+                    </h3>
+
+                    <span class="text-slate-500 font-medium">
+                        #{invoiceBean.invoices.size()} Invoice(s)
+                    </span>
+
+                </div>
+
+                <p:dataTable
+                    value="#{invoiceBean.invoices}"
+                    var="inv"
+                    reflow="true"
+                    emptyMessage="No invoices found"
+                    styleClass="rounded-2xl overflow-hidden">
+
+                    <p:column headerText="Invoice No">
+
+                        #{inv.invoiceNumber}
+
+                    </p:column>
+
+                    <p:column headerText="Customer">
+
+                        #{inv.sid.customerId.customerName}
+
+                    </p:column>
+
+                    <p:column headerText="Amount">
+
+                        ₹ #{inv.invoiceAmount}
+
+                    </p:column>
+
+                    <p:column headerText="Date">
+
+                        <h:outputText value="#{inv.invoiceDate}">
+                            <f:convertDateTime
+                                pattern="dd-MM-yyyy" timeZone="Asia/Kolkata"/>
+                        </h:outputText>
+
+                    </p:column>
+
+                    <p:column headerText="Status">
+
+                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium">
+
+                            #{inv.status}
+
+                        </span>
+
+                    </p:column>
+
+                    <p:column headerText="Action">
+
+                        <p:button
+                            value="View"
+                            icon="pi pi-eye"
+                            styleClass="!bg-emerald-500 hover:!bg-emerald-600 !border-0 !rounded-lg"
+                            outcome="/staff/invoice_details.xhtml">
+
+                            <f:param
+                                name="id"
+                                value="#{inv.invid}" />
+
+                        </p:button>
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

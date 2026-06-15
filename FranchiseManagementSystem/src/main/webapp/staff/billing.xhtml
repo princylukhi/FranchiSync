@@ -1,11 +1,290 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE html>
+
+<ui:composition template="/templates/layout.xhtml"
+
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+     <ui:define name="content">
+         
+    <!-- PAGE HEADER -->
+    
+    <div class="mb-8">
+
+            <h1 class="text-4xl font-black text-slate-900">
+                Billing Counter
+            </h1>
+
+            <p class="text-slate-500 mt-2 text-lg">
+                Create invoices and process customer payments.
+            </p>
+
+        </div>
+
+    <h:form id="billingForm">
+
+        <p:growl id="msg" showDetail="true"/>
+
+        <!-- MAIN BILLING PANEL -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+
+            <!-- TOP AREA -->
+            <div class="grid grid-cols-1 lg:grid-cols-2">
+
+                <!-- LEFT SIDE -->
+                <div class="p-6 border-r border-zinc-800">
+
+                    <h3 class="text-xl text-white font-semibold mb-6 flex items-center gap-2">
+                        <i class="pi pi-user text-emerald-400"></i>
+                        Customer Details
+                    </h3>
+
+                    <!-- MOBILE -->
+                    <div class="mb-5">
+
+                        <label class="block text-slate-300 mb-2">
+                            Mobile Number
+                        </label>
+
+                        <div class="flex flex-col md:flex-row gap-3">
+
+                            <p:inputText
+                                value="#{billingBean.mobileNo}"
+                                styleClass="w-full"/>
+
+                            <p:commandButton
+                                value="Search"
+                                icon="pi pi-search"
+                                actionListener="#{billingBean.searchCustomer}"
+                                process="@form"
+                                update="@form msg"
+                                styleClass="!bg-emerald-500 !border-0"/>
+
+                        </div>
+
+                    </div>
+
+                    <!-- NAME -->
+                    <div class="mb-5">
+
+                        <label class="block text-slate-300 mb-2">
+                            Customer Name
+                        </label>
+
+                        <p:inputText
+                            value="#{billingBean.customer.customerName}"
+                            styleClass="w-full"/>
+
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div class="mb-6">
+
+                        <label class="block text-slate-300 mb-2">
+                            Email
+                        </label>
+
+                        <p:inputText
+                            value="#{billingBean.customer.email}"
+                            styleClass="w-full"/>
+
+                    </div>
+
+                    <!-- PRODUCT -->
+                    <div class="mb-5">
+
+                        <label class="block text-slate-300 mb-2">
+                            Product
+                        </label>
+
+                        <p:selectOneMenu
+                            value="#{billingBean.selectedProductId}"
+                            styleClass="w-full">
+
+                            <f:selectItem
+                                itemLabel="Select Product"
+                                itemValue="#{null}"/>
+
+                            <f:selectItems
+                                value="#{billingBean.availableProducts}"
+                                var="inv"
+                                itemValue="#{inv.pid.pid}"
+                                itemLabel="#{inv.pid.productName} (Stock: #{inv.quantity})"/>
+
+                        </p:selectOneMenu>
+
+                    </div>
+
+                    <!-- QUANTITY -->
+                    <div class="mb-5">
+
+                        <label class="block text-slate-300 mb-2">
+                            Quantity
+                        </label>
+
+                        <p:inputNumber
+                            value="#{billingBean.quantity}"
+                            minValue="1"
+                            styleClass="w-full"/>
+
+                    </div>
+
+                    <!-- ADD BUTTON -->
+                    <p:commandButton
+                        value="Add To Cart"
+                        icon="pi pi-plus"
+                        actionListener="#{billingBean.addToCart}"
+                        update="@form"
+                        styleClass="!bg-emerald-500 !border-0"/>
+
+                </div>
+
+                <!-- RIGHT SIDE -->
+                <div class="p-6">
+
+                    <div class="flex justify-between items-center mb-6">
+
+                        <h3 class="text-xl text-white font-semibold flex items-center gap-2">
+                            <i class="pi pi-shopping-cart text-emerald-400"></i>
+                            Cart Items
+                        </h3>
+
+                        <span class="text-slate-400">
+                            #{billingBean.cartItems.size()} Item(s)
+                        </span>
+
+                    </div>
+                    
+
+                    <p:dataTable
+                        value="#{billingBean.cartItems}"
+                        var="item"
+                        emptyMessage="No products added yet."
+                        reflow="true"
+                        scrollable="true"
+                        scrollHeight="350">
+
+                        <p:column headerText="Producst">
+                            #{item.productName}
+                        </p:column>
+
+                        <p:column headerText="Qty">
+                            #{item.quantity}
+                        </p:column>
+
+                        <p:column headerText="Price">
+                            ₹ #{item.price}
+                        </p:column>
+
+                        <p:column headerText="Amount">
+                            ₹ #{item.amount}
+                        </p:column>
+
+                        <p:column headerText="Action">
+
+                            <p:commandButton
+                                icon="pi pi-trash"
+                                actionListener="#{billingBean.removeItem(item)}"
+                                update="@form"
+                                styleClass="ui-button-danger"/>
+
+                        </p:column>
+
+                    </p:dataTable>
+
+                </div>
+
+            </div>
+
+            <!-- BILL SUMMARY -->
+            <div class="border-t border-zinc-800 p-6">
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+
+                    <!-- SUMMARY -->
+                    <div>
+
+                        <h3 class="text-xl text-white font-semibold mb-4">
+                            Billing Summary
+                        </h3>
+
+                        <div class="space-y-2">
+
+                            <div class="flex justify-between">
+
+                                <span class="text-slate-400">
+                                    Total Items
+                                </span>
+
+                                <span class="text-white font-medium">
+                                    #{billingBean.cartItems.size()}
+                                </span>
+
+                            </div>
+
+                            <div class="flex justify-between">
+
+                                <span class="text-slate-400">
+                                    Grand Total
+                                </span>
+
+                                <span class="text-emerald-400 font-bold text-2xl">
+                                    ₹ #{billingBean.grandTotal}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- PAYMENT -->
+                    <div>
+
+                        <label class="block text-slate-300 mb-2">
+                            Payment Mode
+                        </label>
+
+                        <p:selectOneMenu
+                            value="#{billingBean.paymentMode}"
+                            styleClass="w-full mb-4">
+
+                            <f:selectItem
+                                itemValue="Cash"
+                                itemLabel="Cash"/>
+
+                            <f:selectItem
+                                itemValue="UPI"
+                                itemLabel="UPI"/>
+
+                            <f:selectItem
+                                itemValue="Card"
+                                itemLabel="Card"/>
+
+                        </p:selectOneMenu>
+
+                        <p:commandButton
+                            value="Generate Bill"
+                            icon="pi pi-check-circle"
+                            actionListener="#{billingBean.generateBill}"
+                            update="@form"
+                            styleClass="w-full !bg-emerald-500 hover:!bg-emerald-600 !border-0 !py-3"/>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </h:form>
+
+
+</ui:define>
+
+</ui:composition>
+

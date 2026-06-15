@@ -95,6 +95,17 @@ public class CompanyRegistrationRequests implements Serializable {
     private Date approvedDate;
     @Column(name = "logo")
     private String logo;
+    @Column(name = "gst_number")
+    private String gstNumber;
+
+    @Column(name = "pan_number")
+    private String panNumber;
+
+    @Column(name = "gst_certificate")
+    private String gstCertificate;
+
+    @Column(name = "business_license")
+    private String businessLicense;
 
     public CompanyRegistrationRequests() {
     }
@@ -203,6 +214,38 @@ public class CompanyRegistrationRequests implements Serializable {
         this.logo = logo;
     }
     
+    public String getGstNumber() {
+        return gstNumber;
+    }
+
+    public void setGstNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
+    }
+
+    public String getPanNumber() {
+        return panNumber;
+    }
+
+    public void setPanNumber(String panNumber) {
+        this.panNumber = panNumber;
+    }
+
+    public String getGstCertificate() {
+        return gstCertificate;
+    }
+
+    public void setGstCertificate(String gstCertificate) {
+        this.gstCertificate = gstCertificate;
+    }
+
+    public String getBusinessLicense() {
+        return businessLicense;
+    }
+
+    public void setBusinessLicense(String businessLicense) {
+        this.businessLicense = businessLicense;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
