@@ -123,22 +123,6 @@ innerBorder.setBorderColor(
                 153));
 
 document.add(innerBorder);
-        
-        // LOGO
-
-//Image logo =
-//        Image.getInstance(logoPath);
-//
-//logo.scaleToFit(120, 120);
-//
-//logo.setAlignment(
-//        Element.ALIGN_CENTER);
-//
-//document.add(logo);
-//
-//document.add(
-//        new Paragraph(" ")
-//);
 
 document.add(
         new Paragraph("\n\n"));
@@ -335,7 +319,7 @@ verify.setAlignment(
 document.add(verify);
 
 // SIGNATURE 
-document.add( new Paragraph("\n\n")); 
+document.add( new Paragraph("\n")); 
 Font signFont = FontFactory.getFont( FontFactory.TIMES_ITALIC, 24); 
 Paragraph companySignature = new Paragraph( franchise.getCid() .getContactPerson(), signFont); 
 companySignature.setAlignment( Element.ALIGN_CENTER); 

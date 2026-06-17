@@ -21,7 +21,7 @@ public class CompanyFeedbackBean implements Serializable {
     @EJB
     private FeedbackServiceLocal feedbackService;
 
-    private List<Feedbacks> companyFeedbacks;
+    private List<Feedbacks> franchiseFeedbacks;
 
     private Feedbacks feedback = new Feedbacks();
 
@@ -49,20 +49,18 @@ public class CompanyFeedbackBean implements Serializable {
 
     public void loadFeedbacks() {
 
-        int companyId = loggedInUser.getCid().getCid();
+        franchiseFeedbacks =
+            feedbackService.getFranchiseFeedbacks();
 
-        companyFeedbacks =
-            feedbackService.getFeedbacksByCompany(companyId);
-
-        totalFeedbacks = companyFeedbacks.size();
+        totalFeedbacks = franchiseFeedbacks.size();
 
         negativeFeedbacks =
-            companyFeedbacks.stream()
+            franchiseFeedbacks.stream()
             .filter(f -> f.getRating() <= 2)
             .count();
 
         averageRating =
-            companyFeedbacks.stream()
+            franchiseFeedbacks.stream()
             .mapToInt(Feedbacks::getRating)
             .average()
             .orElse(0);
@@ -76,7 +74,7 @@ public class CompanyFeedbackBean implements Serializable {
 
         int companyId = loggedInUser.getCid().getCid();
 
-        feedback.setFeedbackType("PLATFORM");
+        feedback.setFeedbackType("COMPANY");
 
         feedbackService.submitFeedback(
             feedback,
@@ -91,8 +89,8 @@ public class CompanyFeedbackBean implements Serializable {
 
     // GETTERS & SETTERS
 
-    public List<Feedbacks> getCompanyFeedbacks() {
-        return companyFeedbacks;
+    public List<Feedbacks> getFranchiseFeedbacks() {
+        return franchiseFeedbacks;
     }
 
     public Feedbacks getFeedback() {

@@ -136,6 +136,7 @@ public class FranchiseService implements FranchiseServiceLocal {
                 em.find(FranchiseRequests.class, requestId);
 
         req.setStatus("REJECTED");
+        req.setApprovedDate(new Date());
 
         em.merge(req);
         
