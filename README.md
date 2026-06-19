@@ -7,16 +7,25 @@ Group Project
 
 ## Tech Stack
 - Java (Enterprise Edition)
-- JPA (Jakarta Persistence API)
+- Enterprise JavaBeans (EJB)
+- Jakarta Persistence API (JPA)
+- Jakarta Server Faces (JSF)
+- PrimeFaces
+- RESTful Web Services
 - MySQL
 - Payara Server
 
 ## Features
-The system is being developed with the following key features:
+The system provides the following key features:
 
 - Company Registration & Approval Workflow
-- Role-Based User Management System
+- Role-Based User Management
+- Franchise Request & Approval Management
 - Franchise & Branch Management
-- Product & Pricing Configuration
-- Inventory Tracking & Stock Management
-- Centralized Reporting & Dashboard
+- Product & Pricing Management
+- Inventory Tracking & Low Stock Alerts
+- Billing & Sales Management
+- Commission Rule Management
+- Notification Management
+- Feedback Management
+- Reports & Analytics Dashboard
