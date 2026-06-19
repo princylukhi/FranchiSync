@@ -5,9 +5,6 @@ FranchiSync is a web-based Franchise Management System developed as part of MSc 
 ## Project Type
 Group Project
 
-## Status
-Ongoing
-
 ## Tech Stack
 - Java (Enterprise Edition)
 - JPA (Jakarta Persistence API)
